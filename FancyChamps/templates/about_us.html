@@ -1,0 +1,42 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}How to Play | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">About Us</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+        <p>
+            Concept of of just watching a game as an expectator is now over, as the FancyChamps is making those expectators into real players who can create team, participate in contest/matches just like actual game, and can earn points 
+            for their team. All this lead you to top of the leaderboard and allow you to earn real Cash Prizes!
+            <br>
+            <center><img src="{% static "images/OriginalLogo.png" %}" alt="Sorry!" class="logo" width="90%;"></center>
+            <br>
+            FancyChamps, started in 2019 is a new and rapidly growing Fantasy Sports platform, Which provide its users so many specialized features which are only available on this platform.
+            FancyChamps aims to provide the best experience of Fantasy Sports to fantasy sorts lovers. Currently we offer Fantasy Cricket, But other Fantasy Sports like Football/Kabbadi will be added soon. So stop waiting, Sign up and start creating team to playing on FancyChamps.
+            <br><h4 style="margin-bottom:-10px;"><center>#LetsBeTheChampsTogether</h4></center><br>
+            <b>Still have doubts? Just give us a try with free-roll contest and decide!<b>
+        </p>
+    </div>
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>  	
+    </div>
+  </div>
+{% endblock %}
+      

@@ -1,0 +1,291 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}How to Play | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">Points System</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+        <div class="TableContainer">
+            <h6 style="padding-left:5px;">BATTING</h6>
+            <table class="Table">
+                <tr class="TableTr">
+                    <th class="MainHeaderOfTable">Type of Point</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">T20</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">ODI</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">TEST</th>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">For each Run</td>
+                    <td class="SubHeaderOfContent">0.5</td>
+                    <td class="SubHeaderOfContent">0.5</td>
+                    <td class="SubHeaderOfContent">0.5</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">For every Boundary</td>
+                    <td class="SubHeaderOfContent">1</td>
+                    <td class="SubHeaderOfContent">1</td>
+                    <td class="SubHeaderOfContent">1</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">For every Six</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent">2</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">For Half Century</td>
+                    <td class="SubHeaderOfContent">5</td>
+                    <td class="SubHeaderOfContent">4</td>
+                    <td class="SubHeaderOfContent">3</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">For Century</td>
+                    <td class="SubHeaderOfContent">10</td>
+                    <td class="SubHeaderOfContent">8</td>
+                    <td class="SubHeaderOfContent">6</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Dismissal for Duck</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-2</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-3</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-4</td>
+                </tr>
+            </table>            
+            <h6 style="padding-left:5px;padding-top:5px;">BOWLING</h6>
+            <table class="Table">
+                <tr class="TableTr">
+                    <th class="MainHeaderOfTable">Type of Point</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">T20</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">ODI</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">TEST</th>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Wicket</td>
+                    <td class="SubHeaderOfContent">10</td>
+                    <td class="SubHeaderOfContent">10</td>
+                    <td class="SubHeaderOfContent">10</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">3 Wicket haul Bonus</td>
+                    <td class="SubHeaderOfContent">6</td>
+                    <td class="SubHeaderOfContent">4</td>
+                    <td class="SubHeaderOfContent">3</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">5 Wicket haul Bonus</td>
+                    <td class="SubHeaderOfContent">8</td>
+                    <td class="SubHeaderOfContent">6</td>
+                    <td class="SubHeaderOfContent">4</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Maiden Over</td>
+                    <td class="SubHeaderOfContent">3</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent">1</td>
+                </tr>
+            </table>
+            <h6 style="padding-left:5px;padding-top:5px;">FIELDING</h6>
+            <table class="Table">
+                <tr class="TableTr">
+                    <th class="MainHeaderOfTable" style="color:#F3F4F4">Type of Point</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">T20</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">ODI</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">TEST</th>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Catch</td>
+                    <td class="SubHeaderOfContent">5</td>
+                    <td class="SubHeaderOfContent">5</td>
+                    <td class="SubHeaderOfContent">5</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Run-out</td>
+                    <td class="SubHeaderOfContent">T-4/C-2</td>
+                    <td class="SubHeaderOfContent">T-4/C-2</td>
+                    <td class="SubHeaderOfContent">T-4/C-2</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Stumping</td>
+                    <td class="SubHeaderOfContent">6</td>
+                    <td class="SubHeaderOfContent">6</td>
+                    <td class="SubHeaderOfContent">6</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Maiden Over</td>
+                    <td class="SubHeaderOfContent">3</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent">1</td>
+                </tr>
+            </table>
+            <h6 style="padding-left:5px;padding-top:5px;">ECONOMY RATE</h6>
+            <table class="Table">
+                <tr class="TableTr">
+                    <th class="MainHeaderOfTable" style="color:#F3F4F4">Type of Point</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">T20</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">ODI</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">TEST</th>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Less than 4 RPO</td>
+                    <td class="SubHeaderOfContent">3</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">4 to 5.99 RPO</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent">1</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">6 to 8 RPO</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-1</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-2</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">8 to 8.99 RPO</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-2</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-3</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Above 9 RPO</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-3</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-4</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+            </table>
+            <h6 style="padding-left:5px;padding-top:5px;">STRIKE RATE</h6>
+            <table class="Table">
+                <tr class="TableTr">
+                    <th class="MainHeaderOfTable" style="color:#F3F4F4">Type of Point</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">T20</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">ODI</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">TEST</th>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">120 to 129.9 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent">1</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">130 to 150 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Above 150 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent">3</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">90 to 80 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-1</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">79.9 to 70 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-2</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Belowe 70 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-3</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">100 to 109.9 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent">1</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">110 to 130 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Above 130 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent">3</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">70 to 80 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent"></td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-1</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">60 to 69.9 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-2</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Belowe 60 Runs per 100 Balls</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-3</td>
+                    <td class="SubHeaderOfContent"> - </td>
+                </tr>
+            </table>
+            <h6 style="padding-left:5px;padding-top:5px;">OTHERS</h6>
+            <table class="Table">
+                <tr class="TableTr">
+                    <th class="MainHeaderOfTable" style="color:#F3F4F4">Type of Point</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">T20</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">ODI</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">TEST</th>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Captain</td>
+                    <td class="SubHeaderOfContent">2x</td>
+                    <td class="SubHeaderOfContent">2x</td>
+                    <td class="SubHeaderOfContent">2x</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Vice-Captain</td>
+                    <td class="SubHeaderOfContent">1.5x</td>
+                    <td class="SubHeaderOfContent">1.5x</td>
+                    <td class="SubHeaderOfContent">1.5x</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Being part of Playing 11</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent">2</td>
+                    <td class="SubHeaderOfContent">2</td>
+                </tr>
+            </table>       
+        </div>
+    </div>
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>  	
+    </div>
+  </div>
+{% endblock %}
+      

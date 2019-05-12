@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+  <head>
+    <meta charset="utf-8">
+    <title>Page Not Found | FancyChamps</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static "css/error_page.css" %}">
+  </head>
+  <body>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="main">
+      <h1>404</h1>
+      <p>It looks like you're lost...<br/>Don't worry! We are here to guide you</p>
+      <a href={% url 'IndexView' %}><button type="button">Go back to FancyChamps</button>
+    </div>    
+    <script src=""></script>
+  </body>
+</html>

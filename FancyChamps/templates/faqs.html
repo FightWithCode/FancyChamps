@@ -1,0 +1,208 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}FAQ's | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">Points System</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+      <center><h6><b>Registration on FancyChamps</b></h6></center>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">1. What is FancyChamps?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : FancyChamps is one of the Best fantasy sports platforms in India. FancyChamps help the users to earn real money by using their skills and knowledge of sports.</p>
+        </div>
+      </div>
+
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">2. How do I sign up on FancyChamps?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : It's easy! Once you are on FancyChamps homepage, fill up the short registration form, get the bonus and start earning!</p>
+        </div>
+      </div>
+
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">3. Why can't I log in to my Account?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : Opps! Please check whether your registered e-mail address and password are entered correctly and try again. If you've forgotten your password, click on 'Forgot Password', enter your registered email ID and we’ll send you a link shortly to reset your password via e-mail. If you've forgotten your registered email id, reach out to us via our Contact Us page.</p>
+        </div>
+      </div>
+
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">4. Can I have multiple accounts on FancyChamps?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : No! A user is allowed to have only one account with valid documents on FancyChamps. Please refer <a href="{% url 'terms' %}">T&C</a> for further details.</p>
+        </div>
+      </div>
+
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">5. Can I update / edit my information?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : Why not! Simply log into FancyChamps and click on the top right of the page then select 'My Profile' and then edit your informations. You will be able to update/edit your full name and DOB.</p>
+        </div>
+      </div>
+
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">6. I did not get any confirmation e-mail after I signed up. What to do?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : There is a possibility that the e-mail could have been marked as ‘Spam’. Henceforth, we suggest you to check your 'Spam Flolder' and mark the e-mail from FancyChamps as ‘Not Spam’.The other reason can be, you may not have entered the correct e-mail address during registration. If the issue still persists, get in touch with us via our Contact Us page.</p>
+        </div>
+      </div>
+
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">7. I don't know much about fantasy cricket – can I still play?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : The fantasy cricket services offered by MyTeam11 are for everyone including those who don’t know much about cricket. So, yes, you can play even if you don’t know much about cricket. In addition, the “How to Play” section of MyTeam11 website can assist you in playing the game by briefing you about the playing tactics.</p>
+        </div>
+      </div>
+      <center><h6 style="margin-top:-5px;"><b>Playing, Scoring and Points on FancyChamps</b></h6></center>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">1. When does Fantasy Cricket start on FancyChamps?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : Fantasy Cricket on FancyChamps starts as soon as the match starts. Usualy, seconds before the first bowl is bowled in the match.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">2. Can I choose players from one side only?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : No, the users cannot choose players from one team only. They are allowed to choose a maximum of 7 players from a single side and the remaining players should be selected from the other side.</p>
+        </div>
+      </div>
+      
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">3. Can I edit my team during a round/match?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : No! Once the round/match is started, users are not allowed to change/create any of their teams. Users can only change/create teams before the match starts.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">4. Can I choose which of my teams will compete in a contest (Team 1 or 2) after joining?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : Not yet, But our team is working hard to make this happend. You will see this feature soon!</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">5. How will I score points?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : You will score points depending on how the players in your team perform in the live match. So, make sure you pick a winning combination to help you win! Check out our ‘Fantasy Points System’ for more information.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">6. When do the scores get updated?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : Points are usually updated every over! The final points including your team's total and your rank are updated and finalized once the match is over. Winners are declared and Winnings are distributed only after our team verifies the points.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">7. What happens when there is a tie between users? How will you distribute the prize?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : When there is a tie between 2 or more users, the prize money is divided equally between the users.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">8. Do I get points for a substituted players?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : No, your team is not awarded any points for a substitute player in case he replaces any player on-field as the substitute is not considered as a part of playing XI.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">9. Do I get points for a Super Over in a Match?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : We do not consider the Super Over points. Because the runs/wickets scored by the players are not considered in their official records.</p>
+        </div>
+      </div>
+      <center><h6 style="margin-top:-5px;"><b>Contest and Prizes on FancyChamps</b></h6></center>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">1. How do I join contests?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : To join contests, click on the ‘Join Now’ button below the specific contest you wish to join.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">2. What are the Cash Contest</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : The cash contest organized by FancyChamps are contests wherein the users can participate by paying a pre-defined entry fee and can compete with other users in order to win prizes and real money.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">3. How many winners will be announced for contests?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : The winners will vary for different contests. The number of winners and their prizes in a contest will be shown by clicking on the '₹ Winnings ' link and this information will be disclosed as soon as the contest is made available to join.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">4. What happens if there is a tie between winners of a multiple winner contest?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : In case of a tie between winners of a multiple winner contest for any position, the prize money for the winner's position and the immediately next winning position (if any), and so forth in accordance with the number of tied winners, will be aggregated and shared equally among the tied winners. All other prize money will remain as per the winner's standing.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">5. What happens if an ODI/T20 match is abandoned?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : If the real match is abandoned fantasy match will be cancelled and the entry fees will be refunded. This includes scenarios where the real match is abandoned without a single ball being bowled, as well as where the match is abandoned after it has started.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">6. What do I win in a cash contest?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : The users will win real cash prizes, if they are playing in a cash contest.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">7. How do you decide the winner of a contest?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : The winner in a contest is decided on the basis of the aggregate a team scores. The user whose team scores the highest aggregate of scores on the basis of the on-field performance of their chosen players is announced as the winner of a contest. </p>
+        </div>
+      </div>
+      <center><h6 style="margin-top:-5px;"><b>Widhrawals and Payments on FancyChamps</b></h6></center>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">1. How do I Widhrawal money from my FancyChamps Account?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : The users are allowed to withdraw money from “My Wallet” section of their FancyChamps main menu, only after they successfully complete the verification process. The users can withdraw a minimum of ₹200 and a maximum of ₹9,999 in a day. Further, the withdrawal <b>amount will be deposited to your Paytm Wallet of number, which you provided while registration</b> within one working day. If you want to change the wallet number please contact us through "Contact Us" page.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">2. Why can’t I withdraw the Cash Bonus in my Dream11 account?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : This is a bonus amount given by FancyChamps to you. You cannot withdraw this amount but you can use it to join more contests and win more cash. Cash Bonus also comes with an expiry date so make sure to use it before it expires!</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">3. What details do I need to provide for widhrawal?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : No Bank and PAN Card details! You can widhraw cash to your PayTM wallet which is completed with KYC.</p>
+        </div>
+      </div>
+      <div id="dropdown-1" class="dropdown dropdown-processed">
+        <a class="dropdown-link" href="#">4. Is it safe to enter card details? Does FancyChamps save any of it.?</a>
+        <div class="dropdown-container" style="display: none;">
+          <p class="AnswerP">Ans : FancyChamps uses secure and credible third-party payment gateways for transactions that use secure authentication which ensures that it is safe to share your card details. In addition, FancyChamps does not store any of your card information, including your CVV number.</p>
+        </div>
+      </div>
+      <p>&nbsp;</p>
+    </div>
+
+
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>  	
+  
+  
+    </div>
+  </div>
+{% endblock %}

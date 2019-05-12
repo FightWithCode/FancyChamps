@@ -1,0 +1,426 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Home | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+{% block other_page_content %}
+        <!--<div class="alert alert-danger AlertClass">-->
+        <!--    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
+        <!--    Success! message sent successfully.-->
+        <!--</div>-->
+      <!--<div class="alert alert-danger" role="alert">-->
+      <!--  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+      <!--  <center><strong>Verify Email And Mobile No.</strong></center>-->
+      <!--</div>-->
+{% if request|is_mobile %}
+    <div id="first">
+      <div class="trans row">
+        {% if request|is_mobile %}
+        {% else %}
+        {% endif %}
+        <p>&nbsp;</p><p>&nbsp;</p>
+
+        <div class="col-md-5">
+          <div class="form_wrapper">
+            <h4 class="LoginHeading">Login or Signup with FancyChamps</h4>
+            {% if login_error %}
+              <div class="alert alert-danger" role="alert">
+                <center>Please Enter Correct Username and Password!<center>
+              </div>
+            {% endif %}
+            <form method="post" action="{% url 'IndexView' %}">
+              {% csrf_token %}
+              {{ login_form.non_field_errors }}
+              {{ login_form.source.errors }}
+              {{ login_form.source }}
+              {{ login_form.username.label_tag }}
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
+                {% render_field login_form.username class="form-control" %}
+              </div>
+              {{ login_form.username.errors }}
+
+              {{ login_form.password.label_tag }}
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
+                {% render_field login_form.password class="form-control" %}
+              </div>
+              {{ login_form.password.errors }}
+              <div class="ButtonContainer">
+                <input class="btn login_button" verify-login="{% url 'VerifyLoginDetail' %}" type="submit" name="submit" id="login_button" value="Login">
+                <a href="{% url 'password_reset' %}">Forgotten your Password?</a>
+              </div>
+            </form>
+
+            <div class="col-md-7">
+              <div class="logo">
+                <div class="mainContent">
+                  <center><h2 style="">Start earning Real Cash <span style="color: #ff4f8b;">without any PAN Card or Bank Account details</span></h2>
+                  <h2 style="margin-bottom:40px">Get paid directy in your <span style="color: #ff4f8b;">PayTM</span> account</h2>
+                  <button type="button" class="btn btn-success btn-lg" id="signup">Signup to Get Instant <b>₹25 Bonus</b></button></center>
+                </div>
+              </div>
+            </div>
+
+            {% if registered %}
+              <h2>Thank-You for you Time!</h2>
+              <div class="alert alert-success" role="alert">
+                Thank You for creating account. Now please login!
+              </div>
+            {% else %}
+
+              <form method="post">
+                {% csrf_token %}
+                <!-- ****UserForm**** -->
+                <div class="row">
+                  <div class="InfoProvider"></div>
+                  <div style="height:10px;"></div>
+                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+                    {{ user_form.non_field_errors }}
+                    {{ user_form.source.errors }}
+                    {{ user_form.source }}
+
+                    {{ user_form.username.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
+                      {% render_field user_form.username class="form-control" %}
+                    </div>
+                    {{ user_form.username.errors }}
+
+                  </div>
+
+                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+
+                    {{ user_form.password.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
+                      {% render_field user_form.password class="form-control" %}
+                    </div>
+                    {{ user_form.password.errors }}
+
+                  </div>
+
+                  <div class="col-md-12 col-sm-12" class="inner_form_wrapper">
+                    {{ user_form.email.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope" style="color:black;"></i></span>
+                      {% render_field user_form.email class="form-control" %}
+                      <i aria-hidden="true" class="custom_verify_email" verify-input="{% url 'EmailVerifyView' %}"><span class="custom_verify_text">Verify</span></i>
+                    </div>
+                    {{ user_form.email.errors }}
+
+                    {{ profile_form.phone_number.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                      {% render_field profile_form.phone_number class="custom_input" %}
+                      <i aria-hidden="true" class="custom_verify_phone" verify-input="{% url 'MobileVerifyView' %}"><span class="custom_verify_text">Verify</span></i>
+                    </div>
+                    {{ profile_form.phone_number.errors }}
+                  </div>
+                  <!-- ****ProfileForm -->
+                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+
+                    {{ profile_form.date_of_birth.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-calendar" style="color:black;"></i></span>
+                      {% render_field profile_form.date_of_birth class="form-control" id="DateOfBirth" %}
+                    </div>
+                    {{ profile_form.date_of_birth.errors }}
+
+                  </div>
+
+                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+                    {{ profile_form.non_field_errors }}
+                    {{ profile_form.source.errors }}
+                    {{ profile_form.source }}
+
+                    {{ profile_form.state.label_tag }}
+                    {% render_field profile_form.state class="form-control" %}
+                    {{ profile_form.state.errors }}
+
+                  </div>
+                </div>
+                <div class="ButtonContainer" check="{% url 'CheckEnteredData' %}">
+                  <input class="btn signup_button" type="submit" name="submit" id="signup_button" value="Register" style="margin-bottom:30px">
+                </div>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% else %}
+    <div id="first">
+      <div class="trans row">
+        {% if request|is_mobile %}
+        {% else %}
+        {% endif %}
+        <p>&nbsp;</p><p>&nbsp;</p>
+        <div class="col-md-7">
+          <div class="logo">
+            <img src="{% static "images/OriginalLogo.png" %}" alt="Sorry! LOGO Not Found" class="logo"  class="img-responsive">
+            {% comment %} <h4 class="Tagline">LET'S BE THE <b>CHAMPS</b> TOGETHER.</h4> {% endcomment %}
+            <div class="mainContent">
+              {% comment %} <h1>PLAY FANTASY SPORTS & </h1>
+              <h1>WIN DAILY <b>CASH PRIZES!</b></h1> {% endcomment %}
+              <h2 style="">Start earning Real Cash <span style="color: #ff4f8b;">without any PAN Card or Bank Account details</span></h2>
+              <h2 style="margin-bottom:40px">Get paid directy in your <span style="color: #ff4f8b;">PayTM</span> account</h2>
+              <button type="button" class="btn btn-success btn-lg" id="signup">Signup to Get Instant <b>₹25 Bonus</b></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form_wrapper">
+            <h4 class="LoginHeading">Login or Signup with FancyChamps</h4>
+            {% if login_error %}
+              <div class="alert alert-danger" role="alert">
+                <center>Please Enter Correct Username and Password!<center>
+              </div>
+            {% endif %}
+            <form method="post" action="{% url 'IndexView' %}">
+              {% csrf_token %}
+              {{ login_form.non_field_errors }}
+              {{ login_form.source.errors }}
+              {{ login_form.source }}
+              {{ login_form.username.label_tag }}
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
+                {% render_field login_form.username class="form-control" %}
+              </div>
+              {{ login_form.username.errors }}
+
+              {{ login_form.password.label_tag }}
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
+                {% render_field login_form.password class="form-control" %}
+              </div>
+              {{ login_form.password.errors }}
+              <div class="ButtonContainer">
+                <input class="btn login_button" verify-login="{% url 'VerifyLoginDetail' %}" type="submit" name="submit" id="login_button" value="Login">
+                <a href="{% url 'password_reset' %}">Forgotten your Password?</a>
+              </div>
+            </form>
+
+
+            {% if registered %}
+              <h2>Thank-You for you Time!</h2>
+              <div class="alert alert-success" role="alert">
+                Thank You for creating account. Now please login!
+              </div>
+            {% else %}
+
+              <form method="post">
+                {% csrf_token %}
+                <!-- ****UserForm**** -->
+                <div class="row">
+                  <div class="InfoProvider"></div>
+                  <div style="height:10px;"></div>
+                  <div class="col-md-6 col-sm-6 inner_form_wrapper username">
+                    {{ user_form.non_field_errors }}
+                    {{ user_form.source.errors }}
+                    {{ user_form.source }}
+
+                    {{ user_form.username.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
+                      {% render_field user_form.username class="form-control" %}
+                    </div>
+                    {{ user_form.username.errors }}
+
+                  </div>
+
+                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+
+                    {{ user_form.password.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
+                      {% render_field user_form.password class="form-control" %}
+                    </div>
+                    {{ user_form.password.errors }}
+
+                  </div>
+
+                  <div class="col-md-12 col-sm-12" class="inner_form_wrapper">
+                    {{ user_form.email.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope" style="color:black;"></i></span>
+                      {% render_field user_form.email class="form-control" %}
+                      <i aria-hidden="true" class="custom_verify_email" verify-input="{% url 'EmailVerifyView' %}"><span class="custom_verify_text">Verify</span></i>
+                    </div>
+                    {{ user_form.email.errors }}
+
+                    {{ profile_form.phone_number.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                      {% render_field profile_form.phone_number class="custom_input" %}
+                      <i aria-hidden="true" class="custom_verify_phone" verify-input="{% url 'MobileVerifyView' %}"><span class="custom_verify_text">Verify</span></i>
+                    </div>
+                    {{ profile_form.phone_number.errors }}
+                  </div>
+                  <!-- ****ProfileForm -->
+                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+
+                    {{ profile_form.date_of_birth.label_tag }}
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-calendar" style="color:black;"></i></span>
+                      {% render_field profile_form.date_of_birth class="form-control" id="DateOfBirth" %}
+                    </div>
+                    {{ profile_form.date_of_birth.errors }}
+
+                  </div>
+
+                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+                    {{ profile_form.non_field_errors }}
+                    {{ profile_form.source.errors }}
+                    {{ profile_form.source }}
+
+                    {{ profile_form.state.label_tag }}
+                    {% render_field profile_form.state class="form-control" %}
+                    {{ profile_form.state.errors }}
+
+                  </div>
+                </div>
+                <div class="ButtonContainer">
+                  <input class="btn signup_button" type="submit" name="submit" id="signup_button" value="Register" style="margin-bottom:30px">
+                </div>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% endif %}
+<div id="second">
+  <div class="transnew row">
+    <p>&nbsp;</p><p>&nbsp;</p>
+    <div class="col-sm-12"><h1>How to Play on FancyChamps?</h1><br><br><br></div>
+    <div class="col-sm-4 stepContainer" data-aos="fade-up" id="setp1">
+      <center><h2 class="countSteps">1</h2>
+      <div class="qLoader2 manualCount"></div></center>
+      <div><br>
+        <img src="{% static "images/step_2.png" %}" alt="Sorry!" class="logo stepsImage" data-aos="zoom-in" style="height:;">
+        <h2>Choose 11 Players</h2>
+        <h4>Select your best 11 players from both the teams. And Choose One Captain and One Vice-Captain</h4>
+      </div>
+    </div><br><br><br>
+    <div class="col-sm-4 stepContainer" data-aos="fade-up" id="setp2">
+      <center><h2 class="countSteps">2</h2>
+      <div class="qLoader2 manualCount"></div></center>
+      <div><br>
+        <img src="{% static "images/step_3.png" %}" alt="Sorry!" class="logo stepsImage" data-aos="zoom-in">
+        <h2>Select A League</h2>
+        <h4>Select a League of your Choice from Available Leaguages</h4>
+      </div>
+    </div><br><br><br>
+    <div class="col-sm-4" data-aos="fade-up" id="setp3">
+      <center><h2 class="countSteps">3</h2>
+      <div class="qLoader2 manualCount"></div></center>
+      <div><br>
+        <img src="{% static "images/last_step.png" %}" alt="Sorry!" class="logo stepsImage" data-aos="zoom-in">
+        <h2>Win Daily Cash Prizes</h2>
+        <h4>Win Cash Prizes according to the rank you got in Leagues</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="third">
+  <div class="trans row">
+
+    {% if request|is_mobile %}
+
+      <div class="col-sm-6 col-xs-12"><br>
+        <div class="" style="margin-top:10%;">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> NO NEED OF PAN CARD<h3>
+          <p>There is no need of Pan Card to widhdraw your Winnings</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xs-12"><br>
+        <div class="" style="margin-top:10%;">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> VATRIETIES OF LEAGUES<h3>
+          <p>Join all new and Variety of leagues with high rewards</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xs-12"><br>
+        <div class="" style="margin-top:10%;">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> FAST CASH WIDHDRAWAL<h3>
+          <p>Get the fastest possible cash widhdraw of you winnings.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xs-12"><br>
+        <div class="" style="margin-top:10%;">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> 24x7 SUPPORT<h3>
+          <p>We are here to hear you at anytime. Just mail us or fill the form we will be in touch to you ASAP!</p>
+        </div>
+      </div>
+    {% else %}
+      <div class="col-sm-4" style=":100vh;"><br>
+        <div class="col-sm-12" data-aos="fade-up-left" class="featuresConatiner">
+          <div class="" style="margin-top:20%;margin-left:30%;">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>Signup Bonus<h3>
+          </div>
+        </div>
+        <div class="col-sm-12" data-aos="fade-left" class="featuresConatiner">
+          <div class="" style=";margin-top:20%;">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>Variety of Leages<h3>
+          </div>
+        </div>
+        <div class="col-sm-12" data-aos="fade-down-left" class="featuresConatiner">
+          <div class="" style="margin-top:20%;margin-left:30%;">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>Win Real Cash Prizes<h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <img src="{% static "images/OriginalLogo.png" %}" alt="Sorry!" class="featuresLogo" data-aos="zoom-in">
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12" data-aos="fade-up-right" class="featuresConatiner">
+          <div class="" style="margin-top:25%;margin-right:30%;">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>24x7 Support<h3>
+          </div>
+        </div>
+        <div class="col-sm-12" data-aos="fade-right" class="featuresConatiner">
+          <div class="" style="margin-top:20%;">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>High Rewards<h3>
+          </div>
+        </div>
+        <div class="col-sm-12" data-aos="fade-down-right" class="featuresConatiner">
+          <div class="" style="margin-top:20%;margin-right:30%;">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>No Need of PAN Card Details<h3>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+<div id="fourth">
+  <div class="trans row">
+    <p>&nbsp;</p><p>&nbsp;</p>
+    <div class="col-sm-12"><h1>FAQs</h1><br><br><br></div>
+    <div class="col-sm-12 faq">
+      <div class="col-md-6">
+        <div class="qa-section">
+          <b><p class="question">Q. What is FancyChamps?</p></b>
+          <p class="answer">Ans. FancyChamps is one of the Best fantasy sports platforms in India. FancyChamps help the users to earn real money by using their skills and knowledge of sports.</p>
+        </div><br><br>
+        <div class="qa-section">
+          <b><p class="question">Q. Ok, but what is Fantasy Cricket?</p></b>
+          <p class="answer">Ans. Fantasy cricket is a part of the fantasy sports genre. It is an online game, which is played accoriding to a real performance of players in a cricket match. Players create their own team using their mere skills, those teamscollect points according to how their selected players perform in actual match. Player/Team decalered aswinner who scores maximum point and awarded Real Cash Prizes!</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="qa-section">
+          <b><p class="question">Q. What is Point System?</p></b>
+          <p class="answer">Ans. Point System defines how much Points your selected player will be awarded on basis of their specific action/performace in actual match. Points System of FancyChamps can be found on the <a href="{% url 'points_system' %}">point system page</a>. </p>
+        </div><br><br>
+        <div class="qa-section">
+          <b><p class="question">Q. What about Competetion!</p></b>
+          <p class="answer">Ans. Don't worry about the Competetion! Here at FancyChamps the competetion is always low and Chaces of your winning are always Heigher! Just sign up at FancyChamps and start earning real cash right now!<br><a href="{% url 'faqs' %}">Here are some more FAQ's</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block other_page_script %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+  <script src="{% static 'js/index.js' %}"></script>
+{% endblock %}

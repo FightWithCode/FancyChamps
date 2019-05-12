@@ -1,0 +1,72 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Cricket Center | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+	<div class="MainBackground">
+	  <div class="color-overlay"></div>
+	</div>  
+	<div class="MatchAreaForMatch">
+		<div class="OwnMatchCard">
+	  	<center>
+	  		<h4 class="ContentHeaderTeams">{{match_obj.match_name}}</h4>
+	  		<h6 class="ContentHeader">Joined User List</h6>
+	  		<hr class="HrSeparatorOfInfoBar">
+	  	</center>
+	  </div>
+	  <div class="ContestInfoCard">
+	  	<h5 class="ContestNameOfContestInfoCard">{{contest_obj.contest_name}}</h5>
+	  	<div class="ContestInfoHeaderContainer">
+	  		<h6 class="InfoHeaderOfContestInfoCard">Fee</h6>
+	  		<h6 class="InfoHeaderOfContestInfoCard">Size</h6>
+	  		<h6 class="InfoHeaderOfContestInfoCard">Prize</h6>
+	  	</div>
+	  	<div class="ContestInfoHeaderContainer">	
+	  		<h6 class="InfoOfContestInfoCard">{{contest_obj.contest_fee}}</h6>
+	  		<h6 class="InfoOfContestInfoCard">{{contest_obj.contest_size}}</h6>
+	  		<h6 class="InfoOfContestInfoCard">{{contest_obj.contest_prize}}</h6>
+	  	</div>
+	  </div>
+	  <div>
+		<div class="RankingHeader">
+				<h6 class="RankingHeaderRankPosition">RANK</h6>
+				{% if not match_obj.live %}
+					<h6 class="RankingHeaderIfTeam">TEAM</h6>
+				{% else %}
+					<h6 class="RankingHeaderTeam">TEAM</h6>	
+				{% endif %}
+				<h6 class="RankHeaderPointsLive">POINTS</h6>
+			</div>
+			{% for rank in all_joined_with_ranking %}
+				<div class="RankInfoCard" go-to="{% url 'cricket_center:ranking_team_preview' team_no=rank.joined_user_team team_name=rank.joined_user match_slug=match_obj.match_slug %}">
+					{% if not match_obj.live and match_obj.history_activate %}
+						<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
+						<h6 class="RankingHeaderIfTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
+						{% if rank.rank <= contest_obj.contest_winners %}
+						<h6 class="RankingHeaderStatus">Winner</h6>
+						{% else %}
+						<h6 class="RankingHeaderStatus"></h6>
+						{% endif %}
+						<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}</h6>
+					{% else %}
+						<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
+						<h6 class="RankingHeaderTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
+						<h6 class="RankHeaderPointsActual"">{{rank.total_team_points}}</h6>
+					{% endif %}
+				</div>
+			{% endfor %}
+	  </div>
+  	  <div class="footer">
+	    	<a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+					Go to Match Center
+	    	</button></center></a>  	
+	  	</div>
+  	</div>
+	
+{% endblock %}

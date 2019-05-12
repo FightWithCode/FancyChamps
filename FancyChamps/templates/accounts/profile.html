@@ -1,0 +1,79 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Profile | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p class="ProfileContent">PROFILE</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+      <div class="MainProfileContent">
+        <div class="MainImageContainer">
+          <i class="fas fa-user-circle" style="font-size:100px;"></i>
+        </div>
+        <center><h6 class="UserNameHeader">{{user.email}}</h6></center>
+      </div>
+      <h5 class="InformationHeader">Profile Information</h5>
+      <div class="MainConrainerOfInfoContainer">
+        <div class="ProfileInformationContainer">
+          <h6 class="InfoHeaderContainer"><span class="fa fa-user"></span> USERNAME</h6>
+          <h6 class="InfoHeaderContainer"><span class="fa fa-envelope"></span> EMAIL</h6>
+          <h6 class="InfoHeaderContainer"><span class="fa fa-phone"></span> MOBILE NO.</h6> 
+          <h6 class="InfoHeaderContainer"><span class="fa fa-calendar"></span> DOB</h6>
+          <h6 class="InfoHeaderContainer"><span class="fa fa-globe"></span> STATE</h6>
+        </div>  
+        <div class="InformationContainer">
+          <h6>{{user.username}}</h6>
+          <h6>{{user.email}}</h6> 
+          <h6>{{user.profile.phone_number}}</h6>
+          <h6>{{user.profile.date_of_birth}}</h6>
+          <h6>{{user.profile.state}}</h6> 
+        </div>  
+      </div>
+      <h5 class="InformationHeader">Stats</h5>
+      <div class="MainConrainerOfInfoContainer">
+        <div class="ProfileInformationContainer">
+          <h6 class="InfoHeaderContainer"><span class="fa fa-gamepad"></span> MATCH PLAYED</h6>
+          <h6 class="InfoHeaderContainer"><span class="fa fa-trophy"></span> WINS</h6>
+          <h6 class="InfoHeaderContainer"><span class="fa fa-percent"></span> WIN PERCENTAGE</h6> 
+        </div>  
+        <div class="InformationContainer">
+          <h6>{{user.profile.match_played}}</h6>
+          <h6>{{user.profile.total_wins}}</h6> 
+          <h6>{% widthratio user.profile.total_wins user.profile.match_played 100 %}%</h6>
+        </div>  
+      </div>
+      <h5 class="InformationHeader">Wallet</h5>
+      <div  class="MainConrainerOfInfoContainer">
+        <div class="ProfileInformationContainer">
+          <h6 class="InfoHeaderContainer"> WINNINGS</h6>
+          <h6 class="InfoHeaderContainer"> BONUS</h6>
+          <h6 class="InfoHeaderContainer"> WIDHRAWABLE</h6> 
+        </div>  
+        <div class="InformationContainer">
+          <h6>{{user.profile.balance}}₹</h6>
+          <h6>{{user.profile.bonus}}₹</h6> 
+          <h6>{{user.profile.widhdrawable_balance}}₹</h6>
+        </div>  
+      </div>
+    </div>
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><button class="btn MainPageFooter">
+        Go to Home
+      </button></a>
+    </div>
+  </div>
+{% endblock %}

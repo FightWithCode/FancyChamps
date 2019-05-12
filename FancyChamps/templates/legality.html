@@ -1,0 +1,50 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Legality | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">LEGALITY</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+    
+    
+        <section class="common_content_box">
+            <div class="container">
+              <p>FancyChamps takes great care to comply with all central and state legislation in India to ensure that our users are fully protected. Every contest on our platform is carefully designed to comply with applicable statutes and regulations in India.</p>
+                <p>The Indian High Court held that ‘the element of skill’ had a predominant influence on the outcome of the FancyChamps's game, which follows the following format:
+                  <ul class="strong_text" style="font-weight: bold;">
+                    <li>Participants have to choose a team consisting of at least the same number of players as playing in a real-life sports team (e.g. 11 in cricket).</li>
+                    <li>All contests are run for at least the duration of one full sports match.</li>
+                    <li>No team changes are allowed by participants after the start of the sports match.</li>
+                    <li>Winning prize and Joining fee is stated before the match starts.</li>
+                  </ul>
+                  <p>On this basis, it is clear that playing on FancyChamps constitutes a ‘game of mere skill’, which makes the FancyChamps game exempt from the provisions of the Public Gambling Act, 1867 (PGA).</p>
+                </p>
+              <p>You can find more information on the legality of FancyChamps and Fantasy Sports in India on the website of the Indian Federation of Sports Gaming (IFSG): <a href="http://www.ifsg.in/" target="_blank">www.ifsg.in</a>. IFSG is India’s first and only self-regulatory Sports Gaming industry body formed to protect consumer interest and create standardised best practices in the Sports Gaming industry.</p>
+            </div>
+          </section>
+    
+    
+    </div>
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>  	
+    </div>
+  </div>
+{% endblock %}
+      

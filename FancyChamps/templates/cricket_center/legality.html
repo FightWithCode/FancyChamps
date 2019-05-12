@@ -1,0 +1,50 @@
+{% comment %} {% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Legality | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">LEGALITY</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+    
+    
+            <p>Dream11 takes great care to comply with all central and state legislation in India to ensure that our users are fully protected. Every contest on our platform is carefully designed to comply with applicable statutes and regulations in India.</p>
+            <p>Below are the key points from an Indian High Court’s judgement specifically regarding Dream11's game. A challenge to this judgement was also dismissed by the Supreme Court of India:</p>
+            <ul>
+              <li>The Court, in its ruling, stated that playing the Dream11 game involves considerable skill, judgement and discretion and that success on Dream11 arises out of users’ exercise, superior knowledge, judgment and attention</li>
+              <li>The Court also held that ‘the element of skill’ had a predominant influence on the outcome of the Dream11 game, which follows the following format:
+                <ul class="strong_text" style="font-weight: bold;">
+                  <li>Participants have to choose a team consisting of at least the same no. of players as playing in a real-life sports team (e.g. 5 in basketball, 7 in kabaddi and 11 in cricket/football)</li>
+                  <li>All contests are run for at least the duration of one full sports match</li>
+                  <li>No team changes are allowed by participants after the start of the sports match</li>
+                </ul>
+                <p>On this basis, the Court adjudged that playing on Dream11 constitutes a ‘game of mere skill’, which makes the Dream11 game exempt from the provisions of the Public Gambling Act, 1867 (PGA).</p>
+              </li>
+              <li>Finally, the Court held that the Dream11 is a legitimate business activity protected under Article 19(1)(g) of the Constitution of India.</li>
+            </ul>
+            <p>You can find more information on the legality of Dream11 and Fantasy Sports in India on the website of the Indian Federation of Sports Gaming (IFSG): <a href="http://www.ifsg.in/" target="_blank">www.ifsg.in</a>. IFSG is India’s first and only self-regulatory Sports Gaming industry body formed to protect consumer interest and create standardised best practices in the Sports Gaming industry.</p>
+    
+    
+    </div>
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>  	
+    </div>
+  </div>
+{% endblock %}
+       {% endcomment %}

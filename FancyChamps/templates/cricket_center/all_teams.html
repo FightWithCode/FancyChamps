@@ -1,0 +1,35 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Cricket Center | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+	<div class="MainBackground">
+	  <div class="color-overlay"></div>
+	</div>  
+	<div class="MatchAreaForMatch">
+	  <div class="MatchCard">
+	  	<center>
+	  		<h4 style="position:relative;top:2px;">Kent vs Hamp</h4>
+	  		<h6 style="position:relative;top:-9px;">Available Leagues</h6>
+	  		<hr class="HrSeparatorOfInfoBar">
+	  	</center>
+	  </div>
+
+	  <div class="footer">
+		<!--<center><div style="position:relative; display:inline-block; width:2px; height:40px; top:5px; background-color:green;"></div></center>	-->
+		<a href="#"><button class="btn btn-success FooterInfoLeft">
+			My Teams : {{ total_teams.count }}
+		</button></a> 
+		<a href="{% url 'cricket_center:joined_contests' match_slug=match_slug %}"><button class="btn btn-success FooterInfoRight">
+			Contests Joined : {{contests_count}}
+		</button></a>  	
+	  </div>
+
+	</div>
+{% endblock %}

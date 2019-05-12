@@ -1,0 +1,44 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}How to Play | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">How to Play</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+        <center>
+            <h3>Step 1 : Select a Match</h3>
+            <img src="{% static "images/step_1.png" %}" width="90%" class="img-responsive StepImg">
+            <br>&nbsp;
+            <h3>Step 2 : Create your Champiom Team</h3>
+            <img src="{% static "images/step_2.png" %}" width="90%" class="img-responsive StepImg">
+            <br>&nbsp;
+            <h3>Step 3 : Join a Contest</h3>
+            <img src="{% static "images/step_3.png" %}" width="90%" class="img-responsive StepImg">
+            <br>&nbsp;
+            <h3>Step 4 : Win Cash Prizes</h3>
+            <img src="{% static "images/last_step.png" %}" width="90%" class="img-responsive StepImg">
+        </center>
+    </div>
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>  	
+    </div>
+  </div>
+{% endblock %}
+      
