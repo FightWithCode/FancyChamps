@@ -59,8 +59,9 @@ db.sqlite3
 data.json
 FancyChamps.pem
 FancyChampsEnv
+FancyChampsDB
 .vscode
-
+ProductionFiles
 # Flask stuff:
 instance/
 .webassets-cache
