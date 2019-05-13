@@ -22,7 +22,7 @@ from collections import OrderedDict
 def CricketCenterIndexView(request):
     upcomming_match_obj = MatchDetail.objects.filter(match_tick__gte=time.time()).order_by('match_date')
     live_match_obj = MatchDetail.objects.filter(match_tick__lte=time.time(), history_activate=False, live=True).order_by('match_date')
-    history_match_obj = MatchDetail.objects.filter(history_activate=True)
+    history_match_obj = MatchDetail.objects.filter(history_activate=True).order_by('-match_tick')
     return render(request, "cricket_center/cricket_center_index.html", context={'upcomming_match_obj': upcomming_match_obj, "live_match_obj": live_match_obj, "history_match_obj": history_match_obj})
 
 
@@ -195,7 +195,8 @@ def SingleMatchLiveView(request, match_slug):
             contest_obj = get_object_or_404(ContestDetail, contest_slug__exact=contest.joined_contest_slug)
             if contest_obj not in contests_joined:
                 contests_joined.append(contest_obj)
-        return render(request, "cricket_center/live_match.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj})
+        contests_count = len(contests_joined)
+        return render(request, "cricket_center/live_match.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj, "contests_count":contests_count,})
 
 
 @login_required(login_url='IndexView')
@@ -213,13 +214,14 @@ def SingleMatchHistoryView(request, match_slug):
             contest_obj = get_object_or_404(ContestDetail, contest_slug__exact=contest.joined_contest_slug)
             if contest_obj not in contests_joined:
                 contests_joined.append(contest_obj)
+        contests_count = len(contests_joined)
         # all_joined = JoiningDetail.objects.filter(username_of_player__exact=request.user.username)
         # contests = []
         # for team in all_joined:
         #     if team.joined_contest_slug not in contests:
         #         contests.append(team.contest_slug)
 
-        return render(request, "cricket_center/match_his.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj})
+        return render(request, "cricket_center/match_his.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj,"contests_count":contests_count})
 
 
 @login_required(login_url='IndexView')

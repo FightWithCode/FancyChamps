@@ -11,7 +11,7 @@
 
 	<div class="MainBackground">
 	  <div class="color-overlay"></div>
-	</div>  
+	</div>
 	<div class="MatchAreaForMatch">
 		<div class="OwnMatchCard">
 	  	<center>
@@ -19,32 +19,36 @@
 	  		<h6 class="ContentHeader">Available Leagues</h6>
 	  	</center>
 	  </div>
-	  {% for contest in contests_joined %}
-			<div class="LeagueArea row">
-	  	    <div class="row col-xs-12">
-	  	      <div class="col-xs-12 ContestJoinedCard">
-				<center><h5 class="LeagueName">{{contest.contest_name}}</h5></center>
-				<hr class="HrTagInsideContestJoinedCard">
-	  	  	    <div class="LeagueInfoContainer">
-	  	  	    	<h6>Total Winnings : <span class="JoinedInfoContent">₹{{contest.contest_prize}}</span></h6>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{ contest.joined_percentage }}%"></div>
-                    </div>
-                    <h6>Joined<span class="JoinedInfoContent">{{contest.total_player_joined}}/{{contest.contest_size}}</span></h6>
-                    <div class="MultipleButtonContainer row" >
-                        <center class="ViewButton"><a href="{% url 'cricket_center:contest_ranking' match_slug=match_slug contest_slug=contest.contest_slug %}"><button type="button" class="btn btn-success btn-lg JoinNow">View Rankings</b></button></a></center>
-                    </div>
-	  	  	    </div>
-	  	      </div>
-				</div>	
-			</div>
-			{% endfor %}
+	    {% if contests_count == 0 %}
+	      <center><h4>Sorry! <br>You have not Joined any Contest</h4></center>
+	    {% else %}
+    	    {% for contest in contests_joined %}
+    		    <div class="LeagueArea row">
+    	  	    <div class="row col-xs-12">
+    	  	      <div class="col-xs-12 ContestJoinedCard">
+    				<center><h5 class="LeagueName">{{contest.contest_name}}</h5></center>
+    				<hr class="HrTagInsideContestJoinedCard">
+    	  	  	    <div class="LeagueInfoContainer">
+    	  	  	    	<h6>Total Winnings : <span class="JoinedInfoContent">₹{{contest.contest_prize}}</span></h6>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{ contest.joined_percentage }}%"></div>
+                        </div>
+                        <h6>Joined<span class="JoinedInfoContent">{{contest.total_player_joined}}/{{contest.contest_size}}</span></h6>
+                        <div class="MultipleButtonContainer row" >
+                            <center class="ViewButton"><a href="{% url 'cricket_center:contest_ranking' match_slug=match_slug contest_slug=contest.contest_slug %}"><button type="button" class="btn btn-success btn-lg JoinNow">View Rankings</b></button></a></center>
+                        </div>
+    	  	  	    </div>
+    	  	      </div>
+    				</div>
+    			</div>
+    		{% endfor %}
+		{% endif %}
 			<div class="footer">
 				<a href="{% url 'cricket_center:cricket_center' %}">
 					<center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
 						Go to Match Center
 					</button></center>
-				</a>  	
+				</a>
 			</div>
   	</div>
 

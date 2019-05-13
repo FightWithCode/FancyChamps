@@ -4,7 +4,7 @@ from . import models
 
 admin.site.register(models.MatchDetail)
 admin.site.register(models.CSKMITeam)
-admin.site.register(models.WIBANTeam)
+admin.site.register(models.MICSKTeam)
 admin.site.register(models.SRHDCTeam)
 admin.site.register(models.BANIRETeam)
 admin.site.register(models.PlayerDetail)
