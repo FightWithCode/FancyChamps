@@ -17,9 +17,15 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from . import views
+from django.contrib.sitemaps.views import sitemap
+from cricket_center.sitemaps import StaticSitemap
 
 handler404 = views.handler404
 handler500 = views.handler500
+
+sitemaps = {
+      'static': StaticSitemap(),
+    }
 
 urlpatterns = [
     url(r'^verify_mobile_otp', views.MobileOTPVerifyView, name="MobileOTPVerify"),
@@ -44,4 +50,6 @@ urlpatterns = [
     url(r'contact_us/(?P<submitted>[0-1]+)', views.ContastUs, name='contact_us'),
     # url(r'^accounts/password_reset/$', auth_views.password_reset, {'template_name': 'registration/password_reset.html'}),
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    #url(r'^sitemap\.xml$', views.SiteMapView, name="SiteMap"),
 ]

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load widget_tweaks %}
+{% load user_agents %}
 <html>
   <head>
-    <title>{% block title %}FancyChamps{% endblock title %}</title>
+    <title>{% block title %}Play Fantasy Cricket and Win Real Cash Daily{% endblock title %}</title>
     <meta charset="utf-8">
+    <meta name="google-site-verification" content="14xrDnRqwUqnk6-PdiKOhGs348zJ0E6F-Chm8UJ7kJQ" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="FancyChamps – Play fantasy cricket online and join fantasy league at FancyChamps. Invite your friends and family to play daily fantasy cricket game and win real cash. Let's be the Champs Together."/>
     {% block stylesheets %}
@@ -53,9 +55,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-5"  class="img-responsive">
-                    <img src="{% static "images/OriginalLogo.png" %}" alt="" style="width:280px;position:relative;top:50%;left:50%;-moz-transform: translateX(-50%) translateY(25%);
-  -webkit-transform: translateX(-50%) translateY(25%);
-  transform: translateX(-50%) translateY(25%);">
+                    {% if request|is_mobile %}
+                        <center><img src="{% static "images/OriginalLogo.png" %}" alt="logo" class="FooterLogoMobile"><center>
+                    {% else %}
+                        <img src="{% static "images/OriginalLogo.png" %}" alt="logo" class="FooterLogo">
+                    {% endif %}
                 </div>
                 <div class="col-sm-2">
                     <h5>Get started</h5>
@@ -90,7 +94,7 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>Copyright © 2018 FancyChamps Pvt. Ltd.</p>
+            <p>Copyright © 2019 FancyChamps Pvt. Ltd.</p>
         </div>
     </footer>
     {% block scripts %}

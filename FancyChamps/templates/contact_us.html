@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% load user_agents %}
-{% block title %}How to Play | {{block.super}}{% endblock title %}
+{% block title %}Contact us | {{block.super}}{% endblock title %}
 {% block stylesheets %}
   {{block.super}}
 {% endblock stylesheets %}
@@ -21,7 +21,7 @@
             <center style="height:30px;margin-top:-10px;font-size:16px;"><strong>Your query has been submited!</strong></center>
           </div>
         {% else %}
-          
+
         {% endif %}
         <center>
           <p sclass="ProfileContent">Contact Us</p>
@@ -29,16 +29,16 @@
     </div>
     <div class="InfoConatinerOfPage">
         <p style="margin:10px;">
-            We heared, You have a question! Don't worry FancyChamps has a dedicated team for your help, Because we know A question of a curious mind wants a quick answer. So just shoot them through any of the following 
-            ways and we will answer you as soon as possible!           
+            We heared, You have a question! Don't worry FancyChamps has a dedicated team for your help, Because we know A question of a curious mind wants a quick answer. So just shoot them through any of the following
+            ways and we will answer you as soon as possible! We will be happy to answer your all types of question, whether they are of t20 fantasy league or of any other formats.
         </p>
         <center><h5>FAQ's</h5></center>
         <p style="margin:10px;">
-            Have any question, then FAQ's section is the best place to find your answers have a look at the FAQ's page. If still did'nt find your answer then contact us by using below methods. FAQ's page : <a href="{% url 'faqs' %}">FAQ</a>           
+            Still have any question related to fantasy leagues, login, signup or question related to How to play fantasy cricket, then FAQ's section is the best place to find your answers have a look at the FAQ's page. If still did'nt find your answer then contact us by using below methods. FAQ's page : <a href="{% url 'faqs' %}">FAQ</a>
         </p>
         <center><h5>Through Mail</h5></center>
         <p style="margin:10px;">
-            If our FAQ's did not helped you then, Mail us any time(24x7) you want and we will get in touch to you to solve your problem. And We will be happy to help you. Just mail us at <a href="mailto:support@fancychamps.com">support@fancychamps.com</a>            
+            If our FAQ's did not helped you then, Mail us any time(24x7) you want and we will get in touch to you to solve your problem. And We will be happy to help you. Just mail us at <a href="mailto:support@fancychamps.com">support@fancychamps.com</a>
         </p>
         <center><h5>Through Contact Form</h5></center>
         <form method="POST" class="container">
@@ -46,39 +46,39 @@
           {{ form.non_field_errors }}
           {{ form.source.errors }}
           {{ form.source }}
-          
+
           {{ form.email.label_tag }}
-          <div class="input_field"></span>         
+          <div class="input_field"></span>
             {% render_field form.email class="form-control" %}
           </div>
           {{ form.email.errors }}
 
           {{ form.mobile_no.label_tag }}
-          <div class="input_field"></span>         
+          <div class="input_field"></span>
             {% render_field form.mobile_no class="form-control" %}
           </div>
           {{ form.mobile_no.errors }}
 
           {{ form.question.label_tag }}
-          <div class="input_field"></span>         
+          <div class="input_field"></span>
             {% render_field form.question class="form-control" %}
           </div>
           {{ form.question.errors }}
 
           {{ form.brief_description.label_tag }}
-          <div class="input_field"></span>         
+          <div class="input_field"></span>
             {% render_field form.brief_description class="form-control" %}
           </div>
           {{ form.brief_description.errors }}
 
             <center><input class="btn btn-success" type="submit" value="Submit" style="margin:10px;"></center>
-        
+
         </form>
     </div>
     <div class="footer">
       <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
         Go to Match Center
-      </button></center></a>  	
+      </button></center></a>
     </div>
   </div>
 {% endblock %}
@@ -89,13 +89,13 @@
           {{ login_form.source.errors }}
           {{ login_form.source }}
           {{ login_form.username.label_tag }}
-          <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>         
+          <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
             {% render_field login_form.username class="form-control" %}
           </div>
           {{ login_form.username.errors }}
 
           {{ login_form.password.label_tag }}
-          <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>         
+          <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
             {% render_field login_form.password class="form-control" %}
           </div>
           {{ login_form.password.errors }}

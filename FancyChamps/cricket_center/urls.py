@@ -1,5 +1,12 @@
 from django.conf.urls import url
 from . import views
+# from django.contrib.sitemaps.views import sitemap
+# from cricket_center.sitemaps import StaticSitemap
+
+
+# sitemaps = {
+#       'static': StaticSitemap(),
+#     }
 
 app_name = 'cricket_center'
 
@@ -22,5 +29,6 @@ urlpatterns = [
     url(r'team_preview/(?P<team>[\w]+)/(?P<match_slug>[\w]+)', views.PreviewTeam, name='team_preview'),
     url(r'view_payout/(?P<contest_slug>[\w]+)', views.ViewPayout, name='view_payout'),
     url(r'match_his/(?P<match_slug>[\w]+)', views.SingleMatchHistoryView, name='match_his'),
-    url(r'message', views.MessageCreateShow, name='message')
+    url(r'message', views.MessageCreateShow, name='message'),
+    #url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]

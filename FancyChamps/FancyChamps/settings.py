@@ -24,6 +24,8 @@ STATICFILES = os.path.join(BASE_DIR, 'static')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
+SITE_ID = 1
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
@@ -46,6 +48,8 @@ INSTALLED_APPS = [
     'support',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

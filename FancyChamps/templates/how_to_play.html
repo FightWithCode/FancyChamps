@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% load user_agents %}
-{% block title %}How to Play | {{block.super}}{% endblock title %}
+{% block title %}How to Play Fantasy Cricket League | {{block.super}}{% endblock title %}
 {% block stylesheets %}
   {{block.super}}
 {% endblock stylesheets %}
@@ -16,10 +16,11 @@
   <div class="MatchAreaForMatch">
     <div class="MainPageHeader">
         <center>
-          <p sclass="ProfileContent">How to Play</p>
+          <p sclass="ProfileContent">How to Play fantasy cricket leagues</p>
         </center>
     </div>
     <div class="InfoConatinerOfPage">
+        <h4>Here are the simplest steps to Play fantasy cricket and win cash prizes</h4>
         <center>
             <h3>Step 1 : Select a Match</h3>
             <img src="{% static "images/step_1.png" %}" width="90%" class="img-responsive StepImg">
@@ -37,8 +38,7 @@
     <div class="footer">
       <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
         Go to Match Center
-      </button></center></a>  	
+      </button></center></a>
     </div>
   </div>
 {% endblock %}
-      

@@ -21,6 +21,9 @@ from accounts.models import User, Profile
 # def handler404(request):
 #     #return HttpResponseRedirect(reverse('IndexView'))
 #     return render(request, 'error.html',{})
+def SiteMapView(request):
+    return render(request, 'sitemap.xml',{})
+
 
 def handler404(request, *args, **argv):
     print("asfasdas")
