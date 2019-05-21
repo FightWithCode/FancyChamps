@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -12,7 +12,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.utils.crypto import get_random_string
 from support.forms import SupportQuerriesForm
 from django.shortcuts import render_to_response
-from accounts.models import User, Profile
+from accounts.models import User, Profile, TempUser
 
 # class IndexView(TemplateView):
 #     template_name = "index.html"
@@ -136,10 +136,17 @@ def MobileVerifyView(request):
 
 def MobileOTPVerifyView(request):
     print("I for called")
-    mobile = request.POST['verify_this_mobile']
+    print(request.POST)
+    username = request.POST['someuser']
     otp = request.POST['verify_otp']
-    otp_obj = OTPVerification.objects.filter(mobile_no__exact=mobile).order_by('-sent_time').first()
+    temp_user_obj = get_object_or_404(TempUser, username__iexact=username)
+    mobile_no = temp_user_obj.mobile_no
+    print(otp)
+    print(username)
+    print(mobile_no)
+    otp_obj = OTPVerification.objects.filter(mobile_no__exact=mobile_no).order_by('-sent_time').first()
     details = otp_obj.otp_send_detail
+    print(details)
     conn = http.client.HTTPConnection("2factor.in")
     payload = ""
     headers = {'content-type': "application/x-www-form-urlencoded"}
@@ -149,10 +156,23 @@ def MobileOTPVerifyView(request):
     data_of_2f = res.read()
     responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
     print("print it")
+    print(responce_from_2f)
     if responce_from_2f['Status'] == 'Success' and responce_from_2f['Details'] == 'OTP Matched':
         data = {
             'otp_matched_status': True,
         }
+        user = User(username=username)
+        user.set_password(temp_user_obj.password)
+        user.save()
+        profile = Profile(phone_number=mobile_no)
+        profile.user = user
+        profile.save()
+        new_user = authenticate(username=username,
+                        password=temp_user_obj.password,
+                        )
+        print(new_user)
+        login(request, new_user)
+        temp_user_obj.delete()
     else:
         data = {
             'otp_matched_status': False,
@@ -163,32 +183,11 @@ def MobileOTPVerifyView(request):
 def EmailVerifyView(request):
     email = request.POST['verify_it']
     if email.endswith('@gmail.com') and (not User.objects.filter(email__iexact=email).exists()):
-        generated_otp = get_random_string(length=6, allowed_chars='1234567890')
-        try:
-            result = send_mail(
-                'FancyChamps OTP Verification Email.',
-                'Hello! Champ, Welcome to FancyChamps.\nUse this below given Six Digit OTP for your Email Verification \n\n' + str(generated_otp) + '\n\nWe Hope to see you on the Leaderboard Soon.\nThankyou.',
-                '',
-                [email],
-            )
-            print(result)
-            data = {
-                'email_valid': True,
-                'email_send': True,
-            }
-            if result:
-                otp_veri_obj = OTPVerificationEmail(
-                    email=email,
-                    otp_send=generated_otp,
-                )
-            otp_veri_obj.save()
-
-        except BadHeaderError:
-            data = {
-                'email_valid': True,
-                'email_send': False,
-            }
-
+        data = {
+            'email_valid': True,
+            'variable': "12531209",
+            'value_of': 12531209,
+        }
     elif(not email.endswith('@gmail.com')):
         data = {
             'email_valid': False,
@@ -227,15 +226,24 @@ def UserLogoutView(request):
 
 
 def IndexView(request):
+    print("main")
     if request.user.is_authenticated():
         return HttpResponseRedirect('cricket_center')
     else:
+        print("main else")
         registered = False
+        mobile_no = ""
+        username = ""
+        otp_send = False
+        digits_valid = False
         user_form = UserForm(request.POST or None)
         profile_form = ProfileForm(request.POST or None)
         login_form = UserLogInForm(request.POST or None)
+        print(request.method)
         if request.method == 'POST':
+            print("if of post")
             if request.POST.get('submit') == 'Login':
+                print("if of login")
                 login_form = UserLogInForm(data=request.POST)
                 if login_form.is_valid:
                     username = login_form.data.get("username")
@@ -263,17 +271,57 @@ def IndexView(request):
                                 'login_form': login_form,
                                 'login_error': login_error
                               })
-            if request.POST.get('submit') == 'Register':
+            print("no post from center")
+            print(request.POST)
+            if request.POST.get('submit_btn') == 'Continue':
+                print("if of regi")
+                print("Hello World...")
                 user_form = UserForm(data=request.POST)
                 profile_form = ProfileForm(data=request.POST)
                 if user_form.is_valid() and profile_form.is_valid():
-                    user = user_form.save(commit=False)
-                    user.set_password(user.password)
-                    user.save()
-                    profile = profile_form.save(commit=False)
-                    profile.user = user
-                    profile.save()
-                    registered = True
+                    # user = user_form.save(commit=False)
+                    # user.set_password(user.password)
+                    # #user.save()
+                    # profile = profile_form.save(commit=False)
+                    # profile.user = user
+                    # #profile.save()
+                    # print(user_form.cleaned_data)
+                    # print(profile_form.cleaned_data)
+                    print("Success")
+                    temp_user_obj = TempUser(username=user_form.cleaned_data['username'], password=user_form.cleaned_data['password'], mobile_no=profile_form.cleaned_data['phone_number'])
+                    temp_user_obj.save()
+                    mobile_no = profile_form.cleaned_data['phone_number']
+                    conn = http.client.HTTPConnection("2factor.in")
+                    payload = ""
+                    # https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/AUTOGEN/FancyChamps OTP
+                    headers = {'content-type': "application/x-www-form-urlencoded"}
+                    conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS/" + mobile_no + "/AUTOGEN/FancyChamps+OTP", payload, headers)
+                    res = conn.getresponse()
+                    data_of_2f = res.read()
+                    responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
+                    print(responce_from_2f['Status'])
+                    if responce_from_2f['Status'] == 'Success':
+                        otp_veri_obj = OTPVerification(
+                                mobile_no=mobile_no,
+                                otp_send_detail=responce_from_2f['Details'],
+                        )
+                        otp_veri_obj.save()
+                        digits_valid =  True
+                        otp_send =  True
+                        username = user_form.cleaned_data['username']
+                    else:
+                        digits_valid = False
+                    print(digits_valid, otp_send)
+                    #mobile_no = profile_form.cleaned_data['phone_number']
+                    #otp_send=True
+                    #print(user_form.cleaned_data['username'], user_form.cleaned_data['password'])
+                    # new_user = authenticate(username=user_form.cleaned_data['username'],
+                    #                 password=user_form.cleaned_data['password'],
+                    #                 )
+                    # print(new_user)
+                    # login(request, new_user)
+                    #return HttpResponseRedirect('cricket_center')
+                    
                 else:
                     print(user_form.errors, profile_form.errors)
         return render(request, 'index.html',
@@ -281,7 +329,10 @@ def IndexView(request):
                                 'user_form': user_form,
                                 'profile_form': profile_form,
                                 'login_form': login_form,
-                                'registered': registered,
+                                'digits_valid': digits_valid,
+                                'otp_send': otp_send,
+                                'mobile_no':mobile_no,
+                                'username':username
                               })
 
 

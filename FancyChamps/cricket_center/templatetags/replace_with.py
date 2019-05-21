@@ -22,3 +22,10 @@ def get_id_one(value):
 @register.filter
 def get_id_two(value):
     return str(value) + "_2"
+
+
+@register.filter
+def mobile(value):
+	value = str(value)
+	return '******'+value[6:]
+    #return str(value) + "_2"

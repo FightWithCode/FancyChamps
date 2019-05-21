@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load replace_with %}
 {% load widget_tweaks %}
 {% load user_agents %}
 {% block title %}FancyChamps | {{block.super}}{% endblock title %}
@@ -8,14 +9,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" rel="stylesheet">
 {% endblock stylesheets %}
 {% block other_page_content %}
-        <!--<div class="alert alert-danger AlertClass">-->
-        <!--    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
-        <!--    Success! message sent successfully.-->
-        <!--</div>-->
-      <!--<div class="alert alert-danger" role="alert">-->
-      <!--  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-      <!--  <center><strong>Verify Email And Mobile No.</strong></center>-->
-      <!--</div>-->
 {% if request|is_mobile %}
     <div id="first">
       <div class="trans row">
@@ -23,7 +16,6 @@
         {% else %}
         {% endif %}
         <p>&nbsp;</p><p>&nbsp;</p>
-
         <div class="col-md-5">
           <div class="form_wrapper">
             <h4 class="LoginHeading">Login or Signup with FancyChamps</h4>
@@ -64,42 +56,53 @@
               </div>
             </div>
 
-            {% if registered %}
-              <h2>Thank-You for you Time!</h2>
-              <div class="alert alert-success" role="alert">
-                Thank You for creating account. Now please login!
-              </div>
+            <div class="FormContainer">
+            {% if digits_valid and otp_send %}
+              <center>
+                <div class="InfoProvider"></div>
+                <p>An OTP has sent to {{mobile_no|mobile}}. Please enter the OTP and verify it.</p>
+                <div class="input_field"> 
+                  <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                  <input type="text" name="otp" placeholder="Enter 6 digit OTP" class="custom_input" id="otp_value">
+                  <input type="hidden" value="{{username}}" id="someuser">
+                </div>
+                <input type="button" name="verify" value="Verify" class="btn signup_button verify_otp" id="verify_otp" verify-input="/verify_mobile_otp/">
+              </center>      
             {% else %}
-
-              <form method="post">
+              <form method="post" id="SignUpForm" name="SignUpForm" verify-input="{% url 'MobileVerifyView' %}">
                 {% csrf_token %}
                 <!-- ****UserForm**** -->
                 <div class="row">
                   <div class="InfoProvider"></div>
                   <div style="height:10px;"></div>
-                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
-                    {{ user_form.non_field_errors }}
+                  <div class="col-md-12 col-sm-12 inner_form_wrapper username">
+                    <!-- <{{ user_form.non_field_errors }}
                     {{ user_form.source.errors }}
                     {{ user_form.source }}
-
+                    -->
                     {{ user_form.username.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
-                      {% render_field user_form.username class="form-control" %}
+                      {% render_field user_form.username class="form-control" placeholder="No Sapce" %}
                     </div>
                     {{ user_form.username.errors }}
-
                   </div>
 
-                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+                  <div class="col-md-12 col-sm-12 inner_form_wrapper password">
 
                     {{ user_form.password.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
-                      {% render_field user_form.password class="form-control" %}
+                      {% render_field user_form.password class="form-control" placeholder="Enter a password"%}
                     </div>
                     {{ user_form.password.errors }}
-
                   </div>
-
+                  <div class="col-md-12 col-sm-12 inner_form_wrapper phone_number">
+                    {{ profile_form.phone_number.label_tag }}
+                      <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                        {% render_field profile_form.phone_number class="custom_input" placeholder="10 Digit mobile number" %}
+                      </div>
+                    {{ profile_form.phone_number.errors }}
+                  </div>
+                <!--
                   <div class="col-md-12 col-sm-12" class="inner_form_wrapper">
                     {{ user_form.email.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope" style="color:black;"></i></span>
@@ -115,7 +118,6 @@
                     </div>
                     {{ profile_form.phone_number.errors }}
                   </div>
-                  <!-- ****ProfileForm -->
                   <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
 
                     {{ profile_form.date_of_birth.label_tag }}
@@ -135,13 +137,16 @@
                     {% render_field profile_form.state class="form-control" %}
                     {{ profile_form.state.errors }}
 
-                  </div>
+                  </div> -->
                 </div>
-                <div class="ButtonContainer" check="{% url 'CheckEnteredData' %}">
-                  <input class="btn signup_button" type="submit" name="submit" id="signup_button" value="Register" style="margin-bottom:30px">
+                <input type="hidden" name="" value="" id="some_input_id">
+                <div class="ButtonContainer">
+                  <input class="btn signup_button" type="submit" name="submit_sign" id="signup_button" value="Continue" style="margin-bottom:30px">
                 </div>
               </form>
+              
             {% endif %}
+            </div>
           </div>
         </div>
       </div>
@@ -195,43 +200,53 @@
               </div>
             </form>
 
-
-            {% if registered %}
-              <h2>Thank-You for you Time!</h2>
-              <div class="alert alert-success" role="alert">
-                Thank You for creating account. Now please login!
-              </div>
+            <div class="FormContainer">
+            {% if digits_valid and otp_send %}
+              <center>
+                <div class="InfoProvider"></div>
+                <p>An OTP has sent to {{mobile_no|mobile}}. Please enter the OTP and verify it.</p>
+                <div class="input_field"> 
+                  <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                  <input type="text" name="otp" placeholder="Enter 6 digit OTP" class="custom_input" id="otp_value">
+                  <input type="hidden" value="{{username}}" id="someuser">
+                </div>
+                <input type="button" name="verify" value="Verify" class="btn signup_button verify_otp" id="verify_otp" verify-input="/verify_mobile_otp/">
+              </center>      
             {% else %}
-
-              <form method="post">
+              <form method="post" id="SignUpForm" name="SignUpForm" verify-input="{% url 'MobileVerifyView' %}">
                 {% csrf_token %}
                 <!-- ****UserForm**** -->
                 <div class="row">
                   <div class="InfoProvider"></div>
                   <div style="height:10px;"></div>
-                  <div class="col-md-6 col-sm-6 inner_form_wrapper username">
-                    {{ user_form.non_field_errors }}
+                  <div class="col-md-12 col-sm-12 inner_form_wrapper username">
+                    <!-- <{{ user_form.non_field_errors }}
                     {{ user_form.source.errors }}
                     {{ user_form.source }}
-
+                    -->
                     {{ user_form.username.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
-                      {% render_field user_form.username class="form-control" %}
+                      {% render_field user_form.username class="form-control" placeholder="No Sapce" %}
                     </div>
                     {{ user_form.username.errors }}
-
                   </div>
 
-                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
+                  <div class="col-md-12 col-sm-12 inner_form_wrapper password">
 
                     {{ user_form.password.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
-                      {% render_field user_form.password class="form-control" %}
+                      {% render_field user_form.password class="form-control" placeholder="Enter a password"%}
                     </div>
                     {{ user_form.password.errors }}
-
                   </div>
-
+                  <div class="col-md-12 col-sm-12 inner_form_wrapper phone_number">
+                    {{ profile_form.phone_number.label_tag }}
+                      <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                        {% render_field profile_form.phone_number class="custom_input" placeholder="10 Digit mobile number" %}
+                      </div>
+                    {{ profile_form.phone_number.errors }}
+                  </div>
+                <!--
                   <div class="col-md-12 col-sm-12" class="inner_form_wrapper">
                     {{ user_form.email.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope" style="color:black;"></i></span>
@@ -247,7 +262,6 @@
                     </div>
                     {{ profile_form.phone_number.errors }}
                   </div>
-                  <!-- ****ProfileForm -->
                   <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
 
                     {{ profile_form.date_of_birth.label_tag }}
@@ -267,13 +281,16 @@
                     {% render_field profile_form.state class="form-control" %}
                     {{ profile_form.state.errors }}
 
-                  </div>
+                  </div> -->
                 </div>
+                <input type="hidden" name="" value="" id="some_input_id">
                 <div class="ButtonContainer">
-                  <input class="btn signup_button" type="submit" name="submit" id="signup_button" value="Register" style="margin-bottom:30px">
+                  <input class="btn signup_button" type="submit" name="submit_sign" id="signup_button" value="Continue" style="margin-bottom:30px">
                 </div>
               </form>
+              
             {% endif %}
+            </div>
           </div>
         </div>
       </div>

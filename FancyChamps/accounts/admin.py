@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, OTPVerification, OTPVerificationEmail
+from .models import Profile, OTPVerification, OTPVerificationEmail, TempUser
 from django import forms
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
@@ -8,6 +8,7 @@ from .models import User
 
 # Register your models here.
 admin.site.register(Profile)
+admin.site.register(TempUser)
 admin.site.register(OTPVerification)
 admin.site.register(OTPVerificationEmail)
 

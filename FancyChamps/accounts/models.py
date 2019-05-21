@@ -8,6 +8,7 @@ from django.core.validators import RegexValidator
 USERNAME_REGX = '^[a-zA-Z0-9.+-_]*$'
 
 STATES = (
+    ("Add state", "Add state",),
     ("Andaman and Nicobar Islands", "Andaman and Nicobar Islands"),
     ("Andhra Pradesh", "Andhra Pradesh",),
     ("Arunachal Pradesh", "Arunachal Pradesh"),
@@ -41,6 +42,7 @@ STATES = (
     ("Uttar Pradesh", "Uttar Pradesh",),
     ("Uttarakhand", "Uttarakhand",),
     ("West Bengal", "West Bengal",),
+
 )
 
 
@@ -50,8 +52,8 @@ class MyUserManager(BaseUserManager):
         Creates and saves a User with the given email, date of
         birth and password.
         """
-        if not email:
-            raise ValueError('Users must have an email address')
+        # if not email:
+        #     raise ValueError('Users must have an email address')
 
         user = self.model(
             username=username,
@@ -84,6 +86,8 @@ class User(AbstractBaseUser):
         verbose_name='email address',
         max_length=255,
         unique=True,
+        blank=True,
+        null=True,
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -92,10 +96,10 @@ class User(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['']
 
     def __str__(self):
-        return self.email
+        return self.username
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
@@ -118,13 +122,14 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_regex = RegexValidator(regex=r'^\d{10}$', message="Please Enter Correct Mobile Number...")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=False, unique=True)
-    state = models.CharField(max_length=50, choices=STATES)
-    date_of_birth = models.DateTimeField(auto_now=False)
+    state = models.CharField(max_length=50, choices=STATES, blank=True, default=STATES[0][0])
+    #date_of_birth = models.DateTimeField(auto_now=False, blank=True)
     balance = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     bonus = models.DecimalField(max_digits=4, decimal_places=2, default=25)
     widhdrawable_balance = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     match_played = models.IntegerField(default=0)
     total_wins = models.IntegerField(default=0)
+    is_email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -146,6 +151,12 @@ class OTPVerificationEmail(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class TempUser(models.Model):
+    username = models.CharField(max_length=64)
+    password = models.CharField(max_length=64)
+    mobile_no = models.CharField(max_length=10,blank=True)
 
 # # class UsersProfileInfo(models.Model):
 # #     user = models.OneToOneField(User, on_delete=models.CASCADE)

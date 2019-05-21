@@ -15,6 +15,12 @@
   </div>
   <div class="MatchAreaForMatch">
     <div class="MainPageHeader">
+      {% if not is_email_confirmed %}
+        <div class="alert alert-danger alert-dismissible AlertEmail">
+          <button type="button" class="close" data-dismiss="alert"></button>
+          <strong>Please! verify/add your email addess. Check inbox and spam folder for confirmation email.</strong>
+        </div>
+      {% endif %}
         <center>
           <p class="ProfileContent">PROFILE</p>
         </center>
@@ -24,23 +30,29 @@
         <div class="MainImageContainer">
           <i class="fas fa-user-circle" style="font-size:100px;"></i>
         </div>
-        <center><h6 class="UserNameHeader">{{user.email}}</h6></center>
+        <center><h6 class="UserNameHeader">{{user.username}}</h6></center>
       </div>
       <h5 class="InformationHeader">Profile Information</h5>
       <div class="MainConrainerOfInfoContainer">
         <div class="ProfileInformationContainer">
           <h6 class="InfoHeaderContainer"><span class="fa fa-user"></span> USERNAME</h6>
           <h6 class="InfoHeaderContainer"><span class="fa fa-envelope"></span> EMAIL</h6>
-          <h6 class="InfoHeaderContainer"><span class="fa fa-phone"></span> MOBILE NO.</h6> 
-          <h6 class="InfoHeaderContainer"><span class="fa fa-calendar"></span> DOB</h6>
+          <h6 class="InfoHeaderContainer"><span class="fa fa-phone fa-rotate-90"></span> MOBILE NO.</h6> 
           <h6 class="InfoHeaderContainer"><span class="fa fa-globe"></span> STATE</h6>
         </div>  
         <div class="InformationContainer">
           <h6>{{user.username}}</h6>
-          <h6>{{user.email}}</h6> 
+          {% if user.email is None %}
+            <a href={% url 'accounts:add_email' %} class="AddInfoLink"><h6><span class="AddInfo">ADD EMAIL</span></h6></a> 
+          {% else %}
+            <h6>{{user.email}}</h6> 
+          {% endif %}
           <h6>{{user.profile.phone_number}}</h6>
-          <h6>{{user.profile.date_of_birth}}</h6>
-          <h6>{{user.profile.state}}</h6> 
+          {% if user.profile.state == "Add state" %}
+            <h6><span class="AddInfo">ADD STATE</span></h6>
+          {% else %}
+            <h6>{{user.profile_state}}</h6>  
+          {% endif %}
         </div>  
       </div>
       <h5 class="InformationHeader">Stats</h5>

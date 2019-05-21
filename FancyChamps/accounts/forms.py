@@ -7,7 +7,7 @@ class UserForm(forms.ModelForm):
 
     class Meta():
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'password')
 
         error_messages = {
             'username': {
@@ -19,17 +19,32 @@ class UserForm(forms.ModelForm):
         }
 
     def clean_email(self):
+        pass
+        # email = self.cleaned_data.get('email')
+        # username = self.cleaned_data.get('username')
+        # if email == username:
+        #     raise forms.ValidationError("Email and Username can't be same.")
+        # return email
+
+
+class UpdateEmailForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('email',)
+    
+    def clean_email(self):
         email = self.cleaned_data.get('email')
-        username = self.cleaned_data.get('username')
-        if email == username:
-            raise forms.ValidationError("Email and Username can't be same.")
+        print("print email")
+        print(email)
+        # if email.endswith not '@gmail.com':
+        #     raise forms.ValidationError("Enter a valid email ending with @gmail.com.")
         return email
 
 
 class ProfileForm(forms.ModelForm):
     class Meta():
         model = Profile
-        fields = ('phone_number', 'date_of_birth', 'state')
+        fields = ('phone_number',)# 'date_of_birth', 'state'
 
 
 class UserLogInForm(forms.Form):

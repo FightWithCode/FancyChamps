@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserChangeForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Q
 from django.http import JsonResponse
@@ -8,18 +9,92 @@ from cricket_center.models import JoiningTransactionDetail
 from payments.models import TransactionDetail
 from itertools import chain
 from .models import User
-from . forms import AddMoneyForm
+from . forms import AddMoneyForm, UpdateEmailForm
+from .tokens import account_activation_token
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail,BadHeaderError
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 
 
 @login_required(login_url='IndexView')
 def ProfileView(request):
-    user_obj = User.objects.filter(username__exact=request.user.username).first()
-    return render(request, 'accounts/profile.html', context={"user": user_obj})
+    user_obj = User.objects.filter(id=request.user.id).first()
+    is_email_confirmed = user_obj.profile.is_email_confirmed
+    return render(request, 'accounts/profile.html', context={"user": user_obj,'is_email_confirmed':is_email_confirmed})
+
+
+@login_required(login_url='IndexView')
+def AddEmailView(request):
+    user_obj = User.objects.filter(id=request.user.id).first()
+    args = {'user':user_obj}
+    print("HeallYEah")
+    if request.method == 'POST':
+        print("Heall")
+        form = UpdateEmailForm(request.POST, instance=request.user)
+        print(form.errors)
+        if form.is_valid():
+            user = form.save(commit=False)
+            print("is_valid")
+            current_site = get_current_site(request)
+            subject = 'Activate Your FancyChamps Account.'
+            message = render_to_string('account_activation_email.html', {
+                'user': user,
+                'domain': current_site.domain   ,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            try:
+                result = send_mail(
+                    subject,
+                    message,
+                    '',
+                    [user.email]
+                )
+            except BadHeaderError:
+                print("Something")
+            user.save()
+            return redirect('/accounts/profile')
+    else:
+        print("aa")
+        form = UpdateEmailForm(instance=request.user)
+        print(form)
+        args.update({'form':form})
+    return render(request, 'accounts/add_email.html', args)
+
+
+def activate(request, uidb64, token):
+    print("called")
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.profile.is_email_confirmed = True
+        #user.profile.email_confirmed = True
+        print(user.profile.is_email_confirmed)
+        user.save()
+        user.profile.save()
+        return redirect('/accounts/remove')
+    else:
+        return render(request, 'account_activation_email.html')
+
+
+def RemoveStorage(request):
+    variables = {
+        'variable': "12531209"
+    }
+    return render(request, 'accounts/remove_storage.html', variables)
 
 
 @login_required(login_url='IndexView')
 def MyAccountView(request):
-    user_obj = User.objects.filter(username__exact=request.user.username).first()
+    user_obj = User.objects.filter(id=request.user.id).first()
     join_transaction_obj = JoiningTransactionDetail.objects.filter(transact_user__exact=request.user.username)
     transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username)#.order_by("-transaction_time")
     sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj), key=lambda obj: obj.transaction_time, reverse=True)
@@ -57,7 +132,7 @@ def MyAccountView(request):
 #     user_obj = User.objects.filter(username__exact=request.user.username).first()
 #     join_transaction_obj = JoiningTransactionDetail.objects.filter(transact_user__exact=request.user.username)
 #     transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username)#.order_by("-transaction_time")
-#     # print(join_transaction_obj, transaction_obj)
+#     # print(join_transaction_obj, transaction_obj)     
 #     sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj), key=lambda obj: obj.transaction_time, reverse=True)
 #     print(sorted_transaction)
 #     money_added = False
