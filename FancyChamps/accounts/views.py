@@ -132,7 +132,7 @@ def MyAccountView(request):
 #     user_obj = User.objects.filter(username__exact=request.user.username).first()
 #     join_transaction_obj = JoiningTransactionDetail.objects.filter(transact_user__exact=request.user.username)
 #     transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username)#.order_by("-transaction_time")
-#     # print(join_transaction_obj, transaction_obj)     
+#     # print(join_transaction_obj, transaction_obj)
 #     sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj), key=lambda obj: obj.transaction_time, reverse=True)
 #     print(sorted_transaction)
 #     money_added = False

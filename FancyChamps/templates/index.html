@@ -16,9 +16,9 @@
         {% else %}
         {% endif %}
         <p>&nbsp;</p><p>&nbsp;</p>
-        <div class="col-md-5">
+        <div class="container-fluid">
           <div class="form_wrapper">
-            <h4 class="LoginHeading">Login or Signup with FancyChamps</h4>
+            <h4 class="LoginHeading">Login with FancyChamps</h4>
             {% if login_error %}
               <div class="alert alert-danger" role="alert">
                 <center>Please Enter Correct Username and Password!<center>
@@ -31,13 +31,13 @@
               {{ login_form.source }}
               {{ login_form.username.label_tag }}
               <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
-                {% render_field login_form.username class="form-control" %}
+                {% render_field login_form.username class="form-control" placeholder="Username" %}
               </div>
               {{ login_form.username.errors }}
 
               {{ login_form.password.label_tag }}
               <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
-                {% render_field login_form.password class="form-control" %}
+                {% render_field login_form.password class="form-control" placeholder="Password" %}
               </div>
               {{ login_form.password.errors }}
               <div class="ButtonContainer">
@@ -45,29 +45,19 @@
                 <a href="{% url 'password_reset' %}">Forgotten your Password?</a>
               </div>
             </form>
-
-            <div class="col-md-7">
-              <div class="logo">
-                <div class="mainContent">
-                  <center><h2 style="">Start earning Real Cash <span style="color: #ff4f8b;">without any PAN Card or Bank Account details</span></h2>
-                  <h2 style="margin-bottom:40px">Get paid directy in your <span style="color: #ff4f8b;">PayTM</span> account</h2>
-                  <button type="button" class="btn btn-success btn-lg" id="signup">Signup to Get Instant <b>₹25 Bonus</b></button></center>
-                </div>
-              </div>
-            </div>
-
             <div class="FormContainer">
+            <h4 class="LoginHeading">New to FancyChamps? Signup now!</h4>
             {% if digits_valid and otp_send %}
               <center>
                 <div class="InfoProvider"></div>
                 <p>An OTP has sent to {{mobile_no|mobile}}. Please enter the OTP and verify it.</p>
-                <div class="input_field"> 
+                <div class="input_field">
                   <span><i aria-hidden="true" class="fa fa-phone"></i></span>
                   <input type="text" name="otp" placeholder="Enter 6 digit OTP" class="custom_input" id="otp_value">
                   <input type="hidden" value="{{username}}" id="someuser">
                 </div>
                 <input type="button" name="verify" value="Verify" class="btn signup_button verify_otp" id="verify_otp" verify-input="/verify_mobile_otp/">
-              </center>      
+              </center>
             {% else %}
               <form method="post" id="SignUpForm" name="SignUpForm" verify-input="{% url 'MobileVerifyView' %}">
                 {% csrf_token %}
@@ -82,7 +72,7 @@
                     -->
                     {{ user_form.username.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
-                      {% render_field user_form.username class="form-control" placeholder="No Sapce" %}
+                      {% render_field user_form.username class="form-control" placeholder="Enter a unique username" %}
                     </div>
                     {{ user_form.username.errors }}
                   </div>
@@ -91,64 +81,139 @@
 
                     {{ user_form.password.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
-                      {% render_field user_form.password class="form-control" placeholder="Enter a password"%}
+                      {% render_field user_form.password class="form-control" placeholder="Enter a strong password"%}
                     </div>
                     {{ user_form.password.errors }}
                   </div>
                   <div class="col-md-12 col-sm-12 inner_form_wrapper phone_number">
                     {{ profile_form.phone_number.label_tag }}
                       <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
-                        {% render_field profile_form.phone_number class="custom_input" placeholder="10 Digit mobile number" %}
+                        {% render_field profile_form.phone_number class="custom_input" placeholder="10 digit mobile number" %}
                       </div>
                     {{ profile_form.phone_number.errors }}
                   </div>
-                <!--
-                  <div class="col-md-12 col-sm-12" class="inner_form_wrapper">
-                    {{ user_form.email.label_tag }}
-                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope" style="color:black;"></i></span>
-                      {% render_field user_form.email class="form-control" %}
-                      <i aria-hidden="true" class="custom_verify_email" verify-input="{% url 'EmailVerifyView' %}"><span class="custom_verify_text">Verify</span></i>
-                    </div>
-                    {{ user_form.email.errors }}
-
-                    {{ profile_form.phone_number.label_tag }}
-                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
-                      {% render_field profile_form.phone_number class="custom_input" %}
-                      <i aria-hidden="true" class="custom_verify_phone" verify-input="{% url 'MobileVerifyView' %}"><span class="custom_verify_text">Verify</span></i>
-                    </div>
-                    {{ profile_form.phone_number.errors }}
-                  </div>
-                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
-
-                    {{ profile_form.date_of_birth.label_tag }}
-                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-calendar" style="color:black;"></i></span>
-                      {% render_field profile_form.date_of_birth class="form-control" id="DateOfBirth" %}
-                    </div>
-                    {{ profile_form.date_of_birth.errors }}
-
-                  </div>
-
-                  <div class="col-md-6 col-sm-6" class="inner_form_wrapper">
-                    {{ profile_form.non_field_errors }}
-                    {{ profile_form.source.errors }}
-                    {{ profile_form.source }}
-
-                    {{ profile_form.state.label_tag }}
-                    {% render_field profile_form.state class="form-control" %}
-                    {{ profile_form.state.errors }}
-
-                  </div> -->
                 </div>
                 <input type="hidden" name="" value="" id="some_input_id">
                 <div class="ButtonContainer">
                   <input class="btn signup_button" type="submit" name="submit_sign" id="signup_button" value="Continue" style="margin-bottom:30px">
                 </div>
               </form>
-              
+
             {% endif %}
             </div>
+
+            <!--<div class="">-->
+            <!--  <div class="logo">-->
+            <!--    <div class="mainContent">-->
+            <!--      <center><h2 style="">Start earning Real Cash <span style="color: #ff4f8b;">without any PAN Card or Bank Account details</span></h2>-->
+            <!--      <h2 style="margin-bottom:40px">Get paid directy in your <span style="color: #ff4f8b;">PayTM</span> account</h2>-->
+            <!--      <button type="button" class="btn btn-success btn-lg" id="signup">Signup to Get Instant <b>₹25 Bonus</b></button></center>-->
+            <!--    </div>-->
+            <!--  </div>-->
+            <!--</div>-->
+
+            <!--<div class="FormContainer">-->
+            <!--{% if digits_valid and otp_send %}-->
+            <!--  <center>-->
+            <!--    <div class="InfoProvider"></div>-->
+            <!--    <p>An OTP has sent to {{mobile_no|mobile}}. Please enter the OTP and verify it.</p>-->
+            <!--    <div class="input_field">-->
+            <!--      <span><i aria-hidden="true" class="fa fa-phone"></i></span>-->
+            <!--      <input type="text" name="otp" placeholder="Enter 6 digit OTP" class="custom_input" id="otp_value">-->
+            <!--      <input type="hidden" value="{{username}}" id="someuser">-->
+            <!--    </div>-->
+            <!--    <input type="button" name="verify" value="Verify" class="btn signup_button verify_otp" id="verify_otp" verify-input="/verify_mobile_otp/">-->
+            <!--  </center>-->
+            <!--{% else %}-->
+            <!--  <form method="post" id="SignUpForm" name="SignUpForm" verify-input="{% url 'MobileVerifyView' %}">-->
+            <!--    {% csrf_token %}-->
+                <!-- ****UserForm**** -->
+            <!--    <div class="row">-->
+            <!--      <div class="InfoProvider"></div>-->
+            <!--      <div style="height:10px;"></div>-->
+            <!--      <div class="col-md-12 col-sm-12 inner_form_wrapper username">-->
+                    <!-- <{{ user_form.non_field_errors }}
+            <!--        {{ user_form.source.errors }}-->
+            <!--        {{ user_form.source }}-->
+            <!--        -->
+            <!--        {{ user_form.username.label_tag }}-->
+            <!--        <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>-->
+            <!--          {% render_field user_form.username class="form-control" placeholder="No Sapce" %}-->
+            <!--        </div>-->
+            <!--        {{ user_form.username.errors }}-->
+            <!--      </div>-->
+
+            <!--      <div class="col-md-12 col-sm-12 inner_form_wrapper password">-->
+
+            <!--        {{ user_form.password.label_tag }}-->
+            <!--        <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>-->
+            <!--          {% render_field user_form.password class="form-control" placeholder="Enter a password"%}-->
+            <!--        </div>-->
+            <!--        {{ user_form.password.errors }}-->
+            <!--      </div>-->
+            <!--      <div class="col-md-12 col-sm-12 inner_form_wrapper phone_number">-->
+            <!--        {{ profile_form.phone_number.label_tag }}-->
+            <!--          <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>-->
+            <!--            {% render_field profile_form.phone_number class="custom_input" placeholder="10 Digit mobile number" %}-->
+            <!--          </div>-->
+            <!--        {{ profile_form.phone_number.errors }}-->
+            <!--      </div>-->
+                <!--
+            <!--      <div class="col-md-12 col-sm-12" class="inner_form_wrapper">-->
+            <!--        {{ user_form.email.label_tag }}-->
+            <!--        <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope" style="color:black;"></i></span>-->
+            <!--          {% render_field user_form.email class="form-control" %}-->
+            <!--          <i aria-hidden="true" class="custom_verify_email" verify-input="{% url 'EmailVerifyView' %}"><span class="custom_verify_text">Verify</span></i>-->
+            <!--        </div>-->
+            <!--        {{ user_form.email.errors }}-->
+
+            <!--        {{ profile_form.phone_number.label_tag }}-->
+            <!--        <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>-->
+            <!--          {% render_field profile_form.phone_number class="custom_input" %}-->
+            <!--          <i aria-hidden="true" class="custom_verify_phone" verify-input="{% url 'MobileVerifyView' %}"><span class="custom_verify_text">Verify</span></i>-->
+            <!--        </div>-->
+            <!--        {{ profile_form.phone_number.errors }}-->
+            <!--      </div>-->
+            <!--      <div class="col-md-6 col-sm-6" class="inner_form_wrapper">-->
+
+            <!--        {{ profile_form.date_of_birth.label_tag }}-->
+            <!--        <div class="input_field"> <span><i aria-hidden="true" class="fa fa-calendar" style="color:black;"></i></span>-->
+            <!--          {% render_field profile_form.date_of_birth class="form-control" id="DateOfBirth" %}-->
+            <!--        </div>-->
+            <!--        {{ profile_form.date_of_birth.errors }}-->
+
+            <!--      </div>-->
+
+            <!--      <div class="col-md-6 col-sm-6" class="inner_form_wrapper">-->
+            <!--        {{ profile_form.non_field_errors }}-->
+            <!--        {{ profile_form.source.errors }}-->
+            <!--        {{ profile_form.source }}-->
+
+            <!--        {{ profile_form.state.label_tag }}-->
+            <!--        {% render_field profile_form.state class="form-control" %}-->
+            <!--        {{ profile_form.state.errors }}-->
+
+            <!--      </div> -->
+            <!--    </div>-->
+            <!--    <input type="hidden" name="" value="" id="some_input_id">-->
+            <!--    <div class="ButtonContainer">-->
+            <!--      <input class="btn signup_button" type="submit" name="submit_sign" id="signup_button" value="Continue" style="margin-bottom:30px">-->
+            <!--    </div>-->
+            <!--  </form>-->
+
+            <!--{% endif %}-->
+            <!--</div>-->
           </div>
         </div>
+        <!--<div class="container-fluid">-->
+        <!--  <div class="NoneLogo">-->
+        <!--    <div class="mainContent">-->
+        <!--      <center><h2 style="">Start earning Real Cash <span style="color: #ff4f8b;">without any PAN Card or Bank Account details</span></h2>-->
+        <!--      <h2 style="margin-bottom:40px">Get paid directy in your <span style="color: #ff4f8b;">PayTM</span> account</h2>-->
+        <!--      <button type="button" class="btn btn-success btn-lg" id="signup">Signup to Get Instant <b>₹25 Bonus</b></button></center>-->
+        <!--    </div>-->
+        <!--  </div>-->
+        <!--</div>-->
       </div>
     </div>
 {% else %}
@@ -172,7 +237,7 @@
         </div>
         <div class="col-md-5">
           <div class="form_wrapper">
-            <h4 class="LoginHeading">Login or Signup with FancyChamps</h4>
+            <h4 class="LoginHeading">Login with FancyChamps</h4>
             {% if login_error %}
               <div class="alert alert-danger" role="alert">
                 <center>Please Enter Correct Username and Password!<center>
@@ -185,13 +250,13 @@
               {{ login_form.source }}
               {{ login_form.username.label_tag }}
               <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
-                {% render_field login_form.username class="form-control" %}
+                {% render_field login_form.username class="form-control" placeholder="Username" %}
               </div>
               {{ login_form.username.errors }}
 
               {{ login_form.password.label_tag }}
               <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key" style="color:black;"></i></span>
-                {% render_field login_form.password class="form-control" %}
+                {% render_field login_form.password class="form-control" placeholder="Password" %}
               </div>
               {{ login_form.password.errors }}
               <div class="ButtonContainer">
@@ -201,17 +266,18 @@
             </form>
 
             <div class="FormContainer">
+            <h4 class="LoginHeading">New to FancyChamps? Signup now!</h4>
             {% if digits_valid and otp_send %}
               <center>
                 <div class="InfoProvider"></div>
                 <p>An OTP has sent to {{mobile_no|mobile}}. Please enter the OTP and verify it.</p>
-                <div class="input_field"> 
+                <div class="input_field">
                   <span><i aria-hidden="true" class="fa fa-phone"></i></span>
                   <input type="text" name="otp" placeholder="Enter 6 digit OTP" class="custom_input" id="otp_value">
                   <input type="hidden" value="{{username}}" id="someuser">
                 </div>
                 <input type="button" name="verify" value="Verify" class="btn signup_button verify_otp" id="verify_otp" verify-input="/verify_mobile_otp/">
-              </center>      
+              </center>
             {% else %}
               <form method="post" id="SignUpForm" name="SignUpForm" verify-input="{% url 'MobileVerifyView' %}">
                 {% csrf_token %}
@@ -226,7 +292,7 @@
                     -->
                     {{ user_form.username.label_tag }}
                     <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user" style="color:black;"></i></span>
-                      {% render_field user_form.username class="form-control" placeholder="No Sapce" %}
+                      {% render_field user_form.username class="form-control" placeholder="Enter a unique Username" %}
                     </div>
                     {{ user_form.username.errors }}
                   </div>
@@ -288,7 +354,7 @@
                   <input class="btn signup_button" type="submit" name="submit_sign" id="signup_button" value="Continue" style="margin-bottom:30px">
                 </div>
               </form>
-              
+
             {% endif %}
             </div>
           </div>
@@ -296,6 +362,82 @@
       </div>
     </div>
 {% endif %}
+<div id="third">
+  <div class="trans row">
+
+    {% if request|is_mobile %}
+      <div class="col-sm-6 col-xs-12 MobileFeatureClass"><br>
+        <div class="">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> NO NEED OF PAN CARD<h3>
+          <p>There is no need of Pan Card to widhdraw your Winnings</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xs-12 MobileFeatureClass"><br>
+        <div class="">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> VATRIETIES OF LEAGUES<h3>
+          <p>Join all new and Variety of leagues with high rewards</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xs-12 MobileFeatureClass"><br>
+        <div class="">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> FAST CASH WIDHDRAWAL<h3>
+          <p>Get the fastest possible cash widhdraw of you winnings.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xs-12 MobileFeatureClass"><br>
+        <div class="">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> 24x7 SUPPORT<h3>
+          <p>We are here to hear you at anytime. Just mail us or fill the form we will be in touch to you ASAP!</p>
+        </div>
+      </div>
+    {% else %}
+      <div class="col-sm-4" style=":100vh;"><br>
+        <div class="col-sm-12 featuresConatiner" data-aos="fade-up-left">
+          <div class="">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>Signup Bonus<h3>
+          </div>
+        </div>
+        <div class="col-sm-12 featuresConatiner" data-aos="fade-left">
+          <div class="">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>Variety of Leages<h3>
+          </div>
+        </div>
+        <div class="col-sm-12 featuresConatiner" data-aos="fade-down-left">
+          <div class="">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>Win Real Cash Prizes<h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <img src="{% static "images/OriginalLogo.png" %}" alt="Sorry!" class="featuresLogo" data-aos="zoom-in">
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 featuresConatiner" data-aos="fade-up-right">
+          <div class="">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>24x7 Support<h3>
+          </div>
+        </div>
+        <div class="col-sm-12 featuresConatiner" data-aos="fade-right">
+          <div class="">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>High Rewards<h3>
+          </div>
+        </div>
+        <div class="col-sm-12 featuresConatiner" data-aos="fade-down-right">
+          <div class="">
+            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
+            <h3>No Need of PAN Card Details<h3>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
 <div id="second">
   <div class="transnew row">
     <p>&nbsp;</p><p>&nbsp;</p>
@@ -329,82 +471,7 @@
     </div>
   </div>
 </div>
-<div id="third">
-  <div class="trans row">
 
-    {% if request|is_mobile %}
-
-      <div class="col-sm-6 col-xs-12"><br>
-        <div class="" style="margin-top:10%;">
-          <h3><i class="fa fa-certificate" aria-hidden="true"></i> NO NEED OF PAN CARD<h3>
-          <p>There is no need of Pan Card to widhdraw your Winnings</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-xs-12"><br>
-        <div class="" style="margin-top:10%;">
-          <h3><i class="fa fa-certificate" aria-hidden="true"></i> VATRIETIES OF LEAGUES<h3>
-          <p>Join all new and Variety of leagues with high rewards</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-xs-12"><br>
-        <div class="" style="margin-top:10%;">
-          <h3><i class="fa fa-certificate" aria-hidden="true"></i> FAST CASH WIDHDRAWAL<h3>
-          <p>Get the fastest possible cash widhdraw of you winnings.</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-xs-12"><br>
-        <div class="" style="margin-top:10%;">
-          <h3><i class="fa fa-certificate" aria-hidden="true"></i> 24x7 SUPPORT<h3>
-          <p>We are here to hear you at anytime. Just mail us or fill the form we will be in touch to you ASAP!</p>
-        </div>
-      </div>
-    {% else %}
-      <div class="col-sm-4" style=":100vh;"><br>
-        <div class="col-sm-12" data-aos="fade-up-left" class="featuresConatiner">
-          <div class="" style="margin-top:20%;margin-left:30%;">
-            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
-            <h3>Signup Bonus<h3>
-          </div>
-        </div>
-        <div class="col-sm-12" data-aos="fade-left" class="featuresConatiner">
-          <div class="" style=";margin-top:20%;">
-            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
-            <h3>Variety of Leages<h3>
-          </div>
-        </div>
-        <div class="col-sm-12" data-aos="fade-down-left" class="featuresConatiner">
-          <div class="" style="margin-top:20%;margin-left:30%;">
-            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
-            <h3>Win Real Cash Prizes<h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <img src="{% static "images/OriginalLogo.png" %}" alt="Sorry!" class="featuresLogo" data-aos="zoom-in">
-      </div>
-      <div class="col-sm-4">
-        <div class="col-sm-12" data-aos="fade-up-right" class="featuresConatiner">
-          <div class="" style="margin-top:25%;margin-right:30%;">
-            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
-            <h3>24x7 Support<h3>
-          </div>
-        </div>
-        <div class="col-sm-12" data-aos="fade-right" class="featuresConatiner">
-          <div class="" style="margin-top:20%;">
-            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
-            <h3>High Rewards<h3>
-          </div>
-        </div>
-        <div class="col-sm-12" data-aos="fade-down-right" class="featuresConatiner">
-          <div class="" style="margin-top:20%;margin-right:30%;">
-            <i class="fa fa-certificate fa-3x" aria-hidden="true"></i>
-            <h3>No Need of PAN Card Details<h3>
-          </div>
-        </div>
-      </div>
-    {% endif %}
-  </div>
-</div>
 <div id="fourth">
   <div class="trans row">
     <p>&nbsp;</p><p>&nbsp;</p>

@@ -93,30 +93,30 @@ def Legality(request):
 def MobileVerifyView(request):
     mobile_no = request.POST['verify_it']
     if len(mobile_no) == 10 and (not Profile.objects.filter(phone_number__iexact=mobile_no).exists()):
-        conn = http.client.HTTPConnection("2factor.in")
-        payload = ""
-        # https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/AUTOGEN/FancyChamps OTP
-        headers = {'content-type': "application/x-www-form-urlencoded"}
-        conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS/" + mobile_no + "/AUTOGEN/FancyChamps+OTP", payload, headers)
-        res = conn.getresponse()
-        data_of_2f = res.read()
-        responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
-        print(responce_from_2f['Status'])
-        if responce_from_2f['Status'] == 'Success':
-            otp_veri_obj = OTPVerification(
-                    mobile_no=mobile_no,
-                    otp_send_detail=responce_from_2f['Details'],
-            )
-            otp_veri_obj.save()
-            data = {
-                'digits_valid': True,
-                'mobile_no': mobile_no,
-                'otp_send': True,
-            }
-        else:
-            data = {
-                'digits_valid': False,
-            }
+        # conn = http.client.HTTPConnection("2factor.in")
+        # payload = ""
+        # # https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/AUTOGEN/FancyChamps OTP
+        # headers = {'content-type': "application/x-www-form-urlencoded"}
+        # conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS/" + mobile_no + "/AUTOGEN/FancyChamps+OTP", payload, headers)
+        # res = conn.getresponse()
+        # data_of_2f = res.read()
+        # responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
+        # print(responce_from_2f['Status'])
+        # if responce_from_2f['Status'] == 'Success':
+        #     otp_veri_obj = OTPVerification(
+        #             mobile_no=mobile_no,
+        #             otp_send_detail=responce_from_2f['Details'],
+        #     )
+        #     otp_veri_obj.save()
+        data = {
+            'digits_valid': True,
+            'mobile_no': mobile_no,
+            'otp_send': True,
+        }
+        # else:
+        #     data = {
+        #         'digits_valid': False,
+        #     }
     # else:
     #     data = {
     #         'digits_valid': False,
@@ -139,7 +139,7 @@ def MobileOTPVerifyView(request):
     print(request.POST)
     username = request.POST['someuser']
     otp = request.POST['verify_otp']
-    temp_user_obj = get_object_or_404(TempUser, username__iexact=username)
+    temp_user_obj = TempUser.objects.filter(username__iexact=username).latest("pk")
     mobile_no = temp_user_obj.mobile_no
     print(otp)
     print(username)
@@ -289,7 +289,6 @@ def IndexView(request):
                     # print(profile_form.cleaned_data)
                     print("Success")
                     temp_user_obj = TempUser(username=user_form.cleaned_data['username'], password=user_form.cleaned_data['password'], mobile_no=profile_form.cleaned_data['phone_number'])
-                    temp_user_obj.save()
                     mobile_no = profile_form.cleaned_data['phone_number']
                     conn = http.client.HTTPConnection("2factor.in")
                     payload = ""
@@ -306,6 +305,7 @@ def IndexView(request):
                                 otp_send_detail=responce_from_2f['Details'],
                         )
                         otp_veri_obj.save()
+                        temp_user_obj.save()
                         digits_valid =  True
                         otp_send =  True
                         username = user_form.cleaned_data['username']
@@ -321,7 +321,7 @@ def IndexView(request):
                     # print(new_user)
                     # login(request, new_user)
                     #return HttpResponseRedirect('cricket_center')
-                    
+
                 else:
                     print(user_form.errors, profile_form.errors)
         return render(request, 'index.html',

@@ -21,7 +21,7 @@
       var verify_this_mobile = ""; // default values
       if ( typeof( new_values ) == 'object' ) {
           verify_this_mobile = new_values;
-      } 
+      }
       else{
           return verify_this_mobile;
       }
@@ -43,15 +43,15 @@
         dataType: 'json',
         success: function (data) {
             console.log(data)
-       			if(data.is_taken){
-       			    console.log("if")
+       		if(data.is_taken){
+       		    console.log("if")
                 unique_user = data.is_taken
                 console.log(unique_user)
                 console.log($('.InfoProvider'))
                 // $('.InfoProvider').style("display","block")
                 $('.InfoProvider').html("<center>Username is Taken Already!</center>")
                 $('.InfoProvider').fadeIn();
-                $('.InfoProvider').delay(3000).fadeOut();      
+                $('.InfoProvider').delay(3000).fadeOut();
             }
             else{
               console.log(phone_number.length)
@@ -104,7 +104,7 @@
               else{
                 $('.InfoProvider').html("<center>Enter an valid Mobile no!</center>")
                 $('.InfoProvider').fadeIn();
-                $('.InfoProvider').delay(3000).fadeOut();                  
+                $('.InfoProvider').delay(3000).fadeOut();
               }
             }
         }

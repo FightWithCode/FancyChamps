@@ -22,24 +22,23 @@
         <a href="{% url 'cricket_center:match' match_slug=match.match_slug %}">
           <div class="MatchInfoCard">
             <div class="MatchInfo">
-              {% with "images/"|add:match.team_one_image as image_static %}
-                <img src="{% static image_static %}" alt="KentLogo" class="TeamFirst" class="img-responsive"/>
-              {% endwith %}
-              {% with "images/"|add:match.team_two_image as image_static %}
-                <img src="{% static image_static %}" alt="KentLogo" class="TeamSecond" class="img-responsive"/>
-              {% endwith %}
-              <h1 class="vs">VS</h1>
-              <div class="MatchBetween">
-                <h4 class="MatchHeader">{{match.match_name}}</h4>
-                <h6 class="MatchTournament">{{match.tournament_name}}</h6>
-              </div>
+                <div class="TeamFirst">
+                    {% with "images/"|add:match.team_one_image as image_static %}
+                      <img src="{% static image_static %}" alt="KentLogo" class="img-responsive TeamFirst"/><span style="position:absolute;top:46%;transform: translateY(-50%);font-size:18px;">{{match.team_one}}</span>
+                    {% endwith %}
+                </div>
+                <div class="TeamSecond">
+                    {% with "images/"|add:match.team_two_image as image_static %}
+                      <span style="position:absolute;right:65px;top:17px;font-size:18px;">{{match.team_two}}</span><img src="{% static image_static %}" alt="KentLogo" class="img-responsive TeamSecond"/>
+                    {% endwith %}
+                </div>
+                <div class="MatchBetween">
+                    <!--<h4 class="MatchHeader">{{match.match_name}}</h4>-->
+                    <h6 class="MatchTournament">{{match.tournament_name}}</h6>
+                </div>
             </div>
             <div class="ActionInfo">
-              <center><button type="button" class="btn StartsIn" time-counter="{{match.match_tick}}"></b></button></center>
-              <!--<div class="SeparatorLine"></div>
-              {% with match.match_slug as match_slug %}
-                <a href="{% url 'cricket_center:match' match_slug=match.match_slug %}"><button type="button" class="btn btn-success btn-lg PlayNow">Play Now</b></button>
-              {% endwith %}-->
+              <center><h1 class="vs">VS</h1><span class="StartsIn" time-counter="{{match.match_tick}}"></span></center>
             </div>
           </div>
         </a>
@@ -50,54 +49,81 @@
           <center><h1>OPPS! There is no Ongoing Match currently</h1></center>
         {% else %}
           {% for match in live_match_obj %}
-            <div class="MatchInfoCard">
-              <div class="MatchInfo">
-                {% with "images/"|add:match.team_one_image as image_static %}
-                  <img src="{% static image_static %}" alt="KentLogo" class="TeamFirst" class="img-responsive"/>
-                {% endwith %}
-                {% with "images/"|add:match.team_two_image as image_static %}
-                  <img src="{% static image_static %}" alt="KentLogo" class="TeamSecond" class="img-responsive"/>
-                {% endwith %}
-                <h1 class="vs">VS</h1>
-                <div class="MatchBetween">
-                  <h4 class="MatchHeader">{{match.match_name}}</h4>
-                  <h6 class="MatchTournament">{{match.tournament_name}}</h6>
+            <a href="{% url 'cricket_center:match_live' match_slug=match.match_slug %}">
+              <div class="MatchInfoCard">
+                <div class="MatchInfo">
+                    <div class="TeamFirst">
+                        {% with "images/"|add:match.team_one_image as image_static %}
+                          <img src="{% static image_static %}" alt="KentLogo" class="img-responsive TeamFirst"/><span style="position:absolute;top:46%;transform: translateY(-50%);font-size:18px;">{{match.team_one}}</span>
+                        {% endwith %}
+                    </div>
+                    <div class="TeamSecond">
+                        {% with "images/"|add:match.team_two_image as image_static %}
+                          <span style="position:absolute;right:65px;top:17px;font-size:18px;">{{match.team_two}}</span><img src="{% static image_static %}" alt="KentLogo" class="img-responsive TeamSecond"/>
+                        {% endwith %}
+                    </div>
+                    <div class="MatchBetween">
+                        <!--<h4 class="MatchHeader">{{match.match_name}}</h4>-->
+                        <h6 class="MatchTournament">{{match.tournament_name}}</h6>
+                    </div>
+                </div>
+                <div class="ActionInfo">
+                  <center><h1 class="vs">VS</h1><span class="JoinedLeagues">Joined Leagues</span></center>
                 </div>
               </div>
-              <a href="{% url 'cricket_center:match_live' match_slug=match.match_slug %}">
-                <div class="ActionInfo">
-                  <button type="button" class="btn StartsIn">Joined Leagues</b></button>
-                </div>
-              </a>
-            </div>
+            </a>
+
+            <!--<div class="MatchInfoCard">-->
+            <!--  <div class="MatchInfo">-->
+            <!--    {% with "images/"|add:match.team_one_image as image_static %}-->
+            <!--      <img src="{% static image_static %}" alt="KentLogo" class="TeamFirst" class="img-responsive"/>-->
+            <!--    {% endwith %}-->
+            <!--    {% with "images/"|add:match.team_two_image as image_static %}-->
+            <!--      <img src="{% static image_static %}" alt="KentLogo" class="TeamSecond" class="img-responsive"/>-->
+            <!--    {% endwith %}-->
+                <!--<h1 class="vs">VS</h1>-->
+            <!--    <div class="MatchBetween">-->
+            <!--      <h4 class="MatchHeader">{{match.match_name}}</h4>-->
+            <!--      <h6 class="MatchTournament">{{match.tournament_name}}</h6>-->
+            <!--    </div>-->
+            <!--  </div>-->
+            <!--  <a href="{% url 'cricket_center:match_live' match_slug=match.match_slug %}">-->
+            <!--    <div class="ActionInfo">-->
+            <!--      <button type="button" class="btn StartsIn">Joined Leagues</b></button>-->
+            <!--    </div>-->
+            <!--  </a>-->
+            <!--</div>-->
           {% endfor %}
         {% endif %}
       </div>
       <div id="Completed" class="tabcontent">
         {% if history_match_obj.count == 0 %}
-          <center><h1>OPPS! There is no match to show Here!</h1></center>
+          <center><h1>Opps! There is no match to show Here!</h1></center>
         {% else %}
           {% for match in history_match_obj %}
-            <div class="MatchInfoCard">
-              <div class="MatchInfo">
-                {% with "images/"|add:match.team_one_image as image_static %}
-                  <img src="{% static image_static %}" alt="KentLogo" class="TeamFirst" class="img-responsive"/>
-                {% endwith %}
-                {% with "images/"|add:match.team_two_image as image_static %}
-                  <img src="{% static image_static %}" alt="KentLogo" class="TeamSecond" class="img-responsive"/>
-                {% endwith %}
-                <h1 class="vs">VS</h1>
-                <div class="MatchBetween">
-                  <h4 class="MatchHeader">{{match.match_name}}</h4>
-                  <h6 class="MatchTournament">{{match.tournament_name}}</h6>
+            <a href="{% url 'cricket_center:match_his' match_slug=match.match_slug %}">
+              <div class="MatchInfoCard">
+                <div class="MatchInfo">
+                    <div class="TeamFirst">
+                        {% with "images/"|add:match.team_one_image as image_static %}
+                          <img src="{% static image_static %}" alt="KentLogo" class="img-responsive TeamFirst"/><span style="position:absolute;top:46%;transform: translateY(-50%);font-size:18px;">{{match.team_one}}</span>
+                        {% endwith %}
+                    </div>
+                    <div class="TeamSecond">
+                        {% with "images/"|add:match.team_two_image as image_static %}
+                          <span style="position:absolute;right:65px;top:17px;font-size:18px;">{{match.team_two}}</span><img src="{% static image_static %}" alt="KentLogo" class="img-responsive TeamSecond"/>
+                        {% endwith %}
+                    </div>
+                    <div class="MatchBetween">
+                        <!--<h4 class="MatchHeader">{{match.match_name}}</h4>-->
+                        <h6 class="MatchTournament">{{match.tournament_name}}</h6>
+                    </div>
+                </div>
+                <div class="ActionInfo">
+                  <center><h1 class="vs">VS</h1><span class="JoinedLeagues">Joined Leagues</span></center>
                 </div>
               </div>
-              <a href="{% url 'cricket_center:match_his' match_slug=match.match_slug %}">
-                <div class="ActionInfo">
-                  <button type="button" class="btn StartsIn">Joined Leagues</b></button>
-                </div>
-              </a>
-            </div>
+            </a>
           {% endfor %}
         {% endif %}
       </div>

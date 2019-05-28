@@ -1,4 +1,27 @@
 /*Button Class*/
+.AddEmailButton{
+  position:relative;
+  width:100%;
+  height: 30px;
+  padding:3px;
+  margin-bottom: 5%;
+}
+
+.AddEmailInfoProvider{
+  position: relative;
+  width: 100%;
+  z-index: 1000000;
+  color:#C21807;
+}
+
+.AlertEmail{
+    position: relative;
+    font-size: 15px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    z-index: 100;
+}
+
 .SeeMoreButton{
   background:#323641;
   color:#F4F4F4;
@@ -611,9 +634,12 @@ body
 
 .MatchInfo{
   position: relative;
-  height:60%;
-  width:90%;
-  left:5%;
+  height:100%;
+  /*width:96%;*/
+  width: -moz-calc(100% - 17px);
+  width: -webkit-calc(100% - 17px);
+  width: calc(100% - 17px);
+  left:8px;
   top: 5px;
   color:#F3F4F4;
 }
@@ -622,9 +648,12 @@ body
   position: relative;
   height:40%;
   width:90%;
-  top: -10px;
+  top: -50px;
   left: 5%;
-  top: -5px;
+}
+
+.ActionInfo button{
+    background-color:#323641;
 }
 
 .MatchHeader{
@@ -632,15 +661,18 @@ body
 }
 
 .StartsIn{
-  background-color: #323641;
-  border: 1px solid #F3F4F4  !important;
   font-size: 15px;
-  padding: 6px 12px;
+  position:relative;
   color:#F3F4F4;
-  position: absolute;
-  height: 35px;
-  left:50%;
-  transform: translateX(-50%);
+  top:-44px;
+  /*transform: translateY(-50%);*/
+}
+
+.JoinedLeagues{
+    font-size: 15px;
+    position:relative;
+    color:#F3F4F4;
+    top:-44px;
 }
 
 .SeparatorLine{
@@ -684,50 +716,45 @@ body
 }
 
 .TeamFirst{
-  width: 70px;
-  height: 95%;
+  width: 65px;
   position: relative;
-  top: 5%;
-  left: 0px;
-  border-radius: 50%;
+  top: 20%  !important;
+  left: 3px;
 }
 
 .TeamSecond{
-  width: 70px;
-  height: 95%;
+  width: 65px;
   position: absolute;
-  right: -1px;
-  top: 5%;
-  border-radius: 50%;
+  right: 2px;
+  top: 20%;
 }
 
 .vs{
-  opacity: 0.1;
+  opacity: 0.7;
   font-size: 50px;
   color: #6A6A6A;
   text-align: center;
-  position: relative;
-  top: 0%%;
-  transform: translateY(-110%);
+  transform: translateY(-43%);
 }
 
 .MatchBetween, .MatchBetweenLive{
   width: 100%;
 }
 
-.MatchBetween h4{
-  position: absolute;
-  left: 50%;
-  top:5%;
-  transform: translateX(-50%);
+.MatchBetween h6{
+    position:absolute;
+    top:5%;
+    font-size:12px;
 }
 
-.MatchBetween h6{
-  position: absolute;
-  left: 50%;
-  top:35%;
-  transform: translateX(-50%);
+.MatchBetween h4{
+    position:absolute;
+    top:27%;
+    left:50%;
+    transform: translateX(-50%);
+    font-size:18px;
 }
+
 
 .MatchBetweenLive h4{
   position: absolute;
@@ -753,6 +780,14 @@ body
 
 .LeagueArea{
   width:100%;
+}
+
+a{
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration:none;
 }
 
 .LeagueCard{
@@ -1227,6 +1262,19 @@ input[type=radio]:checked + label {
   padding-top:-5px;
 }
 
+.AddInfo{
+  position: relative;
+  background-color:#F3F4F4;
+  color:#323641;
+  padding-left:5px;
+  padding-right:5px;
+  border-right: 1px solid #323641;
+}
+
+.AddInfoLink:hover{
+  text-decoration: none;
+}
+
 .Widhdraw{
   position:absolute;
   right:0%  !important;
@@ -1637,6 +1685,11 @@ input[type=radio]:checked + label {
     transform: translateY(-50%);
   }
 
+  /*.TeamFirst{*/
+  /*    position: absolute;*/
+  /*    top: 20%  !important;*/
+  /*}*/
+
   .ErrorClass{
       width:100%;
   }
@@ -1670,12 +1723,11 @@ input[type=radio]:checked + label {
     font-size: 12px;
   }
 
-  .StartsIn{
-    font-size: 13px;
-    padding: 2px 6px;
-    position: absolute;
-    height: 25px;
-  }
+  /*.StartsIn{*/
+  /*  font-size: 13px;*/
+  /*  position: absolute;*/
+  /*  height: 25px;*/
+  /*}*/
 
   .RankInfoCard{
      padding-top: 2px;
@@ -1848,15 +1900,10 @@ input[type=radio]:checked + label {
     font-size: 15px;
   }
   .MatchBetween h6{
-    font-size: 12px;
+    font-size: 10px;
   }
   .MatchArea h3{
     font-size: 20px;
-  }
-  .MatchInfoCard{
-    position: relative;
-    top:2px;
-    height: 75px;
   }
   .LeagueCard h4{
     font-size: 14px;
@@ -1918,6 +1965,11 @@ input[type=radio]:checked + label {
     top: -10px  !important;
     left: 10px;
   }
+
+  /*.TeamFirst{*/
+  /*    position: absolute;*/
+  /*    top: 20%  !important;*/
+  /*}*/
 
   .ErrorClass{
       width:100%;
@@ -2079,15 +2131,10 @@ input[type=radio]:checked + label {
     font-size: 15px;
   }
   .MatchBetween h6{
-    font-size: 12px;
+    font-size: 10px;
   }
   .MatchArea h3{
     font-size: 20px;
-  }
-  .MatchInfoCard{
-    position: relative;
-    top:2px;
-    height: 75px;
   }
   .LeagueCard h4{
     font-size: 14px;
@@ -2465,3 +2512,6 @@ input[type=radio]:checked + label {
     #loader span:nth-child(4) {
       bottom: 0;
       right: 0; }
+
+
+

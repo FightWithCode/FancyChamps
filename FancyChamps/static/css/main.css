@@ -26,6 +26,18 @@ a:link, a:visited {
     width:280px;
 }
 
+.featuresConatiner{
+    margin-top:20%;
+}
+
+.MobileFeatureClass{
+    color:#ff4f8b;
+}
+
+.MobileFeatureClass p{
+    color:#fff  !important;
+}
+
 a:link:active, a:visited:active{
     color: #fff;
 }
@@ -150,6 +162,22 @@ ul, li {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.NonLogoDiv{
+  margin-left:-10px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  height:65%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.FeatureClass{
+
+    margin-top:10%  !important;
+    color:red  !important;
 }
 
 .featuresLogo{
