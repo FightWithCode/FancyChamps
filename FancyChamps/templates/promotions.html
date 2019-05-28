@@ -1,0 +1,51 @@
+{% extends "cricket_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Offers & Promotions | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">Promotions and Offers</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+        <img src="{% static 'images/OriginalLogo.png' %}" style="position:relative;width:50%;left:25%;">
+        <center><b><h3 style="color:#F4F4F4;position:relative;top:10px;font-family: 'Lobster', cursive;
+    ">DEPOSIT &nbsp;&nbsp;OFFERS</h3></b></center>
+        <div class="row">
+          <div class="col-sm-6" style="position:relative;margin-top:20px;">
+            <img src="{% static 'images/extra20.png' %}" style="position:relative;width:80%;left:10%">
+          </div>
+          <div class="col-sm-6" style="position:relative;margin-top:20px;">
+            <img src="{% static 'images/2.png' %}" style="position:relative;width:80%;left:10%">
+          </div>
+          <div class="col-sm-6" style="position:relative;margin-top:20px;">
+            <img src="{% static 'images/3.png' %}" style="position:relative;width:80%;left:10%">
+          </div>
+          <div class="col-sm-6" style="position:relative;margin-top:20px;">
+            <img src="{% static 'images/extra100.png' %}" style="position:relative;width:80%;left:10%">
+          </div>
+        </div>
+        <p>&nbsp;</p>
+    </div>
+
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>
+
+
+    </div>
+  </div>
+{% endblock %}

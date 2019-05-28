@@ -52,6 +52,10 @@ def PrivacyPolicy(request):
     return render(request, 'privacy.html',{})
 
 
+def PromotionsView(request):
+    return render(request, 'promotions.html',{})
+
+
 def HowToPlay(request):
     return render(request, 'how_to_play.html',{})
 

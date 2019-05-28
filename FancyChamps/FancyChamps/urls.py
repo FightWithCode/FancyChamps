@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'how_to_play', views.HowToPlay, name='how_to_play'),
     url(r'points_system', views.PointSystem, name='points_system'),
     url(r'faqs', views.Faqs, name='faqs'),
+    url(r'promotions', views.PromotionsView, name='promotions'),
     url(r'contact_us/(?P<submitted>[0-1]+)', views.ContastUs, name='contact_us'),
     # url(r'^accounts/password_reset/$', auth_views.password_reset, {'template_name': 'registration/password_reset.html'}),
     url(r'^accounts/', include('django.contrib.auth.urls')),
