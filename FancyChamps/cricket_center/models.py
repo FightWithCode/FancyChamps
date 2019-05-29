@@ -23,7 +23,7 @@ class MatchDetail(models.Model):
         print(self.match_date)
         print(self.match_date.timestamp())
         self.match_tick = self.match_date.timestamp()
-        if self.match_slug == "Test":
+        if self.match_slug == "Test" or "":
             self.match_slug = MatchSlugGenerator(self.match_name, self.team_one, self.team_two, self.match_date)
         super(MatchDetail, self).save(*args, **kwargs)
 
@@ -75,7 +75,7 @@ class ContestDetail(models.Model):
         joined = JoiningDetail.objects.filter(joined_contest_slug__exact=self.contest_slug)
         self.total_player_joined = joined.count()
         self.joined_percentage = (self.total_player_joined * 100) / self.contest_size
-        if self.contest_slug == "Test":
+        if self.contest_slug == "Test" or "":
             self.contest_slug = ContestSlugGenerator(self.contest_name, self.contest_category, self.contest_prize, self.contest_fee)
         if self.contest_size == self.total_player_joined:
             self.filled_status = True
@@ -154,6 +154,60 @@ class INDNZTeam(models.Model):
         self.save()
 
 
+class NZSLTeam(models.Model):
+    Keeper = models.CharField(max_length=255, default="")
+    Player2 = models.CharField(max_length=255, default="")
+    Player3 = models.CharField(max_length=255, default="")
+    Player4 = models.CharField(max_length=255, default="")
+    Player5 = models.CharField(max_length=255, default="")
+    Player6 = models.CharField(max_length=255, default="")
+    Player7 = models.CharField(max_length=255, default="")
+    Player8 = models.CharField(max_length=255, default="")
+    Player9 = models.CharField(max_length=255, default="")
+    Player10 = models.CharField(max_length=255, default="")
+    Player11 = models.CharField(max_length=255, default="")
+    Captain = models.CharField(max_length=255, default=" ")
+    Vice_Captain = models.CharField(max_length=255, default=" ")
+
+    Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+
+    total_batsmen = models.IntegerField(default=4)
+    total_allrounders = models.IntegerField(default=3)
+    total_bowlers = models.IntegerField(default=3)
+    team_no = models.IntegerField(default=1)
+    username_of_player = models.CharField(max_length=64)
+    # total_credits_used = models.IntegerField(default=100)
+    total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    match_slug = models.CharField(max_length=100)
+    full_team_name = models.CharField(max_length=255, default="Something")
+
+    def save(self, *args, **kwargs):
+        self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
+        super(NZSLTeam, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def __unicode__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def update_total_team_points(self, user, team_no, match_slug):
+        self.total_team_points = 100
+        self.save()
+
+
 class ENGAFGTeam(models.Model):
     Keeper = models.CharField(max_length=255, default="")
     Player2 = models.CharField(max_length=255, default="")
@@ -208,400 +262,112 @@ class ENGAFGTeam(models.Model):
         self.save()
 
 
+class WIWIREWTeam(models.Model):
+    Keeper = models.CharField(max_length=255, default="")
+    Player2 = models.CharField(max_length=255, default="")
+    Player3 = models.CharField(max_length=255, default="")
+    Player4 = models.CharField(max_length=255, default="")
+    Player5 = models.CharField(max_length=255, default="")
+    Player6 = models.CharField(max_length=255, default="")
+    Player7 = models.CharField(max_length=255, default="")
+    Player8 = models.CharField(max_length=255, default="")
+    Player9 = models.CharField(max_length=255, default="")
+    Player10 = models.CharField(max_length=255, default="")
+    Player11 = models.CharField(max_length=255, default="")
+    Captain = models.CharField(max_length=255, default=" ")
+    Vice_Captain = models.CharField(max_length=255, default=" ")
+
+    Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+
+    total_batsmen = models.IntegerField(default=4)
+    total_allrounders = models.IntegerField(default=3)
+    total_bowlers = models.IntegerField(default=3)
+    team_no = models.IntegerField(default=1)
+    username_of_player = models.CharField(max_length=64)
+    # total_credits_used = models.IntegerField(default=100)
+    total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    match_slug = models.CharField(max_length=100)
+    full_team_name = models.CharField(max_length=255, default="Something")
+
+    def save(self, *args, **kwargs):
+        self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
+        super(WIWIREWTeam, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def __unicode__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def update_total_team_points(self, user, team_no, match_slug):
+        self.total_team_points = 100
+        self.save()
 
 
+class ENGSATeam(models.Model):
+    Keeper = models.CharField(max_length=255, default="")
+    Player2 = models.CharField(max_length=255, default="")
+    Player3 = models.CharField(max_length=255, default="")
+    Player4 = models.CharField(max_length=255, default="")
+    Player5 = models.CharField(max_length=255, default="")
+    Player6 = models.CharField(max_length=255, default="")
+    Player7 = models.CharField(max_length=255, default="")
+    Player8 = models.CharField(max_length=255, default="")
+    Player9 = models.CharField(max_length=255, default="")
+    Player10 = models.CharField(max_length=255, default="")
+    Player11 = models.CharField(max_length=255, default="")
+    Captain = models.CharField(max_length=255, default=" ")
+    Vice_Captain = models.CharField(max_length=255, default=" ")
 
+    Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
 
+    total_batsmen = models.IntegerField(default=4)
+    total_allrounders = models.IntegerField(default=3)
+    total_bowlers = models.IntegerField(default=3)
+    team_no = models.IntegerField(default=1)
+    username_of_player = models.CharField(max_length=64)
+    # total_credits_used = models.IntegerField(default=100)
+    total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    match_slug = models.CharField(max_length=100)
+    full_team_name = models.CharField(max_length=255, default="Something")
 
+    def save(self, *args, **kwargs):
+        self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
+        super(ENGSATeam, self).save(*args, **kwargs)
 
-# class WIBANTeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
+    def __str__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
 
-#     Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    def __unicode__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
 
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(WIBANTeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
-
-
-# class AFGSCOTeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
-
-#     Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(AFGSCOTeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
-
-
-# class CSKDCTeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
-
-#     Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(CSKDCTeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
-
-
-# class ENGPAKTeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
-
-#     Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(ENGPAKTeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
-
-
-# class MICSKTeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
-
-#     Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(MICSKTeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
-
-
-# class CSKMITeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
-#     # total_team_points = models.DecimalField(max_digits=3, decimal_places=2, default=0)
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(CSKMITeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
-
-
-# class SRHDCTeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
-#     # total_team_points = models.DecimalField(max_digits=3, decimal_places=2, default=0)
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(SRHDCTeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
-
-
-# class BANIRETeam(models.Model):
-#     Keeper = models.CharField(max_length=255, default="")
-#     Player2 = models.CharField(max_length=255, default="")
-#     Player3 = models.CharField(max_length=255, default="")
-#     Player4 = models.CharField(max_length=255, default="")
-#     Player5 = models.CharField(max_length=255, default="")
-#     Player6 = models.CharField(max_length=255, default="")
-#     Player7 = models.CharField(max_length=255, default="")
-#     Player8 = models.CharField(max_length=255, default="")
-#     Player9 = models.CharField(max_length=255, default="")
-#     Player10 = models.CharField(max_length=255, default="")
-#     Player11 = models.CharField(max_length=255, default="")
-#     Captain = models.CharField(max_length=255, default=" ")
-#     Vice_Captain = models.CharField(max_length=255, default=" ")
-#     # total_team_points = models.DecimalField(max_digits=3, decimal_places=2, default=0)
-#     total_batsmen = models.IntegerField(default=4)
-#     total_allrounders = models.IntegerField(default=3)
-#     total_bowlers = models.IntegerField(default=3)
-#     team_no = models.IntegerField(default=1)
-#     username_of_player = models.CharField(max_length=64)
-#     # total_credits_used = models.IntegerField(default=100)
-#     total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
-#     match_slug = models.CharField(max_length=100)
-#     full_team_name = models.CharField(max_length=255, default="Something")
-
-#     def save(self, *args, **kwargs):
-#         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-#         super(BANIRETeam, self).save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def __unicode__(self):
-#         return self.username_of_player + "[" + str(self.team_no) + "]"
-
-#     def update_total_team_points(self, user, team_no, match_slug):
-#         self.total_team_points = 100
-#         self.save()
+    def update_total_team_points(self, user, team_no, match_slug):
+        self.total_team_points = 100
+        self.save()
 
 
 class JoiningTransactionDetail(models.Model):
