@@ -51,9 +51,9 @@
           {% endif %}
           <h6>{{user.profile.phone_number}}</h6>
           {% if user.profile.state == "Add state" %}
-            <h6><span class="AddInfo">ADD STATE</span></h6>
+            <a href={% url 'accounts:add_state' %} class="AddInfoLink"><h6><span class="AddInfo">ADD STATE</span></h6></a>
           {% else %}
-            <h6>{{user.profile_state}}</h6>
+            <h6>{{user.profile.state}}</h6>
           {% endif %}
         </div>
       </div>

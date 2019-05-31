@@ -27,6 +27,20 @@ class UserForm(forms.ModelForm):
         # return email
 
 
+class UpdateStateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('state',)
+    
+    def clean_state(self):
+        state = self.cleaned_data.get('state')
+        print("print state")
+        print(state)
+        # if email.endswith not '@gmail.com':
+        #     raise forms.ValidationError("Enter a valid email ending with @gmail.com.")
+        return state
+
+
 class UpdateEmailForm(forms.ModelForm):
     class Meta:
         model = User

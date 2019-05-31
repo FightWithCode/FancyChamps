@@ -9,7 +9,7 @@ from cricket_center.models import JoiningTransactionDetail
 from payments.models import TransactionDetail
 from itertools import chain
 from .models import User
-from . forms import AddMoneyForm, UpdateEmailForm
+from . forms import AddMoneyForm, UpdateEmailForm, UpdateStateForm
 from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
@@ -28,6 +28,60 @@ def ProfileView(request):
     user_obj = User.objects.filter(id=request.user.id).first()
     is_email_confirmed = user_obj.profile.is_email_confirmed
     return render(request, 'accounts/profile.html', context={"user": user_obj,'is_email_confirmed':is_email_confirmed})
+
+
+@login_required(login_url='IndexView')
+def AddStateView(request):
+    user_obj = User.objects.filter(id=request.user.id).first()
+    args = {'user':user_obj}
+    print("HeallYEah")
+    if request.method == 'POST':
+        print("Heall")
+        form = UpdateStateForm(request.POST, instance=request.user.profile)
+        # print(form.errors)
+        if form.is_valid():
+            profile = form.save()
+            print(profile)
+            print("is_valid")
+            # current_site = get_current_site(request)
+            # subject = 'Welcome to FancyChamps! Confirm Your FancyChamps email.'
+            # message = render_to_string('account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain   ,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # try:
+            #     result = send_mail(
+            #         subject,
+            #         message,
+            #         '',
+            #         [user.email]
+            #     )
+            # except BadHeaderError:
+            #     print("Something")
+            # plaintext = get_template('email.txt')
+            # htmly     = get_template('account_activation_email.html')
+
+            # d = { 'user': user, 'domain':current_site.domain, 'uemail':urlsafe_base64_encode(force_bytes(user.email)), 'uid':urlsafe_base64_encode(force_bytes(user.pk)), 'token': account_activation_token.make_token(user)}
+
+            # # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
+            # text_content = ""
+            # html_content = htmly.render(d)
+            # msg = EmailMultiAlternatives(subject, text_content, '', [user.email])
+            # msg.attach_alternative(html_content, "text/html")
+            # try:
+            #     msg.send()
+            # except BadHeaderError:
+            #     print("Error while sending email!")
+            profile.save()
+            return redirect('/accounts/profile')
+    else:
+        print("aa")
+        form = UpdateStateForm(instance=request.user)
+        print(form)
+        args.update({'form':form})
+    return render(request, 'accounts/add_state.html', args)
 
 
 @login_required(login_url='IndexView')
