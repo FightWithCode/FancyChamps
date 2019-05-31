@@ -4,77 +4,79 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
 <url>
   <loc>https://www.fancychamps.com/</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/accounts/password_reset/</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/points_system</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/faqs</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/about_us</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/contact_us/0</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/?next=/cricket_center/</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/?next=/accounts/profile/</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/?next=/accounts/my_account/</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/?next=/logout/</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/how_to_play</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.fancychamps.com/promotions</loc>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/legality</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/terms</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.fancychamps.com/privacy_policy</loc>
-  <lastmod>2019-05-14T15:57:19+00:00</lastmod>
+  <lastmod>2019-05-29T20:18:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 

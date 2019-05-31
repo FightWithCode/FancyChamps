@@ -2339,11 +2339,11 @@ input[type=radio]:checked + label {
 }
 
 .InformationContainer{
-  width:49%;display:inline-block
+  width:59%;display:inline-block
 }
 
 .ProfileInformationContainer{
-  width:49%;display:inline-block
+  width:39%;display:inline-block
 }
 
 .LastTransactionHeaderContainer{

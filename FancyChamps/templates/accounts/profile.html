@@ -37,49 +37,51 @@
         <div class="ProfileInformationContainer">
           <h6 class="InfoHeaderContainer"><span class="fa fa-user"></span> USERNAME</h6>
           <h6 class="InfoHeaderContainer"><span class="fa fa-envelope"></span> EMAIL</h6>
-          <h6 class="InfoHeaderContainer"><span class="fa fa-phone fa-rotate-90"></span> MOBILE NO.</h6> 
+          <h6 class="InfoHeaderContainer"><span class="fa fa-phone fa-rotate-90"></span> MOBILE NO.</h6>
           <h6 class="InfoHeaderContainer"><span class="fa fa-globe"></span> STATE</h6>
-        </div>  
+        </div>
         <div class="InformationContainer">
           <h6>{{user.username}}</h6>
-          {% if user.email is None %}
-            <a href={% url 'accounts:add_email' %} class="AddInfoLink"><h6><span class="AddInfo">ADD EMAIL</span></h6></a> 
+          {% if not user.profile.is_email_confirmed and user.email is None%}
+            <a href={% url 'accounts:add_email' %} class="AddInfoLink"><h6><span class="AddInfo">ADD EMAIL</span></h6></a>
+          {% elif not user.profile.is_email_confirmed %}
+            <h6>{{user.email}} &nbsp;&nbsp;<a href={% url 'accounts:add_email' %} class="AddInfoLink"><span class="AddInfo">EDIT</span></a></h6>
           {% else %}
-            <h6>{{user.email}}</h6> 
+            <h6>{{user.email}}</h6>
           {% endif %}
           <h6>{{user.profile.phone_number}}</h6>
           {% if user.profile.state == "Add state" %}
             <h6><span class="AddInfo">ADD STATE</span></h6>
           {% else %}
-            <h6>{{user.profile_state}}</h6>  
+            <h6>{{user.profile_state}}</h6>
           {% endif %}
-        </div>  
+        </div>
       </div>
       <h5 class="InformationHeader">Stats</h5>
       <div class="MainConrainerOfInfoContainer">
         <div class="ProfileInformationContainer">
           <h6 class="InfoHeaderContainer"><span class="fa fa-gamepad"></span> MATCH PLAYED</h6>
           <h6 class="InfoHeaderContainer"><span class="fa fa-trophy"></span> WINS</h6>
-          <h6 class="InfoHeaderContainer"><span class="fa fa-percent"></span> WIN PERCENTAGE</h6> 
-        </div>  
+          <h6 class="InfoHeaderContainer"><span class="fa fa-percent"></span> WIN PERCENTAGE</h6>
+        </div>
         <div class="InformationContainer">
           <h6>{{user.profile.match_played}}</h6>
-          <h6>{{user.profile.total_wins}}</h6> 
+          <h6>{{user.profile.total_wins}}</h6>
           <h6>{% widthratio user.profile.total_wins user.profile.match_played 100 %}%</h6>
-        </div>  
+        </div>
       </div>
       <h5 class="InformationHeader">Wallet</h5>
       <div  class="MainConrainerOfInfoContainer">
         <div class="ProfileInformationContainer">
           <h6 class="InfoHeaderContainer"> WINNINGS</h6>
           <h6 class="InfoHeaderContainer"> BONUS</h6>
-          <h6 class="InfoHeaderContainer"> WIDHRAWABLE</h6> 
-        </div>  
+          <h6 class="InfoHeaderContainer"> WIDHRAWABLE</h6>
+        </div>
         <div class="InformationContainer">
           <h6>{{user.profile.balance}}₹</h6>
-          <h6>{{user.profile.bonus}}₹</h6> 
+          <h6>{{user.profile.bonus}}₹</h6>
           <h6>{{user.profile.widhdrawable_balance}}₹</h6>
-        </div>  
+        </div>
       </div>
     </div>
     <div class="footer">

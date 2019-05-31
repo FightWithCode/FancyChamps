@@ -234,28 +234,36 @@ def ContestsRankings(request, match_slug, contest_slug):
         all_joined = JoiningDetail.objects.filter(joined_contest_slug__exact=contest_slug).order_by('-total_team_points')
         user_teams_list = []
         print(request.user.username)
-        for ranker in all_joined[:1]:
-            ranker.rank = 1
-            ranker.save()
-        if(all_joined.first().joined_user==request.user.username):
-                        user_teams_list.append(all_joined.first())
-        for i, ranker in enumerate(all_joined[1:]):
+        all_joined.first().rank = 1
+        all_joined.first().save()
+        # for ranker in all_joined[:1]:
+        #     ranker.rank = 1
+        #     ranker.save()
+        # for t in all_joined:
+        #     if t.joined_user == request.user.username
+        #if(all_joined.first().joined_user==request.user.username):
+            # user_teams_list.append(all_joined.first())
+        for i, ranker in enumerate(all_joined):
             try:
                 if ranker.total_team_points == all_joined[i].total_team_points:
-                    print(ranker.joined_user)
+                    # print(ranker.joined_user)
                     ranker.rank = all_joined[i].rank
                     ranker.save()
                     if(ranker.joined_user==request.user.username):
                         user_teams_list.append(ranker)
-
                 else:
-                    ranker.rank = i + 2
+                    print(ranker.joined_user)
+                    ranker.rank = i + 1
                     ranker.save()
                     if(ranker.joined_user==request.user.username):
                         user_teams_list.append(ranker)
 
             except IndexError:
-                pass
+                print("except")
+                print(ranker.joined_user)
+                ranker.rank = i + 1
+                print(ranker.rank)
+                ranker.save()
             all_joined = all_joined.exclude(joined_user=request.user.username)
             print("user list")
             print(user_teams_list)

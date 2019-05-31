@@ -1,7 +1,17 @@
-{% autoescape off %}
-Hi {{ user.username }},
+{% load staticfiles %}
+<html>
+    <head>
+    </head>
+    <body>
+        <div style="background-color:#323641;position:relative;width:100%;text-align:center;color:#F4F4F4;padding-top:10px;font-size:20px;padding-bottom:5px;" class="header">Confirm your email</div>
+        <img src="https://www.fancychamps.com/static/images/OriginalLogoBack.png" width="100%" alt="FancyChamps">
+        <p style="font-size:15px;">Hi {{ user.username }},</p>
+        <p style="font-size:15px;">Thankyou so much for registering with FancyChamps.</p><br>
+        <center><p style="font-size:25px;">Please click on the below button to confirm/verify you email.</p></center>
+        <center><a href="https://www.fancychamps.com{% url 'accounts:activate' uidb64=uid token=token uemailb64=uemail %}"><button style="width:50%;padding:5px;color:#F4F4F4;background-color:#323641;">Click Here!</button></a></center>
+        <p style="font-size:15px;">Regards,</p>
+        <center><img src="https://www.fancychamps.com/static/images/OriginalLogoBack.png" width="25%" alt="FancyChamps"></center>
+        <div></div>
+    </body>
+</html>
 
-Please click on the link below to confirm your registration:
-
-https://www.fancychamps.com{% url 'accounts:activate' uidb64=uid token=token %}
-{% endautoescape %}

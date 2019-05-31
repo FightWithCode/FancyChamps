@@ -18,6 +18,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail,BadHeaderError
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
 
 
 @login_required(login_url='IndexView')
@@ -40,22 +43,36 @@ def AddEmailView(request):
             user = form.save(commit=False)
             print("is_valid")
             current_site = get_current_site(request)
-            subject = 'Activate Your FancyChamps Account.'
-            message = render_to_string('account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain   ,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
+            subject = 'Welcome to FancyChamps! Confirm Your FancyChamps email.'
+            # message = render_to_string('account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain   ,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # try:
+            #     result = send_mail(
+            #         subject,
+            #         message,
+            #         '',
+            #         [user.email]
+            #     )
+            # except BadHeaderError:
+            #     print("Something")
+            # plaintext = get_template('email.txt')
+            htmly     = get_template('account_activation_email.html')
+
+            d = { 'user': user, 'domain':current_site.domain, 'uemail':urlsafe_base64_encode(force_bytes(user.email)), 'uid':urlsafe_base64_encode(force_bytes(user.pk)), 'token': account_activation_token.make_token(user)}
+
+            # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
+            text_content = ""
+            html_content = htmly.render(d)
+            msg = EmailMultiAlternatives(subject, text_content, '', [user.email])
+            msg.attach_alternative(html_content, "text/html")
             try:
-                result = send_mail(
-                    subject,
-                    message,
-                    '',
-                    [user.email]
-                )
+                msg.send()
             except BadHeaderError:
-                print("Something")
+                print("Error while sending email!")
             user.save()
             return redirect('/accounts/profile')
     else:
@@ -66,10 +83,11 @@ def AddEmailView(request):
     return render(request, 'accounts/add_email.html', args)
 
 
-def activate(request, uidb64, token):
+def activate(request, uidb64, token, uemailb64):
     print("called")
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
+        uemail = force_text(urlsafe_base64_decode(uemailb64))
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
@@ -78,6 +96,7 @@ def activate(request, uidb64, token):
         user.profile.is_email_confirmed = True
         #user.profile.email_confirmed = True
         print(user.profile.is_email_confirmed)
+        user.email = uemail
         user.save()
         user.profile.save()
         return redirect('/accounts/remove')
