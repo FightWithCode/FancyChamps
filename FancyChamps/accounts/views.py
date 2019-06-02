@@ -196,7 +196,7 @@ def MyAccountView(request):
         money_added=False
         money_added_status = False
     print(money_added,money_added_status)
-    return render(request, 'accounts/my_account.html', context={"user": user_obj, "total_balance": user_obj.profile.balance + user_obj.profile.bonus + user_obj.profile.widhdrawable_balance, "sorted_transaction": sorted_transaction, "money_added":money_added, "money_added_status":money_added_status})
+    return render(request, 'accounts/my_account.html', context={"user": user_obj, "sorted_transaction": sorted_transaction, "money_added":money_added, "money_added_status":money_added_status})
 
 
 

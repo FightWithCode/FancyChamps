@@ -1,12 +1,13 @@
-from cricket_center.models import PlayerDetail, JoiningDetail, MatchDetail, ContestDetail
+from cricket_center.models import PlayerDetail, JoiningDetail, MatchDetail, ContestDetail, JoiningTransactionDetail
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from cricket_matches.models import Winners65OutOf100Fee12
 from django.apps import apps
 from django.forms.models import model_to_dict
-from accounts.models import User
+from accounts.models import User, Profile
 from decimal import Decimal
 from django.apps import apps
+import random, string
 
 #         model_name = match_obj.team_one + match_obj.team_two + "Team"
 #         model_is = apps.get_registered_model('cricket_center', model_name)
@@ -77,6 +78,50 @@ def update_total_team_points(match_slug):
 def PrintMe():
     print("I m work")
 
+
+def CancellOrApproveContest(match_slug):
+    contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
+    for contest in contest_obj:
+        if ((not contest.filled_status) and contest.contest_size<=10 and contest.total_player_joined>1):
+            contest.contest_winners = 1
+            contest.contest_prize = (contest.total_player_joined*contest.contest_fee*90)/100
+            contest.save()
+        elif ((not contest.filled_status) and contest.contest_size>10 and contest.total_player_joined>=1):
+            joined_qs = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug)
+            for joined in joined_qs:
+                # print(joined.username)
+                print(joined.main_deduction)
+
+                user = Profile.objects.filter(user__username__exact=joined.joined_user).first()
+                # print(user)
+                # print(user.username)
+                # print(Decimal(user.balance))
+                print(Decimal(joined.bonus_deduction))
+                print(Decimal(joined.main_deduction))
+                user.bonus = Decimal(user.bonus) + Decimal(joined.bonus_deduction)
+                user.balance = Decimal(user.balance) + Decimal(joined.main_deduction)
+                # print(user.balance)
+                # print(user.bonus)
+#             # print(Decimal(user.balance))
+                user.save()
+                new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
+                                                        transaction_amt=joined.main_deduction + joined.bonus_deduction,
+                                                        transact_user=joined.joined_user,
+                                                        transaction_message="Refund for Contest",
+                                                        transaction_type="added",
+                )
+                new_trans_obj.save()
+
+                # transaction_id = models.CharField(max_length=255)
+                # transaction_amt = models.IntegerField(default=0)
+                # transact_user = models.CharField(max_length=64)
+                # transaction_time = models.DateTimeField(auto_now=True)
+                # transaction_message = models.CharField(max_length=255, default="")
+                # transaction_type = models.CharField(max_length=16,default="added")
+                # except:
+                #     print("except")
+
+
 def CallThisForDistribution(match_slug):
     contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
     print(contest_obj)
@@ -90,9 +135,6 @@ def CallThisForDistribution(match_slug):
             contest.contest_prize = (contest.total_player_joined*contest.contest_fee*90)/100
             contest.save()
             DistributeWinningToOne(contest.contest_slug)
-        else:
-            #Refund
-            pass
         # else (not contest.confirmed and not contest.filled_status):
         #     RefundContestAmount(contest)
 

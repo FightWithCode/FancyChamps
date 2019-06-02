@@ -60,7 +60,9 @@ $('.JoinNowClass').click(function () {
         dataType: 'json',
         success: function (data) {
         	if(data.profile_error){
-		    	alert("Someting Went Wrong...")
+		    	$('#sub_max').css('display','block');
+		        $('#sub_max').html("Something went Wrong...");
+		        $('#sub_max').delay(3000).fadeOut(1000);
 		    	var div = $(".JoinNowContainer");
 			    var height = div.height();
 			    div.css({
@@ -81,7 +83,9 @@ $('.JoinNowClass').click(function () {
 		    }
 
     		else if(data.already_joined_or_filled){
-    			alert("Contest is Filled or You Have already Joined the Contest")
+    		    $('#sub_max').css('display','block');
+		        $('#sub_max').html("Contest is Filled or You Have already Joined the Contest");
+		        $('#sub_max').delay(3000).fadeOut(3000);
     			var div = $(".JoinNowContainer");
 			    var height = div.height();
 			    div.css({
@@ -234,7 +238,9 @@ $('.PayAndJoinNow').click(function () {
 	        success: function (data) {
 	        	console.log(data)
 			    if(data.already_joined_or_filled){
-	    			alert("Contest is Filled or You Have already Joined the Contest")
+	    		    $('#sub_max').css('display','block');
+		            $('#sub_max').html("Contest is Filled or You Have already Joined the Contest");
+		            $('#sub_max').delay(3000).fadeOut(3000);
 	    			var div = $(".JoinNowContainer");
 				    var height = div.height();
 				    div.css({
@@ -271,7 +277,9 @@ $('.PayAndJoinNow').click(function () {
 				            marginTop: ""
 				        });
 				    });
-				    alert("Contest Joined")
+				    $('#sub_max').css('display','block');
+		            $('#sub_max').html("Contest Joined");
+		            $('#sub_max').delay(3000).fadeOut(1000);
 				    location.reload(true);
 				}
 	        }

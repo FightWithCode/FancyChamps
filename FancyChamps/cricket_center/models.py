@@ -70,6 +70,7 @@ class ContestDetail(models.Model):
     free_contest = models.BooleanField(default=False)
     confirmed = models.BooleanField(default=False)
     prize_dist_type = models.CharField(max_length=100)
+    bonus_percent = models.IntegerField()
 
     def save(self, *args, **kwargs):
         joined = JoiningDetail.objects.filter(joined_contest_slug__exact=self.contest_slug)
@@ -100,7 +101,7 @@ class JoiningDetail(models.Model):
         return self.joined_contest_slug + "[" + self.joined_user_team + "]"
 
 
-class INDNZTeam(models.Model):
+class SABANTeam(models.Model):
     Keeper = models.CharField(max_length=255, default="")
     Player2 = models.CharField(max_length=255, default="")
     Player3 = models.CharField(max_length=255, default="")
@@ -141,7 +142,7 @@ class INDNZTeam(models.Model):
 
     def save(self, *args, **kwargs):
         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-        super(INDNZTeam, self).save(*args, **kwargs)
+        super(SABANTeam, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username_of_player + "[" + str(self.team_no) + "]"
@@ -375,6 +376,8 @@ class JoiningTransactionDetail(models.Model):
     transaction_amt = models.IntegerField(default=0)
     transact_user = models.CharField(max_length=64)
     transaction_time = models.DateTimeField(auto_now=True)
+    transaction_message = models.CharField(max_length=255, default="")
+    transaction_type = models.CharField(max_length=16,default="added")
 
     def __str__(self):
         return self.transaction_id

@@ -109,17 +109,17 @@
       <div style="display:inline">
         <div class="WalletInfoHeaderContainer">
           <h6 class="InfoHeaderContainer"><span class="fa fa-user"></span> USERNAME</h6>
-          <h6 class="InfoHeaderContainer"><i class="fas fa-money-bill-alt"></i> TOTAL BALANCE</h6>
-          <h6 class="InfoHeaderContainer"><i class="fas fa-wallet"></i> WALLET BALANCE</h6>
-          <h6 class="InfoHeaderContainer"><span class="fa fa-phone fa-rotate-90"></span> BONUS</h6>
+          <!--<h6 class="InfoHeaderContainer"><i class="fas fa-money-bill-alt"></i> TOTAL BALANCE</h6>-->
+          <h6 class="InfoHeaderContainer"><i class="fas fa-wallet"></i> DEPOSITED</h6>
           <h6 class="InfoHeaderContainer"><i class="fas fa-trophy"></i> WINNINGS</h6>
+          <h6 class="InfoHeaderContainer"><span class="fa fa-gift"></span> BONUS</h6>
         </div>
         <div class="WalletInfoContainer">
           <h6>{{user.username}}</h6>
-          <h6>{{total_balance}}₹<span class="AddCash">ADD&nbsp;CASH</span></h6>
-          <h6>{{user.profile.balance}}₹</h6>
-          <h6>{{user.profile.bonus}}₹</h6>
+          <!--<h6>{{total_balance}}₹<span class="AddCash">ADD&nbsp;CASH</span></h6>-->
+          <h6>{{user.profile.balance}}₹<span class="AddCash">ADD&nbsp;CASH</span></h6>
           <h6>{{user.profile.widhdrawable_balance}}₹<span class="Widhdraw">WIDHDRAW</span></h6>
+          <h6>{{user.profile.bonus}}₹</h6>
         </div>
       </div>
       <h5 class="InformationHeader">Last Transactions</h5>
