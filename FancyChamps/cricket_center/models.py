@@ -191,6 +191,7 @@ class ContestDetail(models.Model):
     confirmed = models.BooleanField(default=False)
     prize_dist_type = models.CharField(max_length=100)
     bonus_percent = models.IntegerField(default = 0)
+    cancelled = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         joined = JoiningDetail.objects.filter(joined_contest_slug__exact=self.contest_slug)

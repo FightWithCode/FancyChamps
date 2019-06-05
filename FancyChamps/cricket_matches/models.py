@@ -7,6 +7,8 @@ from django.db import models
 #                            56: 8, 57: 8, 58: 8, 59: 8, 60: 8, 61: 8, 62: 8, 63: 8, 64: 8, 65: 8,
 #     }
 # }
+class Winners1To3OutOf10Fee53(models.Model):
+    Rank1To3   = models.IntegerField(default=167)
 
 
 class Winners65OutOf100Fee12(models.Model):

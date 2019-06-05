@@ -136,6 +136,9 @@
 				{% endif %}
 		    </div>
 		  {% endfor %}
+		  {% if contest_obj.cancelled %}
+    	  	<center><h6 class="RefundInfo">This contest is not filled, so it will be cancelled and all your fee will be refunded.</h6></center>
+	      {% endif %}
 	  </div>
   	  <div class="footer">
 		<a href="{% url 'cricket_center:cricket_center' %}">
