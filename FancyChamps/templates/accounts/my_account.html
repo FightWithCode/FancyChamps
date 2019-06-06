@@ -130,7 +130,11 @@
       </div>
       <div style="display:inline">
         {% for tran in sorted_transaction|slice:":10" %}
-          <h6 class="LastTransactionContent"><center>{{tran.transaction_id|slice:":10"}}...</center></h6><h6 class="LastTransactionContent"><center>{{ tran.transaction_amt }}</center></h6><h6 class="LastTransactionContent"><center>{{tran.transaction_time|date:'Y-m-d H:h'}}</center></h6>
+            {% if tran.transaction_type == "added" %}
+              <h6 class="LastTransactionContent"><center>{{tran.transaction_message}}</center></h6><h6 class="LastTransactionContent"><center><span style="color:#90EE90">+{{ tran.transaction_amt }}</span></center></h6><h6 class="LastTransactionContent"><center>{{tran.transaction_time|date:'Y-m-d H:h'}}</center></h6>
+            {% elif tran.transaction_type == "deducted" %}
+              <h6 class="LastTransactionContent"><center>{{tran.transaction_message}}</center></h6><h6 class="LastTransactionContent"><center><span style="color:#C21807">-{{ tran.transaction_amt }}</span></center></h6><h6 class="LastTransactionContent"><center>{{tran.transaction_time|date:'Y-m-d H:h'}}</center></h6>
+            {% endif %}
         {% empty %}
           <center><h5>No Transaction</h5></center>
         {% endfor %}
