@@ -111,12 +111,12 @@ $('.JoinNowClass').click(function () {
 				$('.ProceedToPay').css("display", "inline-block")
 				$('.ProceedToPay').html("Proceed to Pay " + data.add_money)
 				$('.JoinNowHeader').html("Join " + data.contest_name+ " Contest")
-	    		$('#ContestPrice').html("₹"+data.contest_prize)
-	    		$('#ContestFee').html("₹"+data.contest_fee)
-	    		$('#UserMainBalance').html("₹"+data.user_balance)
-	    		$('#UserBonus').html("₹"+data.user_bonus)
-	    		$('#MainDeduction').html("₹"+data.deduction_from_main)
-	    		$('#BonusDeduction').html("₹"+data.deduction_from_bonus)
+	   // 		$('#ContestPrice').html("₹"+data.contest_prize)
+	   // 		$('#ContestFee').html("₹"+data.contest_fee)
+	   // 		$('#UserMainBalance').html("₹"+data.user_balance)
+	   // 		$('#UserBonus').html("₹"+data.user_bonus)
+	    		$('#MainDeduction').html("₹"+data.user_balance)
+	    		$('#BonusDeduction').html("₹"+data.contest_fee)
 	    		$('#match_slug').val(data.match_slug)
 	    		$('#contest_slug').val(data.contest_slug)
 	    		$('.ChoosePaymentTypeContainer').css("display", "none")
@@ -169,12 +169,12 @@ $('.JoinNowClass').click(function () {
     			$('.ProceedToPay').css("display", "none")
     			$('.PayAndJoinNow').css("display", "inline-block")
     			$('.JoinNowHeader').html("Join " + data.contest_name+ " Contest")
-	    		$('#ContestPrice').html("₹"+data.contest_prize)
-	    		$('#ContestFee').html("₹"+data.contest_fee)
-	    		$('#UserMainBalance').html("₹"+data.user_balance)
-	    		$('#UserBonus').html("₹"+data.user_bonus)
-	    		$('#MainDeduction').html("₹"+data.deduction_from_main)
-	    		$('#BonusDeduction').html("₹"+data.deduction_from_bonus)
+	   // 		$('#ContestPrice').html("₹"+data.contest_prize)
+	   // 		$('#ContestFee').html("₹"+data.contest_fee)
+	   // 		$('#UserMainBalance').html("₹"+data.user_balance)
+	   // 		$('#UserBonus').html("₹"+data.user_bonus)
+	    		$('#MainDeduction').html("₹"+data.user_balance)
+	    		$('#BonusDeduction').html("₹"+data.contest_fee)
 	    		$('#match_slug').val(data.match_slug)
 	    		$('#contest_slug').val(data.contest_slug)
 	    		$('.ChoosePaymentTypeContainer').css("display", "none")
@@ -259,6 +259,11 @@ $('.PayAndJoinNow').click(function () {
 				        });
 				    });
 				}
+				else if(data.error==true || data.contest_error==true){
+				    $('#sub_max').css('display','block');
+		            $('#sub_max').html("Something went wrong! Try another contest.");
+		            $('#sub_max').delay(3000).fadeOut(1000);
+				}
 				else{
 					var div = $(".JoinNowContainer");
 				    var height = div.height();
@@ -286,6 +291,8 @@ $('.PayAndJoinNow').click(function () {
 	    });
 	}
 	else{
-		alert("Please Select a Team")
+		$('#sub_max').css('display','block');
+		$('#sub_max').html("Please Select a Team");
+		$('#sub_max').delay(3000).fadeOut(1000);
 	}
 });

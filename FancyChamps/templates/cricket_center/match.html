@@ -53,7 +53,6 @@
 				<div style="width:100%;" class="ConentOfJoiningDetail">
 					<center>
 						<h5 style="color:#F3F4F4">Select a Team</h5>
-					</center>
 					<div class="inputGroup">
 						{% for team in total_teams %}
 						<div class="TeamInput">
@@ -61,29 +60,31 @@
 							<label for="{{team.team_no}}">{{team.username_of_player}}[{{team.team_no}}]</label>
 						</div>
 					{% endfor %}
-				</div>
-				<center>
-						<h5 style="color:#F3F4F4">Balance Information</h5>
-				</center>
-					<div class="col-xs-6" style="float:left">
-						<input type="hidden" name="" value="{{match_slug}}" id="match_slug">
-						<input type="hidden" name="" value="" id="contest_slug">
-						<h6 class="JoinNowDetailsLeft">Total Winnings</h6>
-						<h6 class="JoinNowDetailsRight">Entry Fee</h6>
-						<h6 class="JoinNowDetailsLeft" id="ContestPrice"></h6>
-						<h6 class="JoinNowDetailsRight" id="ContestFee"></h6>
-					</div>
-					<div class="col-xs-6" style="float:right;">
-						<h6 class="JoinNowDetailsLeft">Main Balance</h6>
-						<h6 class="JoinNowDetailsRight">Bonus Balance</h6>
-						<h6 class="JoinNowDetailsLeft" id="UserMainBalance"></h6>
-						<h6 class="JoinNowDetailsRight" id="UserBonus"></h6>
-					</div>
+				    </div>
+				    </center>
+				<!--<center>-->
+				<!--		<h5 style="color:#F3F4F4">Balance Information</h5>-->
+				<!--</center>-->
+					<!--<div class="col-xs-6" style="float:left">-->
+
+					<!--	<h6 class="JoinNowDetailsLeft">Total Winnings</h6>-->
+					<!--	<h6 class="JoinNowDetailsRight">Entry Fee</h6>-->
+					<!--	<h6 class="JoinNowDetailsLeft" id="ContestPrice"></h6>-->
+					<!--	<h6 class="JoinNowDetailsRight" id="ContestFee"></h6>-->
+					<!--</div>-->
+					<!--<div class="col-xs-6" style="float:right;">-->
+					<!--	<h6 class="JoinNowDetailsLeft">Main Balance</h6>-->
+					<!--	<h6 class="JoinNowDetailsRight">Bonus Balance</h6>-->
+					<!--	<h6 class="JoinNowDetailsLeft" id="UserMainBalance"></h6>-->
+					<!--	<h6 class="JoinNowDetailsRight" id="UserBonus"></h6>-->
+					<!--</div>-->
 					<center>
 						<div class="col-xs-12" style="width:80%;">
-							<h5 class="JoinNowDetailsCenter">All Deduction of Balance</h5>
-							<h6 class="JoinNowDetailsLeft">From Main Balance</h6>
-							<h6 class="JoinNowDetailsRight">From Bonus</h6>
+						    <input type="hidden" name="" value="{{match_slug}}" id="match_slug">
+						    <input type="hidden" name="" value="" id="contest_slug">
+							<h5 class="JoinNowDetailsCenter">Balance Information</h5>
+							<h6 class="JoinNowDetailsLeft">Total Balance</h6>
+							<h6 class="JoinNowDetailsRight">Entry Fees</h6>
 							<h6 class="JoinNowDetailsLeft" id="MainDeduction"></h6>
 							<h6 class="JoinNowDetailsRight" id="BonusDeduction"></h6>
 							<button type="button" class="btn PayAndJoinNow" id="PayAndJoinNowID" pay-and-join="{% url 'cricket_center:pay_and_join' %}">Pay & Join</button>

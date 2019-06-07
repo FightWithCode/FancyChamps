@@ -383,6 +383,9 @@ def PayAndJoin(request):
     match_slug = request.POST.get('match_slug')
     contest_slug = request.POST.get('contest_slug')
     team_no = request.POST.get('team_no')
+    print("Printitn.............................................")
+    print(match_slug,contest_slug)
+    already_joined_or_filled = False;
     all_joined = JoiningDetail.objects.filter(joined_contest_slug__exact=contest_slug, joined_user__exact=request.user.username)
 
     try:
@@ -399,6 +402,7 @@ def PayAndJoin(request):
             error = True
             already_joined_or_filled = True
     except ContestDetail.DoesNotExist:
+        print("#####################################*******************I am the fault")
         error = True
         contest_error = True
 
@@ -444,8 +448,10 @@ def PayAndJoin(request):
                     # user.balance = new_balance
                     join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, winnings_deduction=deduction_from_winnings,  joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
                     join_transaction_detail_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase  + string.digits) for _ in range(15)),
-                                                                        transaction_amt=contest_fee*100,
+                                                                        transaction_amt=contest_fee,
                                                                         transact_user=request.user.username,
+                                                                        transaction_message = "Joined a Contest",
+                                                                        transaction_type = "deducted",
                     )
                     join_transaction_detail_obj.save()
                     user.save()
@@ -498,8 +504,10 @@ def PayAndJoin(request):
                     # user.balance = user_balance - deduction_from_main
                     join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, winnings_deduction=deduction_from_winnings,  joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
                     join_transaction_detail_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(15)),
-                                                                        transaction_amt=contest_fee*100,
+                                                                        transaction_amt=contest_fee,
                                                                         transact_user=request.user.username,
+                                                                        transaction_message = "Joined a Contest",
+                                                                        transaction_type = "deducted",
                     )
                     user.save()
                     join_obj.save()
@@ -546,6 +554,8 @@ def PayAndJoin(request):
                 join_transaction_detail_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(15)),
                                                                         transaction_amt=contest_fee,
                                                                         transact_user=request.user.username,
+                                                                        transaction_message = "Joined a Contest",
+                                                                        transaction_type = "deducted",
                 )
                 # user.balance = user_balance - deduction_from_main
                 join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
@@ -667,7 +677,7 @@ def ContestJoinNow(request, match_slug, contest_slug):
                         main_balance_after_deduction = 0
                         winnings_after_deduction = deduction_from_main - user_balance
                     else:
-                        main_balance_after_deduction = user_balance - deduction_from_main         
+                        main_balance_after_deduction = user_balance - deduction_from_main
                     # main_balance_after_deduction = user_balance - deduction_from_main
             else:
                 deduction_from_bonus = user_bonus

@@ -851,8 +851,8 @@ button{
   padding: 6px 12px;
   color:#323641;
   width: 100%;
+  left:-11px;
   margin:12px;
-  right:0px;
   display:none;
   float:left;
 }
@@ -2254,6 +2254,7 @@ input[type=radio]:checked + label {
     position: relative;
     margin: 10px 0;
     margin:12px;
+    width:75%;
 }
 
 .inputGroup label {
