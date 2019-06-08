@@ -296,3 +296,11 @@ $('.PayAndJoinNow').click(function () {
 		$('#sub_max').delay(3000).fadeOut(1000);
 	}
 });
+
+window.onload = function () {
+	$(".ContestTypes").each(function(i) {
+		if($(this).html()==""){
+			$(this).removeClass("ContestTypes")
+		}
+    });
+}

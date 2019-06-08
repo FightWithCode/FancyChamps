@@ -114,11 +114,11 @@
     				<div class="LeagueArea row" id="FirstLeagueArea">
     			  	    <div class="row col-xs-12">
     			  	      <div class="col-xs-12 LeagueCard">
-    						{% comment %} <div style="position: absolute;background-color: #323641;display:none;font-size:13px;height: 100%;z-index:10" class="PayoutDiv{{contest.contest_slug}}">
+    						 <!-- <div style="position: absolute;background-color: #323641;display:none;font-size:13px;height: 100%;z-index:10" class="PayoutDiv{{contest.contest_slug}}">
     							<ul class="LiContainer{{contest.contest_slug}}" style="list-style-type: none;position:relative;text-align: center;padding-left:15px;padding-right:15px;top:50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);">
     							</ul>
-    						</div> {% endcomment %}
-    						<center><h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span></h5></center>
+    						</div>  -->
+    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     			  	  	    <div class="LeagueInfoContainer">
     				  	      <h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -154,11 +154,7 @@
     				<div class="LeagueArea row">
     			  	    <div class="row col-xs-12">
     			  	      <div class="col-xs-12 LeagueCard">
-    						{% comment %} <div style="position: absolute;background-color: #323641;display:none;font-size:13px;z-index:10;right:0px;height:100%;" class="PayoutDiv{{contest.contest_slug}}">
-    							<ul class="LiContainer{{contest.contest_slug}}" style="list-style-type: none;position:relative;text-align: center;padding-left:15px;padding-right:15px;top:50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);">
-    							</ul>
-    						</div> {% endcomment %}
-    						<center><h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span></h5></center>
+    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     			  	  	    <div class="LeagueInfoContainer">
     				  	      <h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -194,11 +190,7 @@
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">
     						<div class="col-xs-12 LeagueCard">
-    						{% comment %} <div style="position: absolute;background-color: #323641;display:none;font-size:13px;z-index:10;right:0px;height:100%;" class="PayoutDiv{{contest.contest_slug}}">
-    							<ul class="LiContainer{{contest.contest_slug}}" style="list-style-type: none;position:relative;text-align: center;padding-left:15px;padding-right:15px;top:50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);">
-    							</ul>
-    						</div> {% endcomment %}
-    						<center><h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span></h5></center>
+    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     							<div class="LeagueInfoContainer">
     							<h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>

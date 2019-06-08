@@ -8,11 +8,84 @@
 {% endblock stylesheets %}
 
 {% block other_page_content %}
+	<div class="alert alert-danger error ErrorClass" id="sub_max">
+  	</div>
 
 	<div class="MainBackground">
 	  <div class="color-overlay"></div>
 	</div>
 	<div class="MatchAreaForMatch">
+	  <div class="PayoutDiv">
+	  </div>
+	  <div class="JoinNowContainer" id="JoinNowContainer">
+			<div class="JoinNowRealDiv">
+				<center><i class="fa fa-chevron-circle-down CloseJoinNowContainer"></i>
+				<div class="JoinNowHeaderContainer">
+					<h3 class="JoinNowHeader">Join </h3>
+				</div>
+				<hr style="width:95%;border-color:#F3F4F4"></center>
+				<div class="ChoosePaymentTypeContainer" style="display:block">
+					{% comment %} <center><h5>Choose a Method</h5></center>
+					<div class="ChoosePaymentTypeOthers" id="rzp-button">
+            <center>
+              <img src="{% static "images/other_payment.jpg" %}" alt="Sorry! LOGO Not Found" class="PaymentTypeImage">
+              <h6>Cards, Net Banking & <br>Other Wallets</h6>
+            </center>
+					</div> {% endcomment %}
+					<a href="#">
+						<div class="ChoosePaymentTypePaytm" style="width:100%;%"><!--Remove Style Aog-->
+                <center>
+                  <img src="{% static "images/Paytm_logo.png" %}" alt="Sorry! LOGO Not Found" class="PaymentTypeImage">
+                  <h6 style="color:white;">Paytm <br>Wallet</h6>
+                </center>
+            </div>
+					</a>
+				</div>
+				<div style="width:100%;" class="ConentOfJoiningDetail">
+					<center>
+						<h5 style="color:#F3F4F4">Select a Team</h5>
+					<div class="inputGroup">
+						{% for team in total_teams %}
+						<div class="TeamInput">
+							<input id="{{team.team_no}}" name="SelectTeam" type="radio" value="{{team.team_no}}"/>
+							<label for="{{team.team_no}}">{{team.username_of_player}}[{{team.team_no}}]</label>
+						</div>
+					{% endfor %}
+				    </div>
+				    </center>
+				<!--<center>-->
+				<!--		<h5 style="color:#F3F4F4">Balance Information</h5>-->
+				<!--</center>-->
+					<!--<div class="col-xs-6" style="float:left">-->
+
+					<!--	<h6 class="JoinNowDetailsLeft">Total Winnings</h6>-->
+					<!--	<h6 class="JoinNowDetailsRight">Entry Fee</h6>-->
+					<!--	<h6 class="JoinNowDetailsLeft" id="ContestPrice"></h6>-->
+					<!--	<h6 class="JoinNowDetailsRight" id="ContestFee"></h6>-->
+					<!--</div>-->
+					<!--<div class="col-xs-6" style="float:right;">-->
+					<!--	<h6 class="JoinNowDetailsLeft">Main Balance</h6>-->
+					<!--	<h6 class="JoinNowDetailsRight">Bonus Balance</h6>-->
+					<!--	<h6 class="JoinNowDetailsLeft" id="UserMainBalance"></h6>-->
+					<!--	<h6 class="JoinNowDetailsRight" id="UserBonus"></h6>-->
+					<!--</div>-->
+					<center>
+						<div class="col-xs-12" style="width:80%;">
+						    <input type="hidden" name="" value="{{match_slug}}" id="match_slug">
+						    <input type="hidden" name="" value="" id="contest_slug">
+							<h5 class="JoinNowDetailsCenter">Balance Information</h5>
+							<h6 class="JoinNowDetailsLeft">Total Balance</h6>
+							<h6 class="JoinNowDetailsRight">Entry Fees</h6>
+							<h6 class="JoinNowDetailsLeft" id="MainDeduction"></h6>
+							<h6 class="JoinNowDetailsRight" id="BonusDeduction"></h6>
+							<button type="button" class="btn PayAndJoinNow" id="PayAndJoinNowID" pay-and-join="{% url 'cricket_center:pay_and_join' %}">Pay & Join</button>
+							<button type="button" class="btn ProceedToPay"></button>
+						</div>
+					</center>
+				</div>
+
+			</div>
+	  </div>
 	  <div class="OwnMatchCard">
 	  	<center>
 	  		<h4 class="ContentHeaderTeam">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:cricket_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a></h4>
@@ -27,7 +100,7 @@
     		<div class="LeagueArea row">
     	  	    <div class="row col-xs-12">
     	  	      <div class="col-xs-12 ContestJoinedCard">
-    	  	  	    <center><h5 class="LeagueName">{{contest.contest_name}}</h5></center>
+    	  	  	    <h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     	  	  	    <hr class="HrTagInsideContestJoinedCard">
     	  	  	    <div class="LeagueInfoContainer">
     	  	  	      <h6>Total Winnings : <span class="JoinedInfoContent">₹{{contest.contest_prize}}</span></h6>
@@ -37,6 +110,7 @@
     			      		<h6 class="JoinedInfo">Joined<span class="JoinedInfoContent">{{contest.total_player_joined}}/{{contest.contest_size}}</span></h6>
     		  	      	<div class="MultipleButtonContainer row" >
     		  	      		<center class="ViewButton"><a href="{% url 'cricket_center:view_contest' match_slug=match_slug contest_slug=contest.contest_slug %}"><button type="button" class="btn btn-success btn-lg JoinNow">View</b></button></a></center>
+    		  	      		<center class="JoinAgainButton"><button type="button" class="btn btn-success btn-lg JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</b></button></center>
     		  	      	</div>
     	  	  	    </div>
     	  	      </div>
@@ -57,4 +131,7 @@
 				</a>
 			</div>
 	</div>
+{% endblock %}
+{% block other_page_script %}
+<script src="{% static 'js/cricket_center/match.js'%}"></script>\
 {% endblock %}

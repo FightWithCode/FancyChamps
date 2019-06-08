@@ -52,5 +52,3 @@ $(".4On1Class > button").click(function(){
     $(this).text($(this).text() == "Show More Leagues!" ? "Show Less" : "Show More Leagues!");
 });
 
-
-

@@ -173,6 +173,60 @@ class PlayerDetail(models.Model):
         return self.player_name
 
 
+class NZAFGTeam(models.Model):
+    Keeper = models.CharField(max_length=255, default="")
+    Player2 = models.CharField(max_length=255, default="")
+    Player3 = models.CharField(max_length=255, default="")
+    Player4 = models.CharField(max_length=255, default="")
+    Player5 = models.CharField(max_length=255, default="")
+    Player6 = models.CharField(max_length=255, default="")
+    Player7 = models.CharField(max_length=255, default="")
+    Player8 = models.CharField(max_length=255, default="")
+    Player9 = models.CharField(max_length=255, default="")
+    Player10 = models.CharField(max_length=255, default="")
+    Player11 = models.CharField(max_length=255, default="")
+    Captain = models.CharField(max_length=255, default=" ")
+    Vice_Captain = models.CharField(max_length=255, default=" ")
+
+    Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+
+    total_batsmen = models.IntegerField(default=4)
+    total_allrounders = models.IntegerField(default=3)
+    total_bowlers = models.IntegerField(default=3)
+    team_no = models.IntegerField(default=1)
+    username_of_player = models.CharField(max_length=64)
+    # total_credits_used = models.IntegerField(default=100)
+    total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    match_slug = models.CharField(max_length=100)
+    full_team_name = models.CharField(max_length=255, default="Something")
+
+    def save(self, *args, **kwargs):
+        self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
+        super(NZAFGTeam, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def __unicode__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def update_total_team_points(self, user, team_no, match_slug):
+        self.total_team_points = 100
+        self.save()
+
+
 class ContestDetail(models.Model):
     contest_of_match = models.ForeignKey(MatchDetail)
     contest_name = models.CharField(max_length=100)
@@ -185,10 +239,13 @@ class ContestDetail(models.Model):
     joined_percentage = models.IntegerField(default=0)
     contest_category = models.CharField(max_length=100)
     multiple_entry = models.BooleanField(default=False)
+    multiple_entry_text = models.CharField(max_length=5,default="",blank=True)
     filled_status = models.BooleanField(default=False)
     bonus_contest = models.BooleanField(default=False)
+    bonus_contest_text = models.CharField(max_length=5,default="", blank=True)
     free_contest = models.BooleanField(default=False)
     confirmed = models.BooleanField(default=False)
+    confirmed_text = models.CharField(max_length=5,default="", blank=True)
     prize_dist_type = models.CharField(max_length=100)
     bonus_percent = models.IntegerField(default = 0)
     cancelled = models.BooleanField(default=False)
@@ -201,6 +258,12 @@ class ContestDetail(models.Model):
             self.contest_slug = ContestSlugGenerator(self.contest_name, self.contest_category, self.contest_prize, self.contest_fee)
         if self.contest_size == self.total_player_joined:
             self.filled_status = True
+        if self.multiple_entry == True:
+            self.multiple_entry_text = "M"
+        if self.bonus_contest == True:
+            self.bonus_contest_text = "B"
+        if self.confirmed == True:
+            self.confirmed_text = "C"
         super(ContestDetail, self).save(*args, **kwargs)
 
     def __str__(self):
