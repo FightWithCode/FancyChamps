@@ -576,18 +576,29 @@ body
 }
 
 .PayoutDiv{
-  line-height:18px;
-  padding: 25px;
-  position:fixed;
-  width: 200px;
-  display:none;
-  background-color:#29BB1C;
-  top:50%;
-  left:50%;
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-  z-index:10;
+  position: fixed;
+  width: 580px;
+  height: 100%;
+  z-index: 1;
+  display: none;
+  background: rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+.PayoutRealDiv{
+  position: absolute;
+  background-color: #323641;
+  bottom:100px;
+  width:580px;
+  z-index:2;
+}
+
+.PayoutDivInfoContainer{
+  position:relative;
+  width:70%;
+  left:15%;
+  color:#F4F4F4;
+  white-space: initial; 
 }
 
 .RankingHeader{
@@ -1630,6 +1641,17 @@ input[type=radio]:checked + label {
   color:#F3F4F4;
 }
 
+.ClosePayoutDiv{
+  position: relative;
+  font-size:24px;
+  top:8px;
+  width:100%;
+  cursor: pointer;
+  display: inline-block;
+  color:#F3F4F4;
+}
+
+
 .CloseTeamPreviewContainer{
   position: relative;
   width:100%;
@@ -1698,6 +1720,13 @@ input[type=radio]:checked + label {
 }
 
 .JoinNowHeader{
+  position: relative;
+  top:13px;
+  display: inline-block;
+  color:#F3F4F4;
+}
+
+.PayoutHeader{
   position: relative;
   top:13px;
   display: inline-block;
