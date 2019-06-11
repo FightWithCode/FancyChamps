@@ -17,7 +17,7 @@ class MatchDetail(models.Model):
     live = models.BooleanField(default=False)
     short_team_one = models.CharField(default='IND', max_length=5)
     short_team_two = models.CharField(default='AUS', max_length=5)
-
+    initial_contest_created = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         print(self.match_date)
@@ -26,126 +26,127 @@ class MatchDetail(models.Model):
         if self.match_slug == "Test" or "":
             self.match_slug = MatchSlugGenerator(self.match_name, self.team_one, self.team_two, self.match_date)
         super(MatchDetail, self).save(*args, **kwargs)
-        contest_obj_1 = ContestDetail(
-                            contest_of_match=self,
-                            contest_name="₹1000 Winnnings",
-                            contest_slug="Test",
-                            contest_prize=1000,
-                            contest_fee = 12,
-                            contest_size = 100,
-                            contest_winners = 40,
-                            total_player_joined = 0,
-                            joined_percentage = 0,
-                            contest_category = "Great and Grand Winning",
-                            multiple_entry = True,
-                            filled_status = False,
-                            bonus_contest = True,
-                            free_contest = False,
-                            confirmed = False,
-                            prize_dist_type = "Winners40OutOf100Fee12",
-                            bonus_percent = 50
-                        )
-        contest_obj_1.save()
-        contest_obj_2 = ContestDetail(
-                            contest_of_match=self,
-                            contest_name="₹1500 Winnnings",
-                            contest_slug="Test",
-                            contest_prize=1500,
-                            contest_fee = 49,
-                            contest_size = 35,
-                            contest_winners = 20,
-                            total_player_joined = 0,
-                            joined_percentage = 0,
-                            contest_category = "Great and Grand Winning",
-                            multiple_entry = True,
-                            filled_status = False,
-                            bonus_contest = True,
-                            free_contest = False,
-                            confirmed = False,
-                            prize_dist_type = "Winners20OutOf35Fee49",
-                            bonus_percent = 0
-                        )
-        contest_obj_2.save()
-        contest_obj_3 = ContestDetail(
-                            contest_of_match=self,
-                            contest_name="₹100 Winnnings",
-                            contest_slug="Test",
-                            contest_prize=100,
-                            contest_fee = 28,
-                            contest_size = 4,
-                            contest_winners = 1,
-                            total_player_joined = 0,
-                            joined_percentage = 0,
-                            contest_category = "Head to Head",
-                            multiple_entry = False,
-                            filled_status = False,
-                            bonus_contest = False,
-                            free_contest = False,
-                            confirmed = True,
-                            prize_dist_type = "ToOne",
-                            bonus_percent = 0
-                        )
-        contest_obj_3.save()
-        contest_obj_4 = ContestDetail(
-                            contest_of_match=self,
-                            contest_name="₹50 Winnnings",
-                            contest_slug="Test",
-                            contest_prize=50,
-                            contest_fee = 28,
-                            contest_size = 2,
-                            contest_winners = 1,
-                            total_player_joined = 0,
-                            joined_percentage = 0,
-                            contest_category = "Head to Head",
-                            multiple_entry = False,
-                            filled_status = False,
-                            bonus_contest = False,
-                            free_contest = False,
-                            confirmed = True,
-                            prize_dist_type = "ToOne",
-                            bonus_percent = 0
-                        )
-        contest_obj_4.save()
-        contest_obj_5 = ContestDetail(
-                            contest_of_match=self,
-                            contest_name="₹400 Winnnings",
-                            contest_slug="Test",
-                            contest_prize=400,
-                            contest_fee = 100,
-                            contest_size = 4,
-                            contest_winners = 1,
-                            total_player_joined = 0,
-                            joined_percentage = 0,
-                            contest_category = "4 On 1",
-                            multiple_entry = False,
-                            filled_status = False,
-                            bonus_contest = False,
-                            free_contest = False,
-                            confirmed = True,
-                            prize_dist_type = "ToOne",
-                            bonus_percent = 0
-                        )
-        contest_obj_5.save()
-        contest_obj_6 = ContestDetail(
-                            contest_of_match=self,
-                            contest_name="₹100 Winnnings",
-                            contest_slug="Test",
-                            contest_prize=100,
-                            contest_fee = 55,
-                            contest_size = 2,
-                            contest_winners = 1,
-                            total_player_joined = 0,
-                            joined_percentage = 0,
-                            contest_category = "Head to Head",
-                            multiple_entry = False,
-                            filled_status = False,
-                            bonus_contest = False,
-                            free_contest = False,
-                            confirmed = True,
-                            prize_dist_type = "ToOne",
-                            bonus_percent = 0
-                        )
-        contest_obj_6.save()
+        if(self.initial_contest_created == False):
+            contest_obj_1 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹1000 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=1000,
+                                contest_fee = 12,
+                                contest_size = 100,
+                                contest_winners = 40,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "Great and Grand Winning",
+                                multiple_entry = True,
+                                filled_status = False,
+                                bonus_contest = True,
+                                free_contest = False,
+                                confirmed = False,
+                                prize_dist_type = "Winners40OutOf100Fee12",
+                                bonus_percent = 50
+                            )
+            contest_obj_1.save()
+            contest_obj_2 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹1500 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=1500,
+                                contest_fee = 49,
+                                contest_size = 35,
+                                contest_winners = 20,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "Great and Grand Winning",
+                                multiple_entry = True,
+                                filled_status = False,
+                                bonus_contest = True,
+                                free_contest = False,
+                                confirmed = False,
+                                prize_dist_type = "Winners20OutOf35Fee49",
+                                bonus_percent = 0
+                            )
+            contest_obj_2.save()
+            contest_obj_3 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹100 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=100,
+                                contest_fee = 28,
+                                contest_size = 4,
+                                contest_winners = 1,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "4 On 1",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = False,
+                                confirmed = True,
+                                prize_dist_type = "ToOne",
+                                bonus_percent = 0
+                            )
+            contest_obj_3.save()
+            contest_obj_4 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹50 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=50,
+                                contest_fee = 28,
+                                contest_size = 2,
+                                contest_winners = 1,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "Head to Head",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = False,
+                                confirmed = True,
+                                prize_dist_type = "ToOne",
+                                bonus_percent = 0
+                            )
+            contest_obj_4.save()
+            contest_obj_5 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹400 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=400,
+                                contest_fee = 100,
+                                contest_size = 4,
+                                contest_winners = 1,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "4 On 1",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = False,
+                                confirmed = True,
+                                prize_dist_type = "ToOne",
+                                bonus_percent = 0
+                            )
+            contest_obj_5.save()
+            contest_obj_6 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹100 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=100,
+                                contest_fee = 55,
+                                contest_size = 2,
+                                contest_winners = 1,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "Head to Head",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = False,
+                                confirmed = True,
+                                prize_dist_type = "ToOne",
+                                bonus_percent = 0
+                            )
+            contest_obj_6.save()
 
     def __str__(self):
         return self.match_name
@@ -215,6 +216,113 @@ class NZAFGTeam(models.Model):
     def save(self, *args, **kwargs):
         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
         super(NZAFGTeam, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def __unicode__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def update_total_team_points(self, user, team_no, match_slug):
+        self.total_team_points = 100
+        self.save()
+
+class SAWITeam(models.Model):
+    Keeper = models.CharField(max_length=255, default="")
+    Player2 = models.CharField(max_length=255, default="")
+    Player3 = models.CharField(max_length=255, default="")
+    Player4 = models.CharField(max_length=255, default="")
+    Player5 = models.CharField(max_length=255, default="")
+    Player6 = models.CharField(max_length=255, default="")
+    Player7 = models.CharField(max_length=255, default="")
+    Player8 = models.CharField(max_length=255, default="")
+    Player9 = models.CharField(max_length=255, default="")
+    Player10 = models.CharField(max_length=255, default="")
+    Player11 = models.CharField(max_length=255, default="")
+    Captain = models.CharField(max_length=255, default=" ")
+    Vice_Captain = models.CharField(max_length=255, default=" ")
+
+    Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+
+    total_batsmen = models.IntegerField(default=4)
+    total_allrounders = models.IntegerField(default=3)
+    total_bowlers = models.IntegerField(default=3)
+    team_no = models.IntegerField(default=1)
+    username_of_player = models.CharField(max_length=64)
+    # total_credits_used = models.IntegerField(default=100)
+    total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    match_slug = models.CharField(max_length=100)
+    full_team_name = models.CharField(max_length=255, default="Something")
+
+    def save(self, *args, **kwargs):
+        self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
+        super(SAWITeam, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def __unicode__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def update_total_team_points(self, user, team_no, match_slug):
+        self.total_team_points = 100
+        self.save()
+
+
+class INDAUSTeam(models.Model):
+    Keeper = models.CharField(max_length=255, default="")
+    Player2 = models.CharField(max_length=255, default="")
+    Player3 = models.CharField(max_length=255, default="")
+    Player4 = models.CharField(max_length=255, default="")
+    Player5 = models.CharField(max_length=255, default="")
+    Player6 = models.CharField(max_length=255, default="")
+    Player7 = models.CharField(max_length=255, default="")
+    Player8 = models.CharField(max_length=255, default="")
+    Player9 = models.CharField(max_length=255, default="")
+    Player10 = models.CharField(max_length=255, default="")
+    Player11 = models.CharField(max_length=255, default="")
+    Captain = models.CharField(max_length=255, default=" ")
+    Vice_Captain = models.CharField(max_length=255, default=" ")
+
+    Keeper_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player8_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player9_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player10_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player11_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+
+    total_batsmen = models.IntegerField(default=4)
+    total_allrounders = models.IntegerField(default=3)
+    total_bowlers = models.IntegerField(default=3)
+    team_no = models.IntegerField(default=1)
+    username_of_player = models.CharField(max_length=64)
+    # total_credits_used = models.IntegerField(default=100)
+    total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    match_slug = models.CharField(max_length=100)
+    full_team_name = models.CharField(max_length=255, default="Something")
+
+    def save(self, *args, **kwargs):
+        self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
+        super(INDAUSTeam, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username_of_player + "[" + str(self.team_no) + "]"

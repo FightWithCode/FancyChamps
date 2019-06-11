@@ -13,8 +13,17 @@
 	  <div class="color-overlay"></div>
 	</div>
 	<div class="MatchAreaForMatch">
-	    <div class="PayoutDiv">
-	    </div>
+	    <div class="PayoutDiv" id="PayoutDiv">
+	  	<div class="PayoutRealDiv">
+	  		<center><i class="fa fa-chevron-circle-down ClosePayoutDiv"></i>
+			<div class="PayoutDivHeaderContainer">
+				<h3 class="PayoutHeader">Prize break-up</h3>
+			</div>
+			<hr style="width:95%;border-color:#F3F4F4"></center>
+			<div class="PayoutDivInfoContainer">
+			</div>
+	  	</div>
+	  </div>
 		<div class="TeamPreviewContainer">
 			<center>
 				<i class="fa fa-chevron-circle-down CloseTeamPreviewContainer"></i>
@@ -78,7 +87,7 @@
 	  	</center>
 	  </div>
 	  <div class="ContestInfoCard">
-	  	<h5 class="ContestNameOfContestInfoCard LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest_obj.contest_slug %}">{{contest_obj.contest_name}}</h5>
+	  	<h5 class="ContestNameOfContestInfoCard LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest_obj.contest_slug %}">{{contest_obj.contest_name}}<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span></h5>
 	  	<div class="ContestInfoHeaderContainer">
 	  		<h6 class="InfoHeaderOfContestInfoCard">Fee</h6>
 	  		<h6 class="InfoHeaderOfContestInfoCard">Size</h6>

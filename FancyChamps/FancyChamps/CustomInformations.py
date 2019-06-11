@@ -322,7 +322,7 @@ def DistributeWinning(contest_slug, prize_dist_type, contest_winners):
                 # tie_amount = tie_amount + prize_dict["Rank"+str(joined.rank)]
                 # print("tie" + str(tie_amount))
                 # print("tiecount" + str(tie_count))
-                winning_amount = tie_amount / (tie_count)
+                winning_amount = tie_amount // (tie_count)
                 for j in all_joined[tie_start - 1: i + 1]:
                     print("Executed")
                     print(winning_amount)
@@ -332,6 +332,7 @@ def DistributeWinning(contest_slug, prize_dist_type, contest_winners):
                     print(j.winnings, winning_amount)
                 tie_amount = 0
                 tie_start = None
+                tie_count = 1
                 continue;
             if (tie_amount is 0) and (tie_start is None):
                 print("No Teu")
@@ -398,6 +399,14 @@ def AddMoneyToWidhrawable(match_slug):
         user_obj.profile.widhdrawable_balance = user_obj.profile.widhdrawable_balance + Decimal(obj.winnings)
         user_obj.save()
         user_obj.profile.save()
+        if(obj.winnings>0):
+            new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
+                                                        transaction_amt=obj.winnings,
+                                                        transact_user=user_obj.username,
+                                                        transaction_message="Won a Contest",
+                                                        transaction_type="added",
+            )
+            new_trans_obj.save()
 # def RefundContestAmount(contest):
 #     all_joined = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug).order_by('-total_team_points')
 #     for i, joined in enumerate(all_joined):

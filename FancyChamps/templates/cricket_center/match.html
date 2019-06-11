@@ -223,7 +223,7 @@
     		 {% endfor %}
     		 <button class="SeeMoreButton">Show More Leagues!</button>
           </div>
-		  <div class="footer">
+          <div class="footer">
 			<!--<center><div style="position:relative; display:inline-block; width:2px; height:40px; top:5px; background-color:green;"></div></center>	-->
 			<a href="{% url 'cricket_center:my_teams' match_slug=match_slug %}"><button class="FooterInfoLeft btn">
 				My Teams : {{ total_teams.count }}
@@ -231,12 +231,13 @@
 			<a href="{% url 'cricket_center:joined_contests' match_slug=match_slug %}"><button class="FooterInfoRight btn">
 				Contests Joined : {{contest_joined|length}}
 			</button></a>
-		  </div>
+          </div>
 		{% endif %}
 	</div>
+
 
 {% endblock %}
 
 {% block other_page_script %}
-<script src="{% static 'js/cricket_center/match.js'%}"></script>\
+<script src="{% static 'js/cricket_center/match.js'%}"></script>
 {% endblock %}

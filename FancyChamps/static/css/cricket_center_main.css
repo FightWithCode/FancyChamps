@@ -28,12 +28,10 @@
 }
 
 .RefundInfo{
-    width: -webkit-calc(100% - 20px);
-    width:    -moz-calc(100% - 20px);
-    width:         calc(100% - 20px);
+    width:550px;
     left:10px;
-    position:absolute;
-    bottom:0px;
+    position:fixed;
+    bottom:45px;
     background-color:#C21807;
     padding:5px;
 }
@@ -320,9 +318,9 @@
   display: inline-block;
   width: 580px;
   display: inline-block;
-  height: -moz-calc(100vh - 100px);
-  height: -webkit-calc(100vh - 100px);
-  height: calc(100vh - 100px);
+  height: -moz-calc(100vh - 56px);
+  height: -webkit-calc(100vh - 56px);
+  height: calc(100vh - 56px);
   overflow-x: auto;
   left: 0%;
   background-color: #F3F4F4;
@@ -375,8 +373,13 @@
   position:relative;width:49%;
 }
 
+.ViewButtonLive{
+    position:relative;
+    width:100%;
+}
+
 .JoinAgainButton{
-  position:relative;width:49%;left:2%; 
+  position:relative;width:49%;left:2%;
 }
 
 .GoBackToMatch{
@@ -415,7 +418,7 @@
   background: url('../images/backoneOri.jpg') no-repeat center / cover;
   width: 100vw;
   height: 100%;
-  position: fixed;
+  position: absolute;
   margin: 0;
   top: 0%;
   content: "";
@@ -598,7 +601,7 @@ body
   width:70%;
   left:15%;
   color:#F4F4F4;
-  white-space: initial; 
+  white-space: initial;
 }
 
 .RankingHeader{
@@ -1741,6 +1744,18 @@ input[type=radio]:checked + label {
     top:64%;
     transform: translateY(-50%);
   }
+  .RefundInfo{
+    width: -moz-calc(100vw - 30px);
+    width: -webkit-calc(100vw - 30px);
+    width: calc(100vw - 30px);
+  }
+
+  .footer{
+      position: fixed;
+      width: 100%;
+      height: 40px;
+  }
+
 
   /*.TeamFirst{*/
   /*    position: absolute;*/
@@ -1993,18 +2008,22 @@ input[type=radio]:checked + label {
   .ButtonContainer{
     width: 100%;
   }
-  .footer{
-    width: 100%;
-    height: 40px;
-    margin-top: -10px;
-  }
   .JoinNowContainer{
     width: 100%;
   }
+
+  .PayoutDiv{
+      width:100%;
+  }
+
   .WidhdrawMoney{
     width:100%;
   }
   .JoinNowRealDiv{
+    width: 100%;
+    bottom:85px;
+  }
+  .PayoutRealDiv{
     width: 100%;
     bottom:85px;
   }
@@ -2023,6 +2042,12 @@ input[type=radio]:checked + label {
     left: 10px;
   }
 
+  .footer{
+      position: fixed;
+      width: 100%;
+      height: 40px;
+  }
+
   /*.TeamFirst{*/
   /*    position: absolute;*/
   /*    top: 20%  !important;*/
@@ -2030,6 +2055,11 @@ input[type=radio]:checked + label {
 
   .ErrorClass{
       width:100%;
+  }
+  .RefundInfo{
+    width: -moz-calc(100vw - 30px);
+    width: -webkit-calc(100vw - 30px);
+    width: calc(100vw - 30px);
   }
 
   .CreateTeamTab{
@@ -2224,18 +2254,23 @@ input[type=radio]:checked + label {
   .ButtonContainer{
     width: 100%;
   }
-  .footer{
-    width: 100%;
-    height: 40px;
-    margin-top: -10px;
-  }
+
   .JoinNowContainer{
     width: 100%;
   }
+
+  .PayoutDiv{
+      width:100%;
+  }
+
   .WidhdrawMoney{
     width:100%;
   }
   .JoinNowRealDiv{
+    width: 100%;
+    bottom:85px;
+  }
+  .PayoutRealDiv{
     width: 100%;
     bottom:85px;
   }

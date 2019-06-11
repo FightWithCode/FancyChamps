@@ -1,7 +1,28 @@
 $('.LeagueName').click(function(){
-	$('.PayoutDiv').toggle()
-	$('.PayoutDiv').html("")
-	//$('.PayoutDiv'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')).toggle()
+	var div = $(".PayoutDiv");
+    var height = div.css({
+        display: "inline"
+    }).height();
+
+    div.css({
+        overflow: "hidden",
+        marginTop: height,
+        height: 0
+    }).animate({
+        marginTop: 0,
+        height: height
+    }, 500, function () {
+        $(this).css({
+            display: "inline-block",
+            overflow: "",
+            height: "",
+            marginTop: ""
+        });
+    });
+
+	// $('.PayoutDiv').toggle()
+	$('.PayoutDivInfoContainer').html("")
+	// //$('.PayoutDiv'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')).toggle()
 	//$('.LiContainer'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')).html("")
 	//class_is = '.LiContainer'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')
 	$.ajax({
@@ -9,14 +30,15 @@ $('.LeagueName').click(function(){
         dataType: 'json',
         success: function (data) {
 			console.log(typeof(data))
-			$('.PayoutDiv').append("<center><div style=\"position:relative;width:130%;left:-15%;line-height:14px;\"><span>NOTE : In case of the contest does not get filled then the total prize will be distributed to First Rank(Rank 1)</span><br>&nbsp;</center>")
+			$('.PayoutDivInfoContainer').append("<center>NOTE : In case of the contest does not get filled then the total prize will be distributed to <b>First Rank(Rank 1)</b></center>")
 			for (var key in data) {
     			if (data.hasOwnProperty(key) && key!="id") {
 					console.log(typeof(key))
 					new_rank = key.replace('Rank', '')
 					new_rank = new_rank.replace('To', '-')
         			console.log(new_rank + " : " + data[key]+"₹");
-					$('.PayoutDiv').append("<li style=\"list-style-type:none\">Rank " + new_rank + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<span style=\"float:right\">" + data[key] + "₹" + "</span></li>")
+					$('.PayoutDivInfoContainer').append("<li style=\"list-style-type:none\">Rank " + new_rank + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<span style=\"float:right\">" + data[key] + "₹" + "</span></li>")
+					$('.PayoutDivInfoContainer').append()
     			}
 			}
         }
@@ -206,6 +228,30 @@ $(".CloseJoinNowContainer").click(function () {
     });
 });
 
+$(".ClosePayoutDiv").click(function () {
+	console.log("Print Me")
+    var div = $(".PayoutDiv");
+
+    var height = div.height();
+
+    div.css({
+        overflow: "hidden",
+        marginTop: 0,
+        height: height
+    }).animate({
+        marginTop: height,
+        height: 0
+    }, 500, function () {
+        $(this).css({
+            display: "none",
+            overflow: "",
+            height: "",
+            marginTop: ""
+        });
+    });
+});
+
+
 
 //For getting CSRF token
 function getCookie(name) {
@@ -296,3 +342,11 @@ $('.PayAndJoinNow').click(function () {
 		$('#sub_max').delay(3000).fadeOut(1000);
 	}
 });
+
+window.onload = function () {
+	$(".ContestTypes").each(function(i) {
+		if($(this).html()==""){
+			$(this).removeClass("ContestTypes")
+		}
+    });
+}
