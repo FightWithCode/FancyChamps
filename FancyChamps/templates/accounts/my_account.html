@@ -8,6 +8,8 @@
 {% endblock stylesheets %}
 
 {% block other_page_content %}
+  <div id="sub_max" class="ErrorAccount">
+  </div>
 
   <div class="MainBackground">
     <div class="color-overlay">
@@ -86,7 +88,7 @@
           <center>
             <form method="POST">
               <input type="number" placeholder="Enter Amount" id="WidhdrawCashAmount"></input><br>
-              <button type="submit" class="WidhdrawButton">Widhdraw</button>
+              <button type="submit" class="WidhdrawButton">Withdraw</button>
             </form>
             <button class="WidhdrawCashButton">100</button>
             <button class="WidhdrawCashButton">250</button>
@@ -118,7 +120,7 @@
           <h6>{{user.username}}</h6>
           <!--<h6>{{total_balance}}₹<span class="AddCash">ADD&nbsp;CASH</span></h6>-->
           <h6>{{user.profile.balance}}₹<span class="AddCash">ADD&nbsp;CASH</span></h6>
-          <h6>{{user.profile.widhdrawable_balance}}₹<span class="Widhdraw">WIDHDRAW</span></h6>
+          <h6>{{user.profile.widhdrawable_balance}}₹<span class="Widhdraw">WITHDRAW</span></h6>
           <h6>{{user.profile.bonus}}₹</h6>
         </div>
       </div>

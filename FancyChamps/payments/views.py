@@ -171,7 +171,9 @@ def CheckBalanceView(request):
     user_profile = Profile.objects.get(user__username__exact=request.user.username)
     data = {
         "widhdrawable_balance" : user_profile.widhdrawable_balance,
-        "username" : request.user.username
+        "username" : request.user.username,
+        "minimum" : 100,
+        "max" : 10000,
     }
     return JsonResponse(data)
 
@@ -185,15 +187,32 @@ def SubmitWidhdrawRequestView(request):
         user=request.user.username,
         widhdraw_amount=cash,
     )
-    if(cash<=user_profile.widhdrawable_balance):
+    if(cash<=user_profile.widhdrawable_balance and cash>=100 and cash<10000):
         user_profile.widhdrawable_balance = user_profile.widhdrawable_balance - cash
-        user_profile.save()
-        data ={
-            "request":True
-        }
+        transaction_obj = TransactionDetail(
+                                transaction_id = ''.join(random.SystemRandom().choice(string.ascii_lowercase  + string.digits) for _ in range(15)),
+                                transaction_amt = Decimal(cash),
+                                transaction_status = "pending",
+                                transact_user = request.user.username,
+                                transaction_message = "Withdrawn " + str(cash),
+                                transaction_type = "deducted",
+                          )
+        try:
+            transaction_obj.save()
+            user_profile.save()
+            widhdraw_obj.save()
+            data ={
+                "request":True
+            }
+            print("HelloWOelr")
+        except:
+            data ={
+                "request":False
+            }
+        
     else:
         data ={
             "request":False
         }
-    widhdraw_obj.save()
+    # print(data)
     return JsonResponse(data)

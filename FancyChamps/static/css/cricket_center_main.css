@@ -14,6 +14,29 @@
   padding-right:5px;
 }
 
+.ContestTypesJs{
+  position:relative;
+  border-radius:2px;
+  border:solid 1px;
+  padding-left:5px;
+  padding-right:5px;
+  /*color:green;*/
+  font-size:20px;
+}
+
+.ContestTypeInfo{
+  position:absolute;
+  left:50px;
+}
+
+.PayoutDivContestTypes{
+  position:relative;
+  color:#F4F4F4;
+  width:70%;
+  left:15%;
+  margin-bottom: 15px;
+}
+
 .AddEmailInfoProvider{
   position: relative;
   width: 100%;
@@ -1199,6 +1222,21 @@ input[type=radio]:checked + label {
   display: none;
 }
 
+
+.ErrorAccount{
+    position:absolute;
+    top:0px;
+    width:580px;
+    height:50px;
+    display:none;
+    background-color: #C21807;
+    z-index:200000;
+    text-align: center;
+    font-size: 18px;
+    padding-top: 12px; 
+}
+
+
 /***************ALL NEW CONTENT*****************/
 .CustomInput{
   display: none;
@@ -1744,6 +1782,12 @@ input[type=radio]:checked + label {
     top:64%;
     transform: translateY(-50%);
   }
+
+  .ErrorAccount{
+    width:100%;
+    height:52px;
+  }
+
   .RefundInfo{
     width: -moz-calc(100vw - 30px);
     width: -webkit-calc(100vw - 30px);
@@ -2040,6 +2084,10 @@ input[type=radio]:checked + label {
     position: relative;
     top: -10px  !important;
     left: 10px;
+  }
+
+  .ErrorAccount{
+    width:100%;
   }
 
   .footer{

@@ -393,7 +393,7 @@ def DistributeWinning(contest_slug, prize_dist_type, contest_winners):
 
 
 def AddMoneyToWidhrawable(match_slug):
-    all_joined = JoiningDetail.objects.all()
+    all_joined = JoiningDetail.objects.all(match_slug__exact=match_slug)
     for obj in all_joined:
         user_obj = User.objects.filter(username__exact=obj.joined_user).first()
         user_obj.profile.widhdrawable_balance = user_obj.profile.widhdrawable_balance + Decimal(obj.winnings)

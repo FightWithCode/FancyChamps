@@ -171,7 +171,7 @@ def MyAccountView(request):
     join_transaction_obj = JoiningTransactionDetail.objects.filter(transact_user__exact=request.user.username)
     transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username)#.order_by("-transaction_time")
     sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj), key=lambda obj: obj.transaction_time, reverse=True)
-    trans_obj = TransactionDetail.objects.filter(Q(added_to_user__exact=False), Q(transact_user__exact=request.user.username))
+    trans_obj = TransactionDetail.objects.filter(Q(added_to_user__exact=False), Q(transact_user__exact=request.user.username), Q(transaction_status__exact="added"))
     print(len(trans_obj))
     if len(trans_obj)>=1:
         print(trans_obj)

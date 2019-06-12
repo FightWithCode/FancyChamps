@@ -127,6 +127,9 @@ def ViewPayout(request, contest_slug):
     data = sorted(data.items(),key=operator.itemgetter(1),reverse=True)
     print(data)
     dict_data = OrderedDict(data)
+    dict_data["multiple_entry"] = contest_obj.multiple_entry
+    dict_data["bonus_contest"] = contest_obj.bonus_contest
+    dict_data["confirmed"] = contest_obj.confirmed
     return JsonResponse(dict_data)
 
 
