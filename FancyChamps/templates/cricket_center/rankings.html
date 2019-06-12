@@ -13,17 +13,20 @@
 	  <div class="color-overlay"></div>
 	</div>
 	<div class="MatchAreaForMatch">
-	    <div class="PayoutDiv" id="PayoutDiv">
-	  	<div class="PayoutRealDiv">
-	  		<center><i class="fa fa-chevron-circle-down ClosePayoutDiv"></i>
-			<div class="PayoutDivHeaderContainer">
-				<h3 class="PayoutHeader">Prize break-up</h3>
-			</div>
-			<hr style="width:95%;border-color:#F3F4F4"></center>
-			<div class="PayoutDivInfoContainer">
-			</div>
-	  	</div>
-	  </div>
+		<div class="PayoutDiv" id="PayoutDiv">
+		  	<div class="PayoutRealDiv">
+		  		<center><i class="fa fa-chevron-circle-down ClosePayoutDiv"></i>
+				<div class="PayoutDivHeaderContainer">
+					<h3 class="PayoutHeader">Prize break-up</h3>
+				</div>
+				<hr style="width:95%;border-color:#F3F4F4"></center>
+				<div class="PayoutDivInfoContainer">
+				</div>
+				<hr style="width:95%;border-color:#F3F4F4"></center>
+				<div class="PayoutDivContestTypes">
+				</div>
+		  	</div>
+		</div>
 		<div class="TeamPreviewContainer">
 			<center>
 				<i class="fa fa-chevron-circle-down CloseTeamPreviewContainer"></i>
@@ -103,7 +106,7 @@
 		  <div class="RankingHeader">
 		  	<h6 class="RankingHeaderRankPosition">RANK</h6>
 		  	{% if not match_obj.live %}
-			    <h6 class="RankingHeaderIfTeam">TEAM</h6>
+			    <h6 class="RankingHeaderTeam">TEAM</h6>
 		  	{% else %}
 		  		<h6 class="RankingHeaderTeam">TEAM</h6>
 		  	{% endif %}

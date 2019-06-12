@@ -13,9 +13,20 @@
 	  <div class="color-overlay"></div>
 	</div>
 	<div class="MatchAreaForMatch">
-      <div class="PayoutDiv">
-	  </div>
-
+      <div class="PayoutDiv" id="PayoutDiv">
+        <div class="PayoutRealDiv">
+            <center><i class="fa fa-chevron-circle-down ClosePayoutDiv"></i>
+            <div class="PayoutDivHeaderContainer">
+                <h3 class="PayoutHeader">Prize break-up</h3>
+            </div>
+            <hr style="width:95%;border-color:#F3F4F4"></center>
+            <div class="PayoutDivInfoContainer">
+            </div>
+            <hr style="width:95%;border-color:#F3F4F4"></center>
+            <div class="PayoutDivContestTypes">
+            </div>
+        </div>
+      </div>
   	  <div class="OwnMatchCard">
 	  	<center>
 	  		<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:cricket_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a></h4>
@@ -30,7 +41,7 @@
 			<div class="LeagueArea row">
 	  	    <div class="row col-xs-12">
 	  	      <div class="col-xs-12 ContestJoinedCard">
-				<center><h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_name}}</h5></center>
+				<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
 				<hr class="HrTagInsideContestJoinedCard">
 	  	  	    <div class="LeagueInfoContainer">
 	  	  	    	<h6>Total Winnings : <span style="float:right;">₹{{contest.contest_prize}}</span></h6>
