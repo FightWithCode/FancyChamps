@@ -61,11 +61,13 @@
       <div class="MainConrainerOfInfoContainer">
         <div class="ProfileInformationContainer">
           <h6 class="InfoHeaderContainer"><span class="fa fa-gamepad"></span> MATCH PLAYED</h6>
+          <!-- <h6 class="InfoHeaderContainer"><span class="fa fa-gamepad"></span> CONTEST JOINED</h6> -->
           <h6 class="InfoHeaderContainer"><span class="fa fa-trophy"></span> WINS</h6>
           <h6 class="InfoHeaderContainer"><span class="fa fa-percent"></span> WIN PERCENTAGE</h6>
         </div>
         <div class="InformationContainer">
           <h6>{{user.profile.match_played}}</h6>
+          <!-- <h6>{{user.profile.contest_played}}</h6> -->
           <h6>{{user.profile.total_wins}}</h6>
           <h6>{% widthratio user.profile.total_wins user.profile.match_played 100 %}%</h6>
         </div>
@@ -73,9 +75,9 @@
       <h5 class="InformationHeader">Wallet</h5>
       <div  class="MainConrainerOfInfoContainer">
         <div class="ProfileInformationContainer">
-          <h6 class="InfoHeaderContainer"> WINNINGS</h6>
+          <h6 class="InfoHeaderContainer"> DEPOSITED</h6>
           <h6 class="InfoHeaderContainer"> BONUS</h6>
-          <h6 class="InfoHeaderContainer"> WIDHRAWABLE</h6>
+          <h6 class="InfoHeaderContainer"> WINNINGS</h6>
         </div>
         <div class="InformationContainer">
           <h6>{{user.profile.balance}}₹</h6>

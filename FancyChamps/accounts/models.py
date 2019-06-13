@@ -128,6 +128,7 @@ class Profile(models.Model):
     bonus = models.DecimalField(max_digits=4, decimal_places=2, default=25)
     widhdrawable_balance = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     match_played = models.IntegerField(default=0)
+    contest_played = models.IntegerField(default=0)
     total_wins = models.IntegerField(default=0)
     is_email_confirmed = models.BooleanField(default=False)
 

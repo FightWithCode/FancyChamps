@@ -393,20 +393,60 @@ def DistributeWinning(contest_slug, prize_dist_type, contest_winners):
 
 
 def AddMoneyToWidhrawable(match_slug):
-    all_joined = JoiningDetail.objects.all(match_slug__exact=match_slug)
+    all_joined = JoiningDetail.objects.filter(match_slug__exact=match_slug)
+    list_of_winners = []
     for obj in all_joined:
-        user_obj = User.objects.filter(username__exact=obj.joined_user).first()
-        user_obj.profile.widhdrawable_balance = user_obj.profile.widhdrawable_balance + Decimal(obj.winnings)
-        user_obj.save()
-        user_obj.profile.save()
         if(obj.winnings>0):
-            new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
-                                                        transaction_amt=obj.winnings,
-                                                        transact_user=user_obj.username,
-                                                        transaction_message="Won a Contest",
-                                                        transaction_type="added",
-            )
-            new_trans_obj.save()
+            print("If block")
+            print(list_of_winners)
+            print(obj.joined_user)
+            try:
+                user_obj = User.objects.filter(username__exact=obj.joined_user).first()
+                user_obj.profile.widhdrawable_balance = user_obj.profile.widhdrawable_balance + Decimal(obj.winnings)
+                if obj.joined_user in list_of_winners:
+                    pass
+                else:
+                    print(obj.joined_user)
+                    user_obj.profile.total_wins = user_obj.profile.total_wins + 1
+                    list_of_winners.append(obj.joined_user)
+                user_obj.save()
+                user_obj.profile.save()
+            except: 
+                new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
+                                                            transaction_amt=obj.winnings,
+                                                            transact_user=user_obj.username,
+                                                            transaction_message="Won a Contest",
+                                                            transaction_type="added",
+                )
+                new_trans_obj.save()
+
+def UpdateMatchPlayed(match_slug):
+    list_of_contest = []
+    list_of_user = []
+    all_joined = JoiningDetail.objects.filter(match_slug__exact=match_slug)
+    for joined in all_joined:
+        if (joined.joined_contest_slug in list_of_contest) and (joined.joined_user in list_of_user) and (joined.joined_user in list_of_contest):
+            continue
+        else:
+            # try:
+            user_obj = User.objects.filter(username__exact=joined.joined_user).first()
+            if joined.joined_user in list_of_user:
+                pass
+            else:
+                user_obj.profile.match_played = user_obj.profile.match_played + 1
+                list_of_user.append(joined.joined_user)
+            # user_obj.profile.contest_played = user_obj.profile.contest_played + 1
+            # if (joined.joined_contest_slug in list_of_contest):
+            #     pass
+            # else:
+            #     list_of_contest.append(joined.joined_contest_slug)
+            #     list_of_contest.append(joined.joined_user)
+            user_obj.save()
+            user_obj.profile.save()
+
+            # except:    
+            #     print("something went wrong")
+
 # def RefundContestAmount(contest):
 #     all_joined = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug).order_by('-total_team_points')
 #     for i, joined in enumerate(all_joined):
