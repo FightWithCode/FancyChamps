@@ -22,6 +22,7 @@ $('.LeagueName').click(function(){
 
 	// $('.PayoutDiv').toggle()
 	$('.PayoutDivInfoContainer').html("")
+	$('.PayoutDivContestTypes').html("")
 	// //$('.PayoutDiv'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')).toggle()
 	//$('.LiContainer'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')).html("")
 	//class_is = '.LiContainer'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')
@@ -32,14 +33,22 @@ $('.LeagueName').click(function(){
 			console.log(typeof(data))
 			$('.PayoutDivInfoContainer').append("<center>NOTE : In case of the contest does not get filled then the total prize will be distributed to <b>First Rank(Rank 1)</b></center>")
 			for (var key in data) {
-    			if (data.hasOwnProperty(key) && key!="id") {
+    			if (data.hasOwnProperty(key) && key!="multiple_entry" && key!="confirmed" && key!="id" && key!="bonus_contest") {
 					console.log(typeof(key))
 					new_rank = key.replace('Rank', '')
 					new_rank = new_rank.replace('To', '-')
         			console.log(new_rank + " : " + data[key]+"₹");
 					$('.PayoutDivInfoContainer').append("<li style=\"list-style-type:none\">Rank " + new_rank + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<span style=\"float:right\">" + data[key] + "₹" + "</span></li>")
-					$('.PayoutDivInfoContainer').append()
     			}
+			}
+			if(data.confirmed){
+				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJs\">C</span><span class=\"ContestTypeInfo\">This is a confirmed contest.</span><br>")	
+			}
+			if(data.bonus_contest){
+				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJs\">B</span><span class=\"ContestTypeInfo\">You can use bonus in this contest.</span><br>")	
+			}
+			if(data.multiple_entry){
+				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJs\">M</span><span class=\"ContestTypeInfo\">You can join this contest with multiple teams.</span><br>")	
 			}
         }
     })

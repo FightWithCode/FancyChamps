@@ -116,7 +116,9 @@ $(".CloseJoinNowContainer").click(function () {
 $('.AddCashButton').click(function(event){
     var cash = parseInt($('#CashAmount').val())
     if(isNaN(cash)){
-        alert("Please valid Amount")
+        $('#sub_max').css('display','block');
+        $('#sub_max').html("Please enter a valid Amount");
+        $('#sub_max').delay(3000).fadeOut(1000);
     }
     else{
         console.log("Right Value")
@@ -128,8 +130,12 @@ $('.WidhdrawButton').click(function(event){
     event.preventDefault()
     console.log("I amWorkign")
     var cash = parseInt($('#WidhdrawCashAmount').val())
+    console.log($('#sub_max'))
     if(isNaN(cash)){
-        alert("Please valid Amount")
+        $('#sub_max').fadeIn(1000);
+        $('#sub_max').html("<center>Please enter a valid Amount</center>");
+        console.log($('#sub_max').html())
+        $('#sub_max').delay(3000).fadeOut(1000);
     }
     else{
         $.ajax({
@@ -137,7 +143,8 @@ $('.WidhdrawButton').click(function(event){
             dataType: 'json',
             success: function (data) {
                 console.log(data)
-                if(data.widhdrawable_balance>=cash){
+                console.log(data.widhdrawable_balance,data.minimum,data.max)
+                if(data.widhdrawable_balance>=cash && data.minimum<=cash && data.max>cash){
                     console.log("ajax")
                     $.ajax({
                         url: '/payments/submit',
@@ -145,16 +152,31 @@ $('.WidhdrawButton').click(function(event){
                         data: {'cash': cash},
                         success: function(data){
                             if(data.request){
-                                alert("Request Accepted")
+                                $('#sub_max').css('display','block');
+                                $('#sub_max').css('background-color','green');
+                                $('#sub_max').html("Requested Accepted!");
+                                $('#sub_max').delay(3000).fadeOut();
+                                window.location.href = "https://www.fancychamps.com/accounts/my_account";
                             }
                             else if(!data.request){
-                                alert("Something Went Wrong")
+                                $('#sub_max').css('display','block');
+                                $('#sub_max').html("Something went wrong! Please contact our dedicated team!");
+                                $('#sub_max').delay(3000).fadeOut(1000);
                             }
                         }
                     })
                 }
-                else{
-                    alert("Insufficient Balance")
+                else if(data.widhdrawable_balance<cash){
+                    console.log("Else")
+                    $('#sub_max').css('display','block');
+                    $('#sub_max').html("Insufficient Balance!");
+                    $('#sub_max').delay(3000).fadeOut(1000);
+                }
+                else if(data.minimum>cash || data.max<=cash){
+                    console.log("Else")
+                    $('#sub_max').css('display','block');
+                    $('#sub_max').html("Widhraw between 100 and 10000!");
+                    $('#sub_max').delay(3000).fadeOut(1000);
                 }
             }
         })
@@ -192,7 +214,9 @@ $('.ChoosePaymentTypePaytm').click(function(){
     money_to_add = $('#CashAmount').val()
     var cash = parseInt($('#CashAmount').val())
     if(isNaN(cash)){
-        alert("Please valid Amount")
+        $('#sub_max').css('display','block');
+        $('#sub_max').html("Insufficient Balance!");
+        $('#sub_max').delay(3000).fadeOut(1000);
     }
     else{
         $('.JoinNowContainer').append("<a id=\"MoneyPayButton\" href=\"/payments/payment/?money_to_add=" + money_to_add + "\"></a>")
