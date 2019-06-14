@@ -411,7 +411,6 @@ def AddMoneyToWidhrawable(match_slug):
                     list_of_winners.append(obj.joined_user)
                 user_obj.save()
                 user_obj.profile.save()
-            except: 
                 new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
                                                             transaction_amt=obj.winnings,
                                                             transact_user=user_obj.username,
@@ -419,6 +418,9 @@ def AddMoneyToWidhrawable(match_slug):
                                                             transaction_type="added",
                 )
                 new_trans_obj.save()
+            except Exception as e: 
+                print("Something Went Wrong")
+                print(e)
 
 def UpdateMatchPlayed(match_slug):
     list_of_contest = []
