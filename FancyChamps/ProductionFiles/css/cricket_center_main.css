@@ -359,7 +359,9 @@
   width: calc(100% - 15px);
   line-height:15px;
   margin:0px;
-  color:#29BB1C;
+  color:#F4F4F4;
+  padding-right: 18px;
+  text-align: justify;
 }
 
 .dropdown-link{
@@ -2520,6 +2522,8 @@ input[type=radio]:checked + label {
   color: #F3F4F4;
   background-color: #323641;
   margin-bottom: 2%;
+  padding:10px;
+  text-align: justify;
 }
 
 .MainProfileContent{

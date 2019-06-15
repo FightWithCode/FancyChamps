@@ -75,20 +75,16 @@ def update_total_team_points(match_slug):
             team.save()
 
 
-def PrintMe():
-    print("I m work")
-
-
 def CancellOrApproveContest(match_slug):
     contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
     for contest in contest_obj:
-        if ((not contest.filled_status) and contest.contest_size<=10 and contest.total_player_joined>1):
+        if ((not contest.filled_status) and contest.contest_size<=10 and contest.total_player_joined>1 and (contest.confirmed is True)):
             contest.contest_winners = 1
             contest.prize_dist_type = "ToOne"
             contest.contest_prize = (contest.total_player_joined*contest.contest_fee*90)//100
             contest.contest_name = "₹" + str(contest.contest_prize) + " Winnings"
             contest.save()
-        elif ((not contest.filled_status) and contest.contest_size>10 and contest.total_player_joined>=1):
+        elif ((not contest.filled_status) and (contest.confirmed is False)):
             contest.cancelled = True
             contest.save()
         elif(contest.total_player_joined==0):
@@ -235,7 +231,7 @@ def DistributeWinningToOne(contest_slug):
                 tie_amount = prize
                 print("tie" + str(tie_amount))
                 print("tiecount" + str(tie_count))
-                winning_amount = tie_amount // (tie_count) + 1
+                winning_amount = round(tie_amount / (tie_count), 1)
                 for j in all_joined[tie_start - 1: i + 1]:
                     print("Executed")
                     print(winning_amount)
@@ -248,6 +244,7 @@ def DistributeWinningToOne(contest_slug):
                 tie_start = 0
                 temp_var = None
                 tie_start = None
+                break;
             if (tie_amount is 0) and (tie_start is None):
                 print("No Teu")
                 joined.winnings = prize
@@ -322,7 +319,7 @@ def DistributeWinning(contest_slug, prize_dist_type, contest_winners):
                 # tie_amount = tie_amount + prize_dict["Rank"+str(joined.rank)]
                 # print("tie" + str(tie_amount))
                 # print("tiecount" + str(tie_count))
-                winning_amount = tie_amount // (tie_count)
+                winning_amount = round(tie_amount / (tie_count), 1)
                 for j in all_joined[tie_start - 1: i + 1]:
                     print("Executed")
                     print(winning_amount)
@@ -418,7 +415,7 @@ def AddMoneyToWidhrawable(match_slug):
                                                             transaction_type="added",
                 )
                 new_trans_obj.save()
-            except Exception as e: 
+            except Exception as e:
                 print("Something Went Wrong")
                 print(e)
 
@@ -446,7 +443,7 @@ def UpdateMatchPlayed(match_slug):
             user_obj.save()
             user_obj.profile.save()
 
-            # except:    
+            # except:
             #     print("something went wrong")
 
 # def RefundContestAmount(contest):
