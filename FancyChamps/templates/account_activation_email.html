@@ -1,17 +1,33 @@
 {% load staticfiles %}
 <html>
     <head>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+        <style type="text/css">
+            .MainDiv{position:relative;width:70%;margin-left:10%  !important;}
+            @media only screen and (min-width: 625px) {
+                .MainDiv{width:80%;left:10%  !important;}
+            }
+        </style>
     </head>
     <body>
-        <div style="background-color:#323641;position:relative;width:100%;text-align:center;color:#F4F4F4;padding-top:10px;font-size:20px;padding-bottom:5px;" class="header">Confirm your email</div>
-        <img src="https://www.fancychamps.com/static/images/OriginalLogoBack.png" width="100%" alt="FancyChamps">
-        <p style="font-size:15px;">Hi {{ user.username }},</p>
-        <p style="font-size:15px;">Thankyou so much for registering with FancyChamps.</p><br>
-        <center><p style="font-size:25px;">Please click on the below button to confirm/verify you email.</p></center>
-        <center><a href="https://www.fancychamps.com{% url 'accounts:activate' uidb64=uid token=token uemailb64=uemail %}"><button style="width:50%;padding:5px;color:#F4F4F4;background-color:#323641;">Click Here!</button></a></center>
-        <p style="font-size:15px;">Regards,</p>
-        <center><img src="https://www.fancychamps.com/static/images/OriginalLogoBack.png" width="25%" alt="FancyChamps"></center>
-        <div></div>
+        <img src="https://www.fancychamps.com/static/images/maillogo.jpg" width="100%" alt="FancyChamps">
+        <div style="font-family: 'Josefin Sans', sans-serif;left:3%;padding:5px;" class="MainDiv">
+            <div style="text-align:center;color:#323641;padding-top:10px;font-size:25px;padding-bottom:5px;">CONFIRM YOUR EMAIL
+            </div>
+            <div style="position:relative;font-family: 'Josefin Sans', sans-serif;line-height:25px;">
+                <center><h5 style="font-size:20px;text-align: justify;">Hi {{ user.username }}, Thankyou so much for registering with FancyChamps. Please <b><i>click on the below button</i></b> to confirm / verify you email. We hope to see you on the board soon. Let's be the Champs together!</h5>
+                </center>
+                <center><a href="https://www.fancychamps.com{% url 'accounts:activate' uidb64=uid token=token uemailb64=uemail %}"><button style="width:100%;padding:5px;color:#F4F4F4;background-color:#323641;border-radius: 4px;text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);background: rgb(28, 184, 65);">Click Here!</button></a></center>
+                <div style="position:relative;width:100%;line-height: 15px;">
+                    <h5 style="font-size:20px;">Regards,</h5>
+                    <h5 style="font-size:20px;">FancyChamps</h5>
+                    <h5 style="font-size:20px;">Facing any problem? <a href="www.fancychamps.com/contact_us/0">Contact us</a></h5>
+                </div>
+                <!-- <center><img src="https://www.fancychamps.com/static/images/OriginalLogoBack.png" width="25%" alt="FancyChamps"></center> -->
+            </div>
+        </div>
     </body>
 </html>
 
+            
+            

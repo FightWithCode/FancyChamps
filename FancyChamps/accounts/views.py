@@ -21,6 +21,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from accounts.tasks import send_feedback_email_task
 
 
 @login_required(login_url='IndexView')
@@ -96,8 +97,6 @@ def AddEmailView(request):
         if form.is_valid():
             user = form.save(commit=False)
             print("is_valid")
-            current_site = get_current_site(request)
-            subject = 'Welcome to FancyChamps! Confirm Your FancyChamps email.'
             # message = render_to_string('account_activation_email.html', {
             #     'user': user,
             #     'domain': current_site.domain   ,
@@ -114,6 +113,9 @@ def AddEmailView(request):
             # except BadHeaderError:
             #     print("Something")
             # plaintext = get_template('email.txt')
+            
+            current_site = get_current_site(request)
+            subject = 'Welcome to FancyChamps! Confirm Your FancyChamps email.'
             htmly     = get_template('account_activation_email.html')
 
             d = { 'user': user, 'domain':current_site.domain, 'uemail':urlsafe_base64_encode(force_bytes(user.email)), 'uid':urlsafe_base64_encode(force_bytes(user.pk)), 'token': account_activation_token.make_token(user)}
@@ -124,10 +126,14 @@ def AddEmailView(request):
             msg = EmailMultiAlternatives(subject, text_content, '', [user.email])
             msg.attach_alternative(html_content, "text/html")
             try:
-                msg.send()
-            except BadHeaderError:
+                print("I am here")
+                # msg.send(fail_silently=False)
+                send_feedback_email_task.delay(subject, text_content, user.email, html_content)
+                user.save()
+            except Exception as e:
+                print("In except")
+                print(e)
                 print("Error while sending email!")
-            user.save()
             return redirect('/accounts/profile')
     else:
         print("aa")

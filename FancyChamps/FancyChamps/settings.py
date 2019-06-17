@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'django_smtp_ssl'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -179,14 +180,25 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'ProductionFiles')
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = config('EMAIL_PORT')
-DEFAULT_FROM_EMAIL = 'FancyChamps Verification <verify@fancychamps.com>'
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST = 'smtpout.secureserver.net'
+EMAIL_HOST_USER = 'verify@fancychamps.com'
+EMAIL_HOST_PASSWORD = "FightBack@2010"
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+# SERVER_EMAIL = 'verify@fancychamps.com'
+# DEFAULT_FROM_EMAIL = 'FancyChamps Verification <verify@fancychamps.com>'
 
 CSRF_FAILURE_VIEW = 'FancyChamps.views.csrf_failure'
+
+#For Celery
+BROKER_URL = 'amqp://localhost'
+CELERY_RESULT_BACKEND = 'amqp://localhost'
+# Celery Data Format
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
 
 #Paytm Crudentials#
 PAYTM_MERCHANT_KEY = config("MERCHANT_KEY")#"#TNO3hVA_FZMjgBF"
