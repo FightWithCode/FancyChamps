@@ -21,7 +21,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
-from accounts.tasks import send_feedback_email_task
+# Uncomment for Celery
+# from accounts.tasks import send_feedback_email_task
 
 
 @login_required(login_url='IndexView')
@@ -113,7 +114,7 @@ def AddEmailView(request):
             # except BadHeaderError:
             #     print("Something")
             # plaintext = get_template('email.txt')
-            
+
             current_site = get_current_site(request)
             subject = 'Welcome to FancyChamps! Confirm Your FancyChamps email.'
             htmly     = get_template('account_activation_email.html')
@@ -123,12 +124,13 @@ def AddEmailView(request):
             # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
             text_content = ""
             html_content = htmly.render(d)
-            msg = EmailMultiAlternatives(subject, text_content, '', [user.email])
+            msg = EmailMultiAlternatives(subject, text_content, 'FancyChamps <verify@fancychamps.com>', [user.email])
             msg.attach_alternative(html_content, "text/html")
             try:
                 print("I am here")
-                # msg.send(fail_silently=False)
-                send_feedback_email_task.delay(subject, text_content, user.email, html_content)
+                msg.send(fail_silently=False)
+                #UnComment if want to use Celery
+                # send_feedback_email_task.delay(subject, text_content, user.email, html_content)
                 user.save()
             except Exception as e:
                 print("In except")
