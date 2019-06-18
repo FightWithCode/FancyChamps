@@ -42,13 +42,13 @@ $('.LeagueName').click(function(){
     			}
 			}
 			if(data.confirmed){
-				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJs\">C</span><span class=\"ContestTypeInfo\">This is a confirmed contest.</span><br>")	
+				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJsC\">C</span><span class=\"ContestTypeInfo\">This is a confirmed contest.</span><br>")
 			}
 			if(data.bonus_contest){
-				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJs\">B</span><span class=\"ContestTypeInfo\">You can use bonus in this contest.</span><br>")	
+				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJsB\">B</span><span class=\"ContestTypeInfo\">You can use bonus in this contest.</span><br>")
 			}
 			if(data.multiple_entry){
-				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJs\">M</span><span class=\"ContestTypeInfo\">You can join this contest with multiple teams.</span><br>")	
+				$('.PayoutDivContestTypes').append("<span class=\"ContestTypesJsM\">M</span><span class=\"ContestTypeInfo\">You can join this contest with multiple teams.</span><br>")
 			}
         }
     })
