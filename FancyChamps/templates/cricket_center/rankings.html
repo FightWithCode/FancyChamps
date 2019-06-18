@@ -83,22 +83,18 @@
 
 
       <div class="OwnMatchCard">
-	  	<center>
-	  		<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:cricket_center' %}" class="GoBack">[GO BACK]</a></h4>
-	  		<h6 class="ContentHeader">Ranking</h6>
-	  		<hr class="HrSeparatorOfInfoBar">
-	  	</center>
+	  	<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:cricket_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a><span style="float:right">{{match_obj.match_status}}</span></h4>
 	  </div>
 	  <div class="ContestInfoCard">
 	  	<h5 class="ContestNameOfContestInfoCard LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest_obj.contest_slug %}">{{contest_obj.contest_name}}<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span></h5>
 	  	<div class="ContestInfoHeaderContainer">
 	  		<h6 class="InfoHeaderOfContestInfoCard">Fee</h6>
-	  		<h6 class="InfoHeaderOfContestInfoCard">Size</h6>
+	  		<h6 class="InfoHeaderOfContestInfoCard">Joined</h6>
 	  		<h6 class="InfoHeaderOfContestInfoCard">Prize</h6>
 	  	</div>
 	  	<div class="ContestInfoHeaderContainer">
 	  		<h6 class="InfoOfContestInfoCard">{{contest_obj.contest_fee}}</h6>
-	  		<h6 class="InfoOfContestInfoCard">{{contest_obj.contest_size}}</h6>
+	  		<h6 class="InfoOfContestInfoCard">{{contest_obj.total_player_joined}}/{{contest_obj.contest_size}}</h6>
 	  		<h6 class="InfoOfContestInfoCard">{{contest_obj.contest_prize}}</h6>
 	  	</div>
 	  </div>
