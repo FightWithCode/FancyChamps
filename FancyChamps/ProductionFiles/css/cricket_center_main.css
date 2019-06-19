@@ -992,13 +992,28 @@ button{
   box-shadow: 0 1px 7px;
 }
 
+.OwnMatchCardView{
+  top:10px;
+  margin-bottom: 20px;
+  margin-left:4%;
+  position: relative;
+  height:50px;
+  width: 92%;
+  background-color: #323641;
+  border-radius: 5px;
+  color:#F3F4F4;
+  -webkit-box-shadow: 0 1px 7px;
+  -moz-box-shadow: 0 1px 7px;
+  box-shadow: 0 1px 7px;
+}
+
 .OwnMatchCard{
   top:10px;
   margin-bottom: 20px;
-  margin-left: 15px;
+  margin-left:2%;
   position: relative;
   height:50px;
-  width: 550px;
+  width: 96%;
   background-color: #323641;
   border-radius: 5px;
   color:#F3F4F4;
@@ -1809,6 +1824,10 @@ input[type=radio]:checked + label {
     transform: translateY(-50%);
   }
 
+  .ContentHeaderTeams{
+      font-size:15px;
+  }
+
   .PayoutDivContestTypes{
       font-size:12px;
   }
@@ -1937,9 +1956,6 @@ input[type=radio]:checked + label {
   }
 
   .OwnMatchCard{
-    width: -moz-calc(100vw - 30px);
-    width: -webkit-calc(100vw - 30px);
-    width: calc(100vw - 30px);
     height: 35px;
   }
 
@@ -2118,6 +2134,10 @@ input[type=radio]:checked + label {
     left: 10px;
   }
 
+  .ContentHeaderTeams{
+      font-size:16px;
+  }
+
   .ErrorAccount{
     width:100%;
   }
@@ -2227,9 +2247,6 @@ input[type=radio]:checked + label {
   }
 
   .OwnMatchCard{
-    width: -moz-calc(100vw - 30px);
-    width: -webkit-calc(100vw - 30px);
-    width: calc(100vw - 30px);
     height: 47px;
   }
 

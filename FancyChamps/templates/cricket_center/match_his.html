@@ -27,11 +27,8 @@
                 </div>
             </div>
         </div>
-		<div class="OwnMatchCard">
-	  	<center>
-	  		<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:match' match_slug=match_slug %}" class="GoBack">[GO BACK]</a></h4>
-	  		<h6 class="ContentHeader">Joined Leagues</h6>
-	  	</center>
+		<div class="OwnMatchCardView">
+            <h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:cricket_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a><span style="float:right">{{match_obj.match_status}}</span></h4>
 	  </div>
 	    {% if contests_count == 0 %}
 	      <center><h4>Sorry! <br>You have not Joined any Contest</h4></center>
