@@ -110,7 +110,7 @@
 		  </div>
 		  {% for rank in user_teams_list %}
 		    <div class="RankInfoCard" style="background-color:#C0C0C0;" go-to="{% url 'cricket_center:ranking_team_preview' team_no=rank.joined_user_team team_name=rank.joined_user match_slug=match_obj.match_slug %}">
-		  		{% if not match_obj.live %}
+		  		{% if match_obj.history_activate %}
 		  			<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderIfTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
 				  	{% if rank.rank <= contest_obj.contest_winners %}
@@ -128,7 +128,7 @@
 		  {% endfor %}
 		  {% for rank in all_joined_with_ranking %}
 		  	<div class="RankInfoCard" go-to="{% url 'cricket_center:ranking_team_preview' team_no=rank.joined_user_team team_name=rank.joined_user match_slug=match_obj.match_slug %}">
-		  		{% if not match_obj.live %}
+		  		{% if match_obj.history_activate %}
 		  			<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderIfTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
 				  	{% if rank.rank <= contest_obj.contest_winners %}

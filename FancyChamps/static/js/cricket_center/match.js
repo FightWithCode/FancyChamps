@@ -20,7 +20,6 @@ $('.LeagueName').click(function(){
         });
     });
 
-	// $('.PayoutDiv').toggle()
 	$('.PayoutDivInfoContainer').html("")
 	$('.PayoutDivContestTypes').html("")
 	// //$('.PayoutDiv'+$(this).attr('pay-view').replace("/cricket_center/view_payout/", '')).toggle()
@@ -30,15 +29,12 @@ $('.LeagueName').click(function(){
         url: $(this).attr('pay-view'),
         dataType: 'json',
         success: function (data) {
-			console.log(typeof(data))
 			$('.PayoutDivInfoContainer').append("<center>NOTE : In case of the contest does not get filled then the total prize will be distributed to <b>First Rank(Rank 1)</b></center>")
 			for (var key in data) {
     			if (data.hasOwnProperty(key) && key!="multiple_entry" && key!="confirmed" && key!="id" && key!="bonus_contest") {
-					console.log(typeof(key))
 					new_rank = key.replace('Rank', '')
 					new_rank = new_rank.replace('To', '-')
-        			console.log(new_rank + " : " + data[key]+"₹");
-					$('.PayoutDivInfoContainer').append("<li style=\"list-style-type:none\">Rank " + new_rank + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<span style=\"float:right\">" + data[key] + "₹" + "</span></li>")
+        			$('.PayoutDivInfoContainer').append("<li style=\"list-style-type:none\">Rank " + new_rank + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<span style=\"float:right\">" + data[key] + "₹" + "</span></li>")
     			}
 			}
 			if(data.confirmed){
@@ -63,7 +59,6 @@ $('.ProceedToPay').click(function (){
 
 // var add_obj = {type:"Fiat", model:"500", color:"white"};
 $('.JoinNowClass').click(function () {
-	console.log("I got Called")
 	$("#PayAndJoinNow").attr('id', 'PayAndJoinNowID')
     var div = $(".JoinNowContainer");
     var height = div.css({
@@ -136,28 +131,20 @@ $('.JoinNowClass').click(function () {
 			    });
 			}
 			if(data.add_money > 0 && data.low_balance == 1){
-
 				$('.ConentOfJoiningDetail').css("display", "block")
 				$('.PayAndJoinNow').css("display", "none")
 				$('.ProceedToPay').css("display", "inline-block")
 				$('.ProceedToPay').html("Proceed to Pay " + data.add_money)
 				$('.JoinNowHeader').html("Join " + data.contest_name+ " Contest")
-	   // 		$('#ContestPrice').html("₹"+data.contest_prize)
-	   // 		$('#ContestFee').html("₹"+data.contest_fee)
-	   // 		$('#UserMainBalance').html("₹"+data.user_balance)
-	   // 		$('#UserBonus').html("₹"+data.user_bonus)
-	    		$('#MainDeduction').html("₹"+data.user_balance)
+	    		$('#MainDeduction').html(+data.user_winnings + +data.user_bonus + +data.user_balance)
 	    		$('#BonusDeduction').html("₹"+data.contest_fee)
 	    		$('#match_slug').val(data.match_slug)
 	    		$('#contest_slug').val(data.contest_slug)
 	    		$('.ChoosePaymentTypeContainer').css("display", "none")
-
 				$('.ChoosePaymentTypePaytm').click(function(){
-					console.log("Got Clicked")
 					$('.ConentOfJoiningDetail').append("<a id=\"MoneyPayButton\" href=\"/payments/payment/?money_to_add=" + data.add_money + "\">Pay</a>")
 					document.getElementById('MoneyPayButton').click();
 				})
-
 				// var csrftoken = getCookie('csrftoken');
 	    		// var options = {
 				//     "key": "rzp_test_C4Ohgv6Fhh2piC",
@@ -171,10 +158,8 @@ $('.JoinNowClass').click(function () {
 				// 	        data: {csrfmiddlewaretoken: csrftoken, razorpay_payment_id: response.razorpay_payment_id, amt: data.add_money*100},
 				// 	        dataType: 'json',
 				// 	        success: function (data) {
-				// 	        	console.log(data)
 				// 				}
 				// 	    });
-				//         console.log(response);
 				//     },
 				//     "prefill": {
 				//         "name": "Gaurav Kumar",
@@ -200,11 +185,7 @@ $('.JoinNowClass').click(function () {
     			$('.ProceedToPay').css("display", "none")
     			$('.PayAndJoinNow').css("display", "inline-block")
     			$('.JoinNowHeader').html("Join " + data.contest_name+ " Contest")
-	   // 		$('#ContestPrice').html("₹"+data.contest_prize)
-	   // 		$('#ContestFee').html("₹"+data.contest_fee)
-	   // 		$('#UserMainBalance').html("₹"+data.user_balance)
-	   // 		$('#UserBonus').html("₹"+data.user_bonus)
-	    		$('#MainDeduction').html("₹"+data.user_balance)
+	    		$('#MainDeduction').html(+data.user_winnings + +data.user_bonus + +data.user_balance)
 	    		$('#BonusDeduction').html("₹"+data.contest_fee)
 	    		$('#match_slug').val(data.match_slug)
 	    		$('#contest_slug').val(data.contest_slug)
@@ -215,8 +196,7 @@ $('.JoinNowClass').click(function () {
 });
 
 $(".CloseJoinNowContainer").click(function () {
-	console.log("Print Me")
-    var div = $(".JoinNowContainer");
+	var div = $(".JoinNowContainer");
 
     var height = div.height();
 
@@ -238,8 +218,7 @@ $(".CloseJoinNowContainer").click(function () {
 });
 
 $(".ClosePayoutDiv").click(function () {
-	console.log("Print Me")
-    var div = $(".PayoutDiv");
+	var div = $(".PayoutDiv");
 
     var height = div.height();
 
@@ -284,15 +263,13 @@ $('.PayAndJoinNow').click(function () {
 	var csrftoken = getCookie('csrftoken');
 	if ($('input[name=SelectTeam]:checked').length == (1 || 2 || 3)){
 		team_no = $('input[name=SelectTeam]:checked').val();
-	    console.log(team_no)
 	    $.ajax({
 	        url: $(this).attr('pay-and-join'),
 	        type: "POST",
 	        data: {csrfmiddlewaretoken : csrftoken, match_slug: match_slug, contest_slug: contest_slug, team_no: team_no},
 	        dataType: 'json',
 	        success: function (data) {
-	        	console.log(data)
-			    if(data.already_joined_or_filled){
+	    	    if(data.already_joined_or_filled){
 	    		    $('#sub_max').css('display','block');
 		            $('#sub_max').html("Contest is Filled or You Have already Joined the Contest");
 		            $('#sub_max').delay(3000).fadeOut(3000);

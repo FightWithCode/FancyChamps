@@ -260,14 +260,12 @@ $(document).ready(function () {
 });
 
 function resetForms() {
-	// console.log("I have been Called.")
 	for (i = 0; i < document.forms.length; i++) {
 		document.forms[i].reset();
 	}
 }
 
 ajaxComplete = false
-console.log("first"+ajaxComplete)
 $(document).ready(function () {
 	var match_slug = $('#match_slug').attr('value')
 	var team_no = $('#team').attr('value')
@@ -390,16 +388,8 @@ function KeeperFunction(){
 	vice_id = $(this).attr("name")+"_2"
 	$("#"+captain_id).prop("checked", false)
 	$("#"+vice_id).prop("checked", false)
-	var keeper_inputs = $('.keeper:checkbox:checked');
 	players_input = $('.CustomInput')
-	global_keeper_count = keeper_inputs.length
 	var players_count = 0;
-	// for(var i = 0; i < keeper_inputs.length; i++){
-	// 	if($(keeper_inputs[i]).is()){
-// 	   	  	global_keeper_count = global_keeper_count+1;
-// 	    }
-	// }
-	console.log(global_keeper_count)
 	for(var i = 0; i < players_input.length; i++){
 		if($(players_input[i]).is(':checked')){
 			players_count = players_count+1;
@@ -407,27 +397,29 @@ function KeeperFunction(){
 	}
 
 	var points = CheckCredit()
-	if (points>100){
-		$(this).prop( "checked", false );
-		$('#sub_max').css('display','block');
-		$('#sub_max').html("Opps! You don't have enough<strong> Points</strong>");
-		$('#sub_max').delay(3000).fadeOut(1000);
-	}
-
-	if(global_keeper_count>1){
-		$(this).prop( "checked", false );
-		$('#sub_max').css('display','block');
-		$('#sub_max').html("Please Select Only <strong>One Keeeper</strong>");
-		$('#sub_max').delay(3000).fadeOut(1000);
-	}
-
 	if (players_count>11){
 		$(this).prop( "checked", false );
 		$('#max').css('display','block');
 		$('#max').html("Please Select Only <strong>11 Players</strong>");
 		$('#max').delay(3000).fadeOut(1000);
 	}
-	console.log("My Valie"+global_keeper_count)
+	else if (points>100){
+		$(this).prop( "checked", false );
+		$('#sub_max').css('display','block');
+		$('#sub_max').html("Opps! You don't have enough<strong> Points</strong>");
+		$('#sub_max').delay(3000).fadeOut(1000);
+	}
+
+	else if(global_keeper_count>1){
+		$(this).prop( "checked", false );
+		$('#sub_max').css('display','block');
+		$('#sub_max').html("Please Select Only <strong>One Keeeper</strong>");
+		$('#sub_max').delay(3000).fadeOut(1000);
+	}
+	else{
+		var keeper_inputs = $('.keeper:checkbox:checked');
+		global_keeper_count = keeper_inputs.length
+	}
 };
 
 $('.batsmen').on('click',BatsmanFunction);
@@ -436,37 +428,38 @@ function BatsmanFunction(){
 	vice_id = $(this).attr("name")+"_2"
 	$("#"+captain_id).prop("checked", false)
 	$("#"+vice_id).prop("checked", false)
-	var batsmen_inputs = $('.batsmen:checkbox:checked');
 	players_input = $('.CustomInput')
-	global_batsmen_count = batsmen_inputs.length;
 	var players_count = 0;
 	for(var i = 0; i < players_input.length; i++){
 		if($(players_input[i]).is(':checked')){
 			players_count = players_count+1;
-			console.log(players_count)
 		}
 	}
 
 	var points = CheckCredit()
-	if (points>100){
+	if (players_count>11){
+		$(this).prop( "checked", false );
+		$('#max').css('display','block');
+		$('#max').html("Please Select Only <strong>11 Players</strong>");
+		$('#max').delay(3000).fadeOut(1000);
+	}
+	else if (points>100){
 		$(this).prop( "checked", false );
 		$('#sub_max').css('display','block');
 		$('#sub_max').html("Opps! You don't have enough<strong> Points</strong>");
 		$('#sub_max').delay(3000).fadeOut(1000);
 	}
 
-	if(global_batsmen_count>5){
+	else if(global_batsmen_count>5){
 		$(this).prop( "checked", false );
 		$('#sub_max').css('display','block');
 		$('#sub_max').html("Please Select Only <strong>5 Batsmen</strong>");
 		$('#sub_max').delay(3000).fadeOut(1000);
 	}
 
-	if (players_count>11){
-		$(this).prop( "checked", false );
-		$('#max').css('display','block');
-		$('#max').html("Please Select Only <strong>11 Players</strong>");
-		$('#max').delay(3000).fadeOut(1000);
+	else{
+		var batsmen_inputs = $('.batsmen:checkbox:checked');
+		global_batsmen_count = batsmen_inputs.length;
 	}
 };
 
@@ -476,9 +469,7 @@ function AllrounderFunction(){
 	vice_id = $(this).attr("name")+"_2"
 	$("#"+captain_id).prop("checked", false)
 	$("#"+vice_id).prop("checked", false)
-	var allrounder_inputs = $('.allrounders:checkbox:checked');
 	players_input = $('.CustomInput')
-	global_allrounder_count = allrounder_inputs.length
 	var players_count = 0;
 	for(var i = 0; i < players_input.length; i++){
 		if($(players_input[i]).is(':checked')){
@@ -487,25 +478,30 @@ function AllrounderFunction(){
 	}
 
 	var points = CheckCredit()
-	if (points>100){
+	if (players_count>11){
+		$(this).prop( "checked", true );
+		$(this).prop( "checked", false );
+		$('#max').css('display','block');
+		$('#max').html("Please Select Only <strong>11 Players</strong>");
+		$('#max').delay(3000).fadeOut(1000);
+	}
+
+	else if (points>100){
 		$(this).prop( "checked", false );
 		$('#sub_max').css('display','block');
 		$('#sub_max').html("Opps! You don't have enough<strong> Points</strong>");
 		$('#sub_max').delay(3000).fadeOut(1000);
 	}
 
-	if(global_allrounder_count>3){
+	else if(global_allrounder_count>3){
 		$(this).prop( "checked", false );
 		$('#sub_max').css('display','block');
 		$('#sub_max').html("Please Select Only <strong>3 Allrounders</strong>");
 		$('#sub_max').delay(3000).fadeOut(1000);
 	}
-
-	if (players_count>11){
-		$(this).prop( "checked", false );
-		$('#max').css('display','block');
-		$('#max').html("Please Select Only <strong>11 Players</strong>");
-		$('#max').delay(3000).fadeOut(1000);
+	else{
+		var allrounder_inputs = $('.allrounders:checkbox:checked');
+		global_allrounder_count = allrounder_inputs.length
 	}
 };
 
@@ -515,9 +511,7 @@ function BowlerFunction(){
 	vice_id = $(this).attr("name")+"_2"
 	$("#"+captain_id).prop("checked", false)
 	$("#"+vice_id).prop("checked", false)
-	var bowler_inputs = $('.bowlers:checkbox:checked');
 	players_input = $('.CustomInput')
-	global_bowler_count = bowler_inputs.length;
 	var players_count = 0;
 	for(var i = 0; i < players_input.length; i++){
 		if($(players_input[i]).is(':checked')){
@@ -526,37 +520,39 @@ function BowlerFunction(){
 	}
 
 	var points = CheckCredit()
-	if (points>100){
-		$(this).prop( "checked", false );
-		$('#sub_max').css('display','block');
-		$('#sub_max').html("Opps! You don't have enough<strong> Points</strong>");
-		$('#sub_max').delay(3000).fadeOut(1000);
-	}
-
-	if(global_bowler_count>5){
-		$(this).prop( "checked", false );
-		$('#sub_max').css('display','block');
-		$('#sub_max').html("Please Select Only <strong>5 Bowlers</strong>");
-		$('#sub_max').delay(3000).fadeOut(1000);
-	}
-
 	if (players_count>11){
 		$(this).prop( "checked", false );
 		$('#max').css('display','block');
 		$('#max').html("Please Select Only <strong>11 Players</strong>");
 		$('#max').delay(3000).fadeOut(1000);
 	}
+	else if (points>100){
+		$(this).prop( "checked", false );
+		$('#sub_max').css('display','block');
+		$('#sub_max').html("Opps! You don't have enough<strong> Points</strong>");
+		$('#sub_max').delay(3000).fadeOut(1000);
+	}
+
+	else if(global_bowler_count>5){
+		$(this).prop( "checked", false );
+		$('#sub_max').css('display','block');
+		$('#sub_max').html("Please Select Only <strong>5 Bowlers</strong>");
+		$('#sub_max').delay(3000).fadeOut(1000);
+	}
+
+	else{
+		var bowler_inputs = $('.bowlers:checkbox:checked');
+		global_bowler_count = bowler_inputs.length;
+	}
 };
 
 
-console.log("Ji"+global_keeper_count)
 $('.btn-sm').click(function(event){
 	players_input = $('.CustomInput');
 	var players_count = 0;
 	for(var i = 0; i < players_input.length; i++){
 		if($(players_input[i]).is(':checked')){
 			players_count = players_count+1;
-			console.log("Something")
 		}
 	}
 	if(players_count<11){
@@ -624,9 +620,6 @@ $('.btn-sm').click(function(event){
 		$('#sub_max').html("Please Select Your <strong>Vice Captain</strong>");
 		$('#sub_max').delay(3000).fadeOut(1000);
 	}
-
-	console.log("Global Keeeper Count : "+global_keeper_count)
-	console.log("Global Batsmen Count : "+global_batsmen_count)
 })
 
 $('.CustomInput').click(function(){
@@ -636,12 +629,10 @@ $('.CustomInput').click(function(){
 		player = $('#'+selected_players[i].id)
 		credits = credits + +player.next('label').find('.PlayerCredits').html()
 		player_team = player.next('label').find('.PlayerTeam').html()
-		console.log("Name : " + selected_players[i].id + " Points : " + credits)
 	}
 	$('#total_credits_points').val(credits)
 	$('.CreditPointsClass').html(100-credits + "/100")
 	$('.TotalPlayersClass').html(selected_players.length + "/11")
-	//console.log("IND : "+ ind + " WI : " + wi + " Total Credits : "+credits)
 });
 
 function CheckCredit(){

@@ -10,6 +10,7 @@ from . import views
 
 app_name = 'cricket_center'
 
+
 urlpatterns = [
     url(r'view_contest/(?P<match_slug>[\w]+)/(?P<contest_slug>[\w]+)', views.ContestsViews, name='view_contest'),
     url(r'capture_payment', views.CapturePayment, name='capture_payment'),

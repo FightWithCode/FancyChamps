@@ -28,6 +28,10 @@ def CricketCenterIndexView(request):
 
 @login_required(login_url='IndexView')
 def MyTeams(request, match_slug):
+    match_objs = MatchDetail.objects.filter(match_slug__exact=match_slug)
+    match_obj = match_objs.first()
+    if match_obj.match_tick < time.time():
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug).first()
     model_name = match_obj.team_one + match_obj.team_two + "Team"
     model_is = apps.get_registered_model('cricket_center', model_name)
@@ -37,6 +41,10 @@ def MyTeams(request, match_slug):
 
 @login_required(login_url='IndexView')
 def JoinedContests(request, match_slug):
+    match_objs = MatchDetail.objects.filter(match_slug__exact=match_slug)
+    match_obj = match_objs.first()
+    if match_obj.match_tick < time.time():
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     match_objs = MatchDetail.objects.filter(match_slug__exact=match_slug)
     model_name = match_objs.first().team_one + match_objs.first().team_two + "Team"
     model_is = apps.get_registered_model('cricket_center', model_name)
@@ -158,9 +166,15 @@ def SingleMatchView(request, match_slug):
     except MatchDetail.DoesNotExist:
         return HttpResponse("Something went Wrong!")
     match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug).first()
+    # if match_obj.match_tick < time.time():
+    #     time_over_error = True
+    #     return render(request, "cricket_center/match.html", context={"time_over_error": time_over_error})
+    
+    print(match_obj.match_tick)
+    print(time.time())
+
     if match_obj.match_tick < time.time():
-        time_over_error = True
-        return render(request, "cricket_center/match.html", context={"time_over_error": time_over_error})
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     else:
         model_name = match_obj.team_one + match_obj.team_two + "Team"
         model_is = apps.get_registered_model('cricket_center', model_name)
@@ -318,6 +332,8 @@ def ContestsViews(request, match_slug, contest_slug):
     match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
     contest_obj = get_object_or_404(ContestDetail, contest_slug__exact=contest_slug)
     print("I got exe")
+    if match_obj.match_tick < time.time():
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     # match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug)
     # model_name = match_obj.first().team_one + match_obj.first().team_two + "Team"
     # model_is = apps.get_registered_model('cricket_center', model_name)
@@ -384,6 +400,10 @@ def PayAndJoin(request):
     log_in_error = False
     contest_error = False
     match_slug = request.POST.get('match_slug')
+    match_objs = MatchDetail.objects.filter(match_slug__exact=match_slug)
+    match_obj = match_objs.first()
+    if match_obj.match_tick < time.time():
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     contest_slug = request.POST.get('contest_slug')
     team_no = request.POST.get('team_no')
     print("Printitn.............................................")
@@ -592,6 +612,7 @@ def PayAndJoin(request):
             'contest_name': contest_name,
             'user_balance': user_balance,
             'user_bonus': user_bonus,
+            'user_winnings': user_winnings,
             'joined_players': joined_players,
             'contest_prize': contest_prize,
             'contest_fee': contest_fee,
@@ -624,6 +645,10 @@ def ProceedToPay(reques):
 
 @login_required(login_url='IndexView')
 def ContestJoinNow(request, match_slug, contest_slug):
+    match_objs = MatchDetail.objects.filter(match_slug__exact=match_slug)
+    match_obj = match_objs.first()
+    if match_obj.match_tick < time.time():
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     print("Print it")
     print(match_slug, contest_slug)
     profile_error = False
@@ -714,12 +739,13 @@ def ContestJoinNow(request, match_slug, contest_slug):
                     main_balance_after_deduction = user_balance - deduction_from_main
                 # main_balance_after_deduction = user_balance - deduction_from_main
 
-        print(user, user_balance, joined_players, contest_name, contest_prize, contest_fee, deduction_from_bonus, deduction_from_main, bonus_balance_after_deduction, main_balance_after_deduction, low_balance, add_money)
+        print(user_winnings, user, user_balance, joined_players, contest_name, contest_prize, contest_fee, deduction_from_bonus, deduction_from_main, bonus_balance_after_deduction, main_balance_after_deduction, low_balance, add_money)
         data = {
             'called': "Ok I Got A Call From AJAX to Views",
             'contest_name': contest_name,
             'user_balance': user_balance,
             'user_bonus': user_bonus,
+            'user_winnings': user_winnings,
             'joined_players': joined_players,
             'contest_prize': contest_prize,
             'contest_fee': contest_fee,
@@ -751,6 +777,12 @@ def ContestJoinNow(request, match_slug, contest_slug):
 @login_required(login_url='IndexView')
 def RankingPreviewTeam(request, team_no, team_name, match_slug):
     match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug)
+    try:
+        if match_obj.first().match_tick > time.time():
+            return redirect('/cricket_center/')
+    except:
+        print("From Except")
+        return redirect('/cricket_center/')
     model_name = match_obj.first().team_one + match_obj.first().team_two + "Team"
     model_is = apps.get_registered_model('cricket_center', model_name)
     team_to_preview = model_is.objects.filter(match_slug__exact=match_slug, username_of_player__exact=team_name, team_no=team_no).first()
@@ -868,7 +900,7 @@ def PreviewTeam(request, team, match_slug):
 def TeamEdit(request, team, match_slug):
     match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
     if match_obj.match_tick < time.time():
-        return redirect('/cricket_center/')
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     else:
         keepers_obj = PlayerDetail.objects.filter(Q(player_current_team=match_obj.short_team_one) | Q(player_current_team=match_obj.short_team_two), Q(player_type='Keeper')).order_by('-player_credit_points')
         batsmen_obj = PlayerDetail.objects.filter(Q(player_current_team=match_obj.short_team_one) | Q(player_current_team=match_obj.short_team_two), Q(player_type='Batsman')).order_by('-player_credit_points')
@@ -984,7 +1016,7 @@ def TeamEdit(request, team, match_slug):
 def CreateTeamView(request, match_slug):
     match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
     if match_obj.match_tick < time.time():
-        return redirect('/cricket_center/')
+        return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     else:
         keepers_obj = PlayerDetail.objects.filter(Q(player_current_team=match_obj.short_team_one) | Q(player_current_team=match_obj.short_team_two), Q(player_type='Keeper')).order_by('-player_credit_points')
         batsmen_obj = PlayerDetail.objects.filter(Q(player_current_team=match_obj.short_team_one) | Q(player_current_team=match_obj.short_team_two), Q(player_type='Batsman')).order_by('-player_credit_points')

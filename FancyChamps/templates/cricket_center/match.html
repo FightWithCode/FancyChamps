@@ -122,7 +122,7 @@
 			</div>
 		  </div>
 		  <div class="GrandClass">
-    		  {% for contest in GreatAndGrand %}
+    		  {% for contest in GreatAndGrand|dictsortreversed:"joined_percentage" %}
     			{% if not contest.filled_status %}
     				<div class="LeagueArea row" id="FirstLeagueArea">
     			  	    <div class="row col-xs-12">
@@ -162,7 +162,7 @@
 			</div>
 		  </div>
 		  <div class="HeadClass">
-    		  {% for contest in HeadToHead %}
+    		  {% for contest in HeadToHead|dictsortreversed:"joined_percentage" %}
     			  {% if not contest.filled_status %}
     				<div class="LeagueArea row">
     			  	    <div class="row col-xs-12">
@@ -198,7 +198,7 @@
 			</div>
 		  </div>
 		  <div class="4On1Class">
-    		  {% for contest in FourOnOne %}
+    		  {% for contest in FourOnOne|dictsortreversed:"joined_percentage" %}
     			{% if not contest.filled_status %}
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">
