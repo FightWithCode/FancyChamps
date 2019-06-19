@@ -148,6 +148,87 @@ class MatchDetail(models.Model):
                                 bonus_percent = 0
                             )
             contest_obj_6.save()
+            contest_obj_7 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹500 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=500,
+                                contest_fee = 53,
+                                contest_size = 10,
+                                contest_winners = 3,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "Great and Grand Winning",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = False,
+                                confirmed = True,
+                                prize_dist_type = "Winners3OutOf10Fee53",
+                                bonus_percent = 0
+                            )
+            contest_obj_7.save()
+            contest_obj_8 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹300 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=300,
+                                contest_fee = 111,
+                                contest_size = 3,
+                                contest_winners = 1,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "3 On 1",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = False,
+                                confirmed = True,
+                                prize_dist_type = "ToOne",
+                                bonus_percent = 0
+                            )
+            contest_obj_8.save()
+            contest_obj_9 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹100 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=100,
+                                contest_fee = 0,
+                                contest_size = 1000,
+                                contest_winners = 10,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "Free Roll",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = True,
+                                confirmed = True,
+                                prize_dist_type = "FreeContestPrize100",
+                                bonus_percent = 0
+                            )
+            contest_obj_9.save()
+            contest_obj_10 = ContestDetail(
+                                contest_of_match=self,
+                                contest_name="₹300 Winnnings",
+                                contest_slug="Test",
+                                contest_prize=300,
+                                contest_fee = 56,
+                                contest_size = 6,
+                                contest_winners = 2,
+                                total_player_joined = 0,
+                                joined_percentage = 0,
+                                contest_category = "Other",
+                                multiple_entry = False,
+                                filled_status = False,
+                                bonus_contest = False,
+                                free_contest = True,
+                                confirmed = True,
+                                prize_dist_type = "Winners2OutOf6Fee56",
+                                bonus_percent = 0
+                            )
+            contest_obj_10.save()
+
 
     def __str__(self):
         return self.match_name

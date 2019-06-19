@@ -181,13 +181,22 @@ def SingleMatchView(request, match_slug):
         HeadToHead = []
         GreatAndGrand = []
         FourOnOne = []
+        FreeRoll = []
+        ThreeOnOne = []
+        OtherContests = []
         for contest in match_obj.contestdetail_set.all():
             if contest.contest_category == "4 On 1":
                 FourOnOne.append(contest)
-            if contest.contest_category == "Head to Head":
+            elif contest.contest_category == "Head to Head":
                 HeadToHead.append(contest)
-            if contest.contest_category == "Great and Grand Winning":
+            elif contest.contest_category == "Great and Grand Winning":
                 GreatAndGrand.append(contest)
+            elif contest.contest_category == "3 On 1":
+                ThreeOnOne.append(contest)
+            elif contest.contest_category == "Free Roll":
+                FreeRoll.append(contest)
+            elif contest.contest_category == "Other":
+                OtherContests.append(contest)
         total_teams = model_is.objects.filter(username_of_player__exact=request.user.username)
         all_joined = JoiningDetail.objects.filter(Q(joined_user__exact=request.user.username), Q(match_slug__exact=match_obj.match_slug))
         contest_joined = []
@@ -197,7 +206,7 @@ def SingleMatchView(request, match_slug):
             if contest.joined_contest_slug not in contest_joined:
                 contest_joined.append(contest.joined_contest_slug)
         print(GreatAndGrand, match_obj.contestdetail_set.all())
-        return render(request, "cricket_center/match.html", context={'match_obj': match_obj, 'FourOnOne': FourOnOne, "HeadToHead": HeadToHead, 'GreatAndGrand': GreatAndGrand, 'match_slug': match_slug, 'total_teams': total_teams, 'contest_joined': contest_joined, 'all_joined_list': all_joined_list})
+        return render(request, "cricket_center/match.html", context={'FreeRoll':FreeRoll, 'ThreeOnOne':ThreeOnOne, 'OtherContests':OtherContests, 'match_obj': match_obj, 'FourOnOne': FourOnOne, "HeadToHead": HeadToHead, 'GreatAndGrand': GreatAndGrand, 'match_slug': match_slug, 'total_teams': total_teams, 'contest_joined': contest_joined, 'all_joined_list': all_joined_list})
 
 
 @login_required(login_url='IndexView')
