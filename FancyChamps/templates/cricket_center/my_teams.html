@@ -42,12 +42,10 @@
 			</div>
 		</div>
 	  </div>
-	  <div class="OwnMatchCard">
-	  	<center>
-	  		<h4 class="ContentHeaderTeam">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:match' match_slug=match_obj.match_slug %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a></h4>
-	  		<h6 class="ContentHeader">My Teams</h6>
-	  		<hr class="HrSeparatorOfInfoBar">
-	  	</center>
+	  <div class="OwnMatchCardView">
+
+	  		<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:cricket_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a><span style="float:right">My Teams</span></h4>
+
 	  </div>
       {% if my_teams.count == 0 %}
         <center><h4>Create a Team <br>and Join Contest to Earn</h4></center>

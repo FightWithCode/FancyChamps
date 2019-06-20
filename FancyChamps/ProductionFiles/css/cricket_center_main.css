@@ -995,10 +995,12 @@ button{
 .OwnMatchCardView{
   top:10px;
   margin-bottom: 20px;
-  margin-left:4%;
+  margin-left:15px;;
   position: relative;
   height:50px;
-  width: 92%;
+  width: -moz-calc(100% - 30px);
+  width: -webkit-calc(100% - 30px);
+  width: calc(100% - 30px);
   background-color: #323641;
   border-radius: 5px;
   color:#F3F4F4;
