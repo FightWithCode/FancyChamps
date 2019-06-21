@@ -177,9 +177,9 @@ def RemoveStorage(request):
 def MyAccountView(request):
     user_obj = User.objects.filter(id=request.user.id).first()
     join_transaction_obj = JoiningTransactionDetail.objects.filter(transact_user__exact=request.user.username)
-    transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username)#.order_by("-transaction_time")
+    transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username, added_to_user__exact=True)#.order_by("-transaction_time")
     sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj), key=lambda obj: obj.transaction_time, reverse=True)
-    trans_obj = TransactionDetail.objects.filter(Q(added_to_user__exact=False), Q(transact_user__exact=request.user.username), Q(transaction_status__exact="added"))
+    trans_obj = TransactionDetail.objects.filter(Q(added_to_user__exact=False), Q(transact_user__exact=request.user.username), Q(transaction_status__exact="TXN_SUCCESS"))
     print(len(trans_obj))
     if len(trans_obj)>=1:
         print(trans_obj)
