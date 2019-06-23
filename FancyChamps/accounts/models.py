@@ -125,7 +125,7 @@ class Profile(models.Model):
     state = models.CharField(max_length=50, choices=STATES, blank=True, default=STATES[0][0])
     #date_of_birth = models.DateTimeField(auto_now=False, blank=True)
     balance = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    bonus = models.DecimalField(max_digits=4, decimal_places=2, default=25)
+    bonus = models.DecimalField(max_digits=4, decimal_places=2, default=50)
     widhdrawable_balance = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     match_played = models.IntegerField(default=0)
     contest_played = models.IntegerField(default=0)

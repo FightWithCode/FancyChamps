@@ -661,6 +661,11 @@ input:-moz-placeholder {
   .header-blue .button, .header-blue .button{
     display: none;
   }
+
+  .mobileview{
+    width:100%;
+  }
+
   .header-blue .leftButtons, .header-blue .leftButtons{
     font-size: 15px  !important;
   }
