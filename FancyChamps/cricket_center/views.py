@@ -217,10 +217,18 @@ def SingleMatchLiveView(request, match_slug):
         return redirect('/cricket_center/')
     else:
         contests_joined = []
+        contest_done = []
         for contest in all_joined:
             contest_obj = get_object_or_404(ContestDetail, contest_slug__exact=contest.joined_contest_slug)
-            if contest_obj not in contests_joined:
-                contests_joined.append(contest_obj)
+            if contest_obj not in contest_done:
+                obj = JoiningDetail.objects.filter(joined_user__exact=request.user.username,joined_contest_slug__exact=contest_obj.contest_slug).order_by("rank").first()
+                print(obj)
+                print(obj.rank)
+                contest_dict = model_to_dict(contest_obj)
+                contest_dict["top_rank"] = obj.rank
+                contest_done.append(contest_obj)
+                contests_joined.append(contest_dict)
+                print(contest_dict)
         contests_count = len(contests_joined)
         return render(request, "cricket_center/live_match.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj, "contests_count":contests_count,})
 
@@ -259,80 +267,45 @@ def ContestsRankings(request, match_slug, contest_slug):
         contest_obj = get_object_or_404(ContestDetail, contest_slug__exact=contest_slug)
         all_joined = JoiningDetail.objects.filter(joined_contest_slug__exact=contest_slug).order_by('-total_team_points', 'pk')
         user_teams_list = []
-        print(request.user.username)
-        if all_joined.first().total_team_points == 0:
-            for i in all_joined:
-                print(i.joined_user)
-                i.rank = 1
-                i.save()
-                if(i.joined_user==request.user.username):
-                    user_teams_list.append(i)
-            return render(request, "cricket_center/rankings.html", context={"match_obj": match_obj, "all_joined_with_ranking": all_joined, "contest_obj": contest_obj, "user":request.user.username, "user_teams_list":user_teams_list})
-        else:
-            for i in all_joined[0:1]:
-                print(i.joined_user)
-                i.rank = 1
-                i.save()
-        for i, ranker in enumerate(all_joined[1:]):
-            print(ranker.total_team_points)
-            print(ranker.rank)
-            print(ranker.joined_user)
-            print("i = " + str(i))
-            print(all_joined[i].joined_user + " Hee  " + str(all_joined[i].total_team_points))
-            if ranker.total_team_points == all_joined[i].total_team_points:
-                ranker.rank = all_joined[i].rank
-                ranker.save()
-                if(ranker.joined_user==request.user.username):
-                    user_teams_list.append(ranker)
-            else:
-                ranker.rank = i + 2
-                ranker.save()
-                if(ranker.joined_user==request.user.username):
-                    user_teams_list.append(ranker)
-
-        # print(all_joined.first().rank)
-        # # for ranker in all_joined[:1]:
-        # #     ranker.rank = 1
-        # #     ranker.save()
-        # # for t in all_joined:
-        # #     if t.joined_user == request.user.username
-        # #if(all_joined.first().joined_user==request.user.username):
-        #     # user_teams_list.append(all_joined.first())
-        # for i, ranker in enumerate(all_joined[1:]):
-        #     print("In for loop for " + str(ranker.joined_user))
-        #     print(all_joined[i].joined_user)
-        #     try:
-        #         print("Value of i" + str(i))
+        for i in all_joined:
+            if(i.joined_user==request.user.username):
+                user_teams_list.append(i)
+        # print(request.user.username)
+        # if all_joined.first().total_team_points == 0:
+        #     for i in all_joined:
+        #         print(i.joined_user)
+        #         i.rank = 1
+        #         i.save()
+        #         if(i.joined_user==request.user.username):
+        #             user_teams_list.append(i)
+        #     return render(request, "cricket_center/rankings.html", context={"match_obj": match_obj, "all_joined_with_ranking": all_joined, "contest_obj": contest_obj, "user":request.user.username, "user_teams_list":user_teams_list})
+        # else:
+        #     print("ELSSSSSS")
+        #     for i in all_joined[0:1]:
+        #         print("ELSSSSSSFOR")
+        #         print(i.joined_user)
+        #         i.last_rank = i.rank
+        #         i.rank = 1
+        #         i.save()
+        #     for i, ranker in enumerate(all_joined[1:]):
+        #         print(ranker.total_team_points)
+        #         print(ranker.rank)
+        #         print(ranker.joined_user)
+        #         print("i = " + str(i))
+        #         print(all_joined[i].joined_user + " Hee  " + str(all_joined[i].total_team_points))
         #         if ranker.total_team_points == all_joined[i].total_team_points:
-        #             print("try if")
-        #             # print(ranker.joined_user)
+        #             ranker.last_rank = ranker.rank
         #             ranker.rank = all_joined[i].rank
         #             ranker.save()
         #             if(ranker.joined_user==request.user.username):
         #                 user_teams_list.append(ranker)
         #         else:
-        #             print("try else")
-        #             print(ranker.joined_user)
-        #             ranker.rank = i + 1
+        #             ranker.last_rank = ranker.rank
+        #             ranker.rank = i + 2
         #             ranker.save()
-        #             print("something special")
-        #             print(ranker.rank)
         #             if(ranker.joined_user==request.user.username):
         #                 user_teams_list.append(ranker)
 
-        #     except IndexError:
-        #         print("Value of i" + str(i))
-        #         if ranker.total_team_points == all_joined[i-1].total_team_points:
-        #             print("except if")
-        #             ranker.rank = all_joined[i-1].rank
-        #         else:
-        #             print(ranker.joined_user)
-        #             ranker.rank = i + 1
-        #             print("except if")
-        #         ranker.save()
-        #     all_joined = all_joined.exclude(joined_user=request.user.username)
-        #     print("user list")
-        #     print(user_teams_list)
         return render(request, "cricket_center/rankings.html", context={"match_obj": match_obj, "all_joined_with_ranking": all_joined, "contest_obj": contest_obj, "user":request.user.username, "user_teams_list":user_teams_list})
 
 

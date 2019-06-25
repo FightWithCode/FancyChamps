@@ -690,11 +690,11 @@ body
 }
 
 .RankHeaderPointsLive{
-  position:relative;text-align:center;width:10%;left:-30px;top:50%;transform: translateY(-50%);
+  position:relative;text-align:center;width:15%;left:-42px;top:50%;transform: translateY(-50%);
 }
 
 .RankHeaderPointsActual{
-  position:relative;text-align:center;width:10%;left:-30px;top:50%;transform: translateY(-50%);
+  position:relative;text-align:center;width:15%;left:-30px;top:50%;transform: translateY(-50%);text-align:left;
 }
 
 .RankingHeaderTeam{

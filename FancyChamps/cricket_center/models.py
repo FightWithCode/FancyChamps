@@ -311,6 +311,7 @@ class JoiningDetail(models.Model):
     bonus_deduction = models.PositiveIntegerField(default=0)
     balance_deduction = models.PositiveIntegerField(default=0)
     winnings_deduction = models.PositiveIntegerField(default=0)
+    last_rank = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.joined_contest_slug + "[" + self.joined_user_team + "]"

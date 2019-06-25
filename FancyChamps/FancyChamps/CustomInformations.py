@@ -73,7 +73,49 @@ def update_total_team_points(match_slug):
             print(team.Vice_Captain_Points)
             print(team)
             team.save()
-
+        contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
+        for contest in contest_obj:
+            contest_slug = contest.contest_slug
+            # print(contest_slug)
+            all_joined = JoiningDetail.objects.filter(joined_contest_slug__exact=contest_slug).order_by('-total_team_points', 'pk')
+            print(all_joined)
+            # user_teams_list = []
+            # print(request.user.username)
+            joined_count = all_joined.count()
+            if joined_count!=0 and (all_joined.first().total_team_points == 0):
+                for i in all_joined:
+                    print(i.joined_user)
+                    i.rank = 1
+                    i.save()
+                    # if(i.joined_user==request.user.username):
+                    #     user_teams_list.append(i)
+                # return render(request, "cricket_center/rankings.html", context={"match_obj": match_obj, "all_joined_with_ranking": all_joined, "contest_obj": contest_obj, "user":request.user.username, "user_teams_list":user_teams_list})
+            else:
+                print("ELSSSSSS")
+                for i in all_joined[0:1]:
+                    print("ELSSSSSSFOR")
+                    print(i.joined_user)
+                    i.last_rank = i.rank
+                    i.rank = 1
+                    i.save()
+                for i, ranker in enumerate(all_joined[1:]):
+                    print(ranker.total_team_points)
+                    print(ranker.rank)
+                    print(ranker.joined_user)
+                    print("i = " + str(i))
+                    print(all_joined[i].joined_user + " Hee  " + str(all_joined[i].total_team_points))
+                    if ranker.total_team_points == all_joined[i].total_team_points:
+                        ranker.last_rank = ranker.rank
+                        ranker.rank = all_joined[i].rank
+                        ranker.save()
+                        # if(ranker.joined_user==request.user.username):
+                        #     user_teams_list.append(ranker)
+                    else:
+                        ranker.last_rank = ranker.rank
+                        ranker.rank = i + 2
+                        ranker.save()
+                        # if(ranker.joined_user==request.user.username):
+                        #     user_teams_list.append(ranker)
 
 def CancellOrApproveContest(match_slug):
     contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
