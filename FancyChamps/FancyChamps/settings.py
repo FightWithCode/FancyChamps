@@ -187,7 +187,7 @@ EMAIL_HOST_PASSWORD = "FightBack@2010"
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 # SERVER_EMAIL = 'verify@fancychamps.com'
-# DEFAULT_FROM_EMAIL = 'FancyChamps Verification <verify@fancychamps.com>'
+DEFAULT_FROM_EMAIL = 'FancyChampes Verification <verify@fancychamps.com>'
 
 CSRF_FAILURE_VIEW = 'FancyChamps.views.csrf_failure'
 
