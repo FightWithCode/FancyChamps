@@ -174,6 +174,7 @@ def CheckBalanceView(request):
         "username" : request.user.username,
         "minimum" : 100,
         "max" : 10000,
+        "is_email_confirmed" : user_profile.is_email_confirmed,
     }
     return JsonResponse(data)
 
