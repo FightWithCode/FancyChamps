@@ -113,16 +113,16 @@
 		  		{% if match_obj.history_activate %}
 		  			<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderIfTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
-				  	{% if rank.rank <= contest_obj.contest_winners %}
+				  	{% if rank.rank <= contest_obj.contest_winners and rank.winnings > 0 %}
 					  <h6 class="RankingHeaderStatus"><img src="{% static "images/winners.jpg" %}" width="16%" class="img-responsive WinningImg"> <span class="RepeeSymbol">₹</span>{{rank.winnings}}</h6>
 				  	{% else %}
 					  <h6 class="RankingHeaderStatus"></h6>
 				  	{% endif %}
-				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:5px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
+				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:8px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
 		  		{% else %}
 		    		<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
-				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:5px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
+				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:8px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
 				{% endif %}
 		    </div>
 		  {% endfor %}
@@ -131,16 +131,16 @@
 		  		{% if match_obj.history_activate %}
 		  			<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderIfTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
-				  	{% if rank.rank <= contest_obj.contest_winners %}
+				  	{% if rank.rank <= contest_obj.contest_winners and rank.winnings > 0%}
 					  <h6 class="RankingHeaderStatus"><img src="{% static "images/winners.jpg" %}" width="16%" class="img-responsive WinningImg"> <span class="RepeeSymbol">₹</span>{{rank.winnings}}</h6>
 				  	{% else %}
 					  <h6 class="RankingHeaderStatus"></h6>
 				  	{% endif %}
-				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:5px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
+				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:8px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
 		  		{% else %}
 		    		<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderTeam">{{rank.joined_user}}[{{rank.joined_user_team}}]</h6>
-				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:5px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
+				  	<h6 class="RankHeaderPointsActual">{{rank.total_team_points}}<span style="float:right;padding-right:8px;">{% if rank.last_rank > rank.rank %}<i class="fa fa-caret-up" style="font-size:20px;color:green"></i>{% elif rank.rank > rank.last_rank %}<i class="fa fa-caret-down" style="font-size:20px;color:red"></i>{% elif rank.rank is rank.last_rank %}<i class="fa fa-caret-up fa-rotate-270" style="font-size:20px;color:orange"></i><i class="fa fa-caret-up fa-rotate-90" style="font-size:20px;color:orange"></i></span>{% endif %}</h6>
 				{% endif %}
 		    </div>
 		  {% endfor %}
