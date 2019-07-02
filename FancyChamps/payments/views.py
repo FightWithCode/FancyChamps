@@ -195,7 +195,7 @@ def SubmitWidhdrawRequestView(request):
                                 transaction_amt = Decimal(cash),
                                 transaction_status = "pending",
                                 transact_user = request.user.username,
-                                transaction_message = "Withdrawn " + str(cash),
+                                transaction_message = "Withdrawn",
                                 transaction_type = "deducted",
                           )
         try:
