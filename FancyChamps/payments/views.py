@@ -197,6 +197,7 @@ def SubmitWidhdrawRequestView(request):
                                 transact_user = request.user.username,
                                 transaction_message = "Withdrawn",
                                 transaction_type = "deducted",
+                                added_to_user= True,
                           )
         try:
             transaction_obj.save()
