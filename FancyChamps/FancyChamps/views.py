@@ -12,8 +12,8 @@ from django.core.mail import send_mail, BadHeaderError
 from django.utils.crypto import get_random_string
 from support.forms import SupportQuerriesForm
 from django.shortcuts import render_to_response
-from accounts.models import User, Profile, TempUser
-
+from accounts.models import User, Profile, TempUser, FailedLoginAttempt
+from datetime import datetime, timedelta
 # class IndexView(TemplateView):
 #     template_name = "index.html"
 
@@ -252,29 +252,39 @@ def IndexView(request):
                 if login_form.is_valid:
                     username = login_form.data.get("username")
                     password = login_form.data.get("password")
-                    user = authenticate(username=username, password=password)
-                    if user:
-                        # Check it the account is active
-                        if user.is_active:
-                            # Log the user in.
-                            login(request, user)
-                            user.save()
-                            return HttpResponseRedirect('cricket_center')
-                        else:
-                            # If account is not active:
-                            return HttpResponse("Your account is not active.")
-
+                    time_threshold = datetime.now() - timedelta(minutes=30)
+                    failed_attempts = FailedLoginAttempt.objects.filter(user__exact=username, failed_time__gt=time_threshold)
+                    print(failed_attempts)
+                    if failed_attempts.count() > 2:
+                        print("More than Twik")
+                        print(failed_attempts)
                     else:
-                        login_error = True
-                        print("Someone tried to login and failed.")
-                        print("They used username: {} and password: {}".format(username, password))
-                        return render(request, 'index.html',
-                              {
-                                'user_form': user_form,
-                                'profile_form': profile_form,
-                                'login_form': login_form,
-                                'login_error': login_error
-                              })
+                        user = authenticate(username=username, password=password)
+                        if user:
+                            # Check it the account is active
+                            if user.is_active:
+                                # Log the user in.
+                                login(request, user)
+                                user.save()
+                                return HttpResponseRedirect('cricket_center')
+                            else:
+                                # If account is not active:
+                                return HttpResponse("Your account is not active.")
+                        else:
+                            login_error = True
+                            print(request.META.get('HTTP_X_REAL_IP'))
+                            print("Someone tried to login and failed.")
+                            print("They used username: {} and password: {}".format(username, password))
+                            # failed_attempts_obj = FailedLoginAttempt(user=username, ip=request.META.get('HTTP_X_REAL_IP'))
+                            failed_attempts_obj = FailedLoginAttempt(user=username, ip=request.META.get('REMOTE_ADDR'))
+                            failed_attempts_obj.save()
+                            return render(request, 'index.html',
+                                  {
+                                    'user_form': user_form,
+                                    'profile_form': profile_form,
+                                    'login_form': login_form,
+                                    'login_error': login_error
+                                  })
             print("no post from center")
             print(request.POST)
             if request.POST.get('submit_btn') == 'Continue':
@@ -314,7 +324,7 @@ def IndexView(request):
                         otp_send =  True
                         username = user_form.cleaned_data['username']
                     else:
-                        digits_valid = False
+                        digits_valid = False0
                     print(digits_valid, otp_send)
                     #mobile_no = profile_form.cleaned_data['phone_number']
                     #otp_send=True

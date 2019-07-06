@@ -158,3 +158,9 @@ class TempUser(models.Model):
     username = models.CharField(max_length=64)
     password = models.CharField(max_length=64)
     mobile_no = models.CharField(max_length=10,blank=True)
+
+
+class FailedLoginAttempt(models.Model):
+    user = models.CharField(max_length=64)
+    ip = models.CharField(max_length=255)
+    failed_time = models.DateTimeField(auto_now=True)
