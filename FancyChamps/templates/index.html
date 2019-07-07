@@ -23,6 +23,10 @@
               <div class="alert alert-danger" role="alert">
                 <center>Please Enter Correct Username and Password!<center>
               </div>
+            {% elif locked %}
+              <div class="alert alert-danger" role="alert">
+                <center>Your account has been locked for suspicious action! Please contact us<center>
+              </div>
             {% endif %}
             <form method="post" action="{% url 'IndexView' %}">
               {% csrf_token %}
@@ -243,6 +247,10 @@
             {% if login_error %}
               <div class="alert alert-danger" role="alert">
                 <center>Please Enter Correct Username and Password!<center>
+              </div>
+            {% elif locked %}
+              <div class="alert alert-danger" role="alert">
+                <center>Your account has been locked for suspicious action! Please contact us<center>
               </div>
             {% endif %}
             <form method="post" action="{% url 'IndexView' %}">

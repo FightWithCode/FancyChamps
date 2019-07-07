@@ -13,7 +13,8 @@ from django.utils.crypto import get_random_string
 from support.forms import SupportQuerriesForm
 from django.shortcuts import render_to_response
 from accounts.models import User, Profile, TempUser, FailedLoginAttempt
-from datetime import datetime, timedelta
+from datetime import timedelta, datetime
+from django.utils import timezone
 # class IndexView(TemplateView):
 #     template_name = "index.html"
 
@@ -252,12 +253,38 @@ def IndexView(request):
                 if login_form.is_valid:
                     username = login_form.data.get("username")
                     password = login_form.data.get("password")
-                    time_threshold = datetime.now() - timedelta(minutes=30)
+                    time_threshold = timezone.now() - timedelta(minutes=30)
                     failed_attempts = FailedLoginAttempt.objects.filter(user__exact=username, failed_time__gt=time_threshold)
                     print(failed_attempts)
                     if failed_attempts.count() > 2:
-                        print("More than Twik")
-                        print(failed_attempts)
+                        print("called")
+                        try:
+                            user_obj = get_object_or_404(User, username__exact=username)
+                            print("trt called")
+                            if user_obj.is_active:
+                                print("trt called if")
+                                return render(request, 'index.html',
+                                  {
+                                    'user_form': user_form,
+                                    'profile_form': profile_form,
+                                    'login_form': login_form,
+                                    'locked': True
+                                  })
+                            else:
+                                print("trt called else")
+                                user_obj.is_active = False
+                                user_obj.save()
+                                locked = True
+                                print(locked)
+                                return render(request, 'index.html',
+                                  {
+                                    'user_form': user_form,
+                                    'profile_form': profile_form,
+                                    'login_form': login_form,
+                                    'locked': locked,
+                                  })
+                        except User.DoesNotExist:
+                            print("User Does not Exists")
                     else:
                         user = authenticate(username=username, password=password)
                         if user:
@@ -269,7 +296,13 @@ def IndexView(request):
                                 return HttpResponseRedirect('cricket_center')
                             else:
                                 # If account is not active:
-                                return HttpResponse("Your account is not active.")
+                                return render(request, 'index.html',
+                                  {
+                                    'user_form': user_form,
+                                    'profile_form': profile_form,
+                                    'login_form': login_form,
+                                    'locked': True
+                                  })
                         else:
                             login_error = True
                             print(request.META.get('HTTP_X_REAL_IP'))
