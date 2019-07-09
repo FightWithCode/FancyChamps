@@ -131,13 +131,7 @@ def ViewPayout(request, contest_slug):
         data = model_to_dict(prize_distri)
         print(data)
     except:
-        if dist_type == "Equal":
-            winners = contest_obj.contest_winners
-            data = {}
-            for i in range(1,winners+1):
-                data['Rank'+str(i)] = contest_obj.contest_prize/winners
-        else:
-            data['Rank1'] = contest_obj.contest_prize
+        data = {'Rank1': contest_obj.contest_prize}
     data = sorted(data.items(),key=operator.itemgetter(1),reverse=True)
     print(data)
     dict_data = OrderedDict(data)

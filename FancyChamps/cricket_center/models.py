@@ -512,7 +512,7 @@ class JoiningDetail(models.Model):
     last_rank = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.joined_contest_slug + "[" + self.joined_user_team + "]"
+        return self.joined_contest_slug + "[" + self.joined_user + self.joined_user_team + "]"
 
 
 class JoiningTransactionDetail(models.Model):
