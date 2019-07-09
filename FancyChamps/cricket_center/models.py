@@ -204,7 +204,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = True,
                                 confirmed = True,
-                                prize_dist_type = "FreeContestPrize100",
+                                prize_dist_type = "Equal",
                                 bonus_percent = 0
                             )
             contest_obj_9.save()
@@ -384,7 +384,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = False,
                                 confirmed = True,
-                                prize_dist_type = "ToTwoEqual",
+                                prize_dist_type = "Equal",
                                 bonus_percent = 0,
                             )
             contest_obj_18.save()
@@ -404,7 +404,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = False,
                                 confirmed = True,
-                                prize_dist_type = "ToTwoEqual",
+                                prize_dist_type = "Equal",
                                 bonus_percent = 0,
                             )
             contest_obj_19.save()
@@ -424,7 +424,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = False,
                                 confirmed = True,
-                                prize_dist_type = "ToTwoEqual",
+                                prize_dist_type = "Equal",
                                 bonus_percent = 0,
                             )
             contest_obj_20.save()

@@ -131,7 +131,13 @@ def ViewPayout(request, contest_slug):
         data = model_to_dict(prize_distri)
         print(data)
     except:
-        data = {'Rank1': contest_obj.contest_prize}
+        if dist_type == "Equal":
+            winners = contest_obj.contest_winners
+            data = {}
+            for i in range(1,winners+1):
+                data['Rank'+str(i)] = contest_obj.contest_prize/winners
+        else:
+            data['Rank1'] = contest_obj.contest_prize
     data = sorted(data.items(),key=operator.itemgetter(1),reverse=True)
     print(data)
     dict_data = OrderedDict(data)
@@ -169,7 +175,7 @@ def SingleMatchView(request, match_slug):
     # if match_obj.match_tick < time.time():
     #     time_over_error = True
     #     return render(request, "cricket_center/match.html", context={"time_over_error": time_over_error})
-    
+
     print(match_obj.match_tick)
     print(time.time())
 
