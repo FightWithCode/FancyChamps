@@ -120,9 +120,10 @@ def update_total_team_points(match_slug):
 def CancellOrApproveContest(match_slug):
     contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
     for contest in contest_obj:
-        if ((not contest.filled_status) and contest.contest_size<=10 and contest.total_player_joined>1 and (contest.confirmed is True)):
+        if ((not contest.filled_status) and contest.contest_size<=100 and contest.total_player_joined>1 and (contest.confirmed is True)):
             contest.contest_winners = 1
             contest.prize_dist_type = "ToOne"
+            print(contest.contest_slug)
             contest.contest_prize = (contest.total_player_joined*contest.contest_fee*90)//100
             contest.contest_name = "₹" + str(contest.contest_prize) + " Winnings"
             contest.save()

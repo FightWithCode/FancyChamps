@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 )
 from django.core.validators import RegexValidator
 
-USERNAME_REGX = '^[a-zA-Z0-9.+-_]*$'
+USERNAME_REGX = '^[a-zA-Z0-9.-_]*$'
 
 STATES = (
     ("Add state", "Add state",),
@@ -81,7 +81,7 @@ class MyUserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username = models.CharField(max_length=64, unique=True, validators=[RegexValidator(regex=USERNAME_REGX, message="Username only contain A-Z,a-z,0-9 or . _ + - $", code="Invalid Username")])
+    username = models.CharField(max_length=64, unique=True, validators=[RegexValidator(regex=USERNAME_REGX, message="Username only contain A-Z,a-z,0-9 or . _ -", code="Invalid Username")])
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
