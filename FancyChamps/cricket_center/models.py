@@ -204,7 +204,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = True,
                                 confirmed = True,
-                                prize_dist_type = "Equal",
+                                prize_dist_type = "Free100To10",
                                 bonus_percent = 0
                             )
             contest_obj_9.save()
@@ -272,10 +272,10 @@ class MatchDetail(models.Model):
                                 contest_of_match=self,
                                 contest_name="₹50 Winnnings",
                                 contest_slug="Test",
-                                contest_prize=5,
+                                contest_prize=50,
                                 contest_fee = 11,
                                 contest_size = 5,
-                                contest_winners = 2,
+                                contest_winners = 1,
                                 total_player_joined = 0,
                                 joined_percentage = 0,
                                 contest_category = "All Goes to Champion",
@@ -290,10 +290,10 @@ class MatchDetail(models.Model):
             contest_obj_13.save()
             contest_obj_14 = ContestDetail(
                                 contest_of_match=self,
-                                contest_name="₹111 Winnnings",
+                                contest_name="₹50 Winnnings",
                                 contest_slug="Test",
-                                contest_prize=50,
-                                contest_fee = 3,
+                                contest_prize=25,
+                                contest_fee = 7,
                                 contest_size = 5,
                                 contest_winners = 1,
                                 total_player_joined = 0,
@@ -305,7 +305,7 @@ class MatchDetail(models.Model):
                                 free_contest = False,
                                 confirmed = True,
                                 prize_dist_type = "ToOne",
-                                bonus_percent = 66,
+                                bonus_percent = 40,
                             )
             contest_obj_14.save()
             contest_obj_15 = ContestDetail(
@@ -330,11 +330,11 @@ class MatchDetail(models.Model):
             contest_obj_15.save()
             contest_obj_16 = ContestDetail(
                                 contest_of_match=self,
-                                contest_name="₹100 Winnnings",
+                                contest_name="₹50 Winnnings",
                                 contest_slug="Test",
-                                contest_prize=100,
+                                contest_prize=50,
                                 contest_fee = 1,
-                                contest_size = 111,
+                                contest_size = 59,
                                 contest_winners = 1,
                                 total_player_joined = 0,
                                 joined_percentage = 0,
@@ -370,11 +370,11 @@ class MatchDetail(models.Model):
             contest_obj_17.save()
             contest_obj_18 = ContestDetail(
                                 contest_of_match=self,
-                                contest_name="₹100 Winnnings",
+                                contest_name="₹50 Winnnings",
                                 contest_slug="Test",
-                                contest_prize=100,
+                                contest_prize=50,
                                 contest_fee = 11,
-                                contest_size = 10,
+                                contest_size = 5,
                                 contest_winners = 2,
                                 total_player_joined = 0,
                                 joined_percentage = 0,
@@ -384,7 +384,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = False,
                                 confirmed = True,
-                                prize_dist_type = "Equal",
+                                prize_dist_type = "Winners2OutOf5Fee11Equal",
                                 bonus_percent = 0,
                             )
             contest_obj_18.save()
@@ -404,7 +404,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = False,
                                 confirmed = True,
-                                prize_dist_type = "Equal",
+                                prize_dist_type = "Winners2OutOf5Fee21Equal",
                                 bonus_percent = 0,
                             )
             contest_obj_19.save()
@@ -424,7 +424,7 @@ class MatchDetail(models.Model):
                                 bonus_contest = False,
                                 free_contest = False,
                                 confirmed = True,
-                                prize_dist_type = "Equal",
+                                prize_dist_type = "Winners2OutOf4Fee55Equal",
                                 bonus_percent = 0,
                             )
             contest_obj_20.save()

@@ -1,1 +1,36 @@
-function openEvent(e,t){var s,i,o;for(i=document.getElementsByClassName("tabcontent"),s=0;s<i.length;s++)i[s].style.display="none";for(o=document.getElementsByClassName("tablinksMain"),s=0;s<o.length;s++)o[s].className=o[s].className.replace(" active","");document.getElementById(t).style.display="block",e.currentTarget.className+=" active"}$(document).ready(function(){$("div.dropdown").each(function(){var e=$(this);$("a.dropdown-link",e).click(function(t){return t.preventDefault(),$div=$("div.dropdown-container",e),$div.toggle(),$("div.dropdown-container").not($div).hide(),!1})}),$("html").click(function(){$("div.dropdown-container").hide()})}),$(window).on("load",function(){$(".GrandClass > div:gt(0)").hide(),$(".HeadClass > div:gt(0)").hide(),$(".4On1Class > div:gt(0)").hide(),$(".OtherContests > div:gt(0)").hide(),$(".3On1Class > div:gt(0)").hide(),$(".FreeRoll > div:gt(0)").hide()}),$(".GrandClass > button").click(function(){$(this).siblings("div:gt(0)").slideToggle(),$(this).text("Show More Grand Leagues!"==$(this).text()?"Show Less":"Show More Grand Leagues!")}),$(".HeadClass > button").click(function(){$(this).siblings("div:gt(0)").slideToggle(),$(this).text("Show More Leagues!"==$(this).text()?"Show Less":"Show More Leagues!")}),$(".4On1Class > button").click(function(){$(this).siblings("div:gt(0)").slideToggle(),$(this).text("Show More Leagues!"==$(this).text()?"Show Less":"Show More Leagues!")}),$(".OtherContests > button").click(function(){$(this).siblings("div:gt(0)").slideToggle(),$(this).text("Show More Leagues!"==$(this).text()?"Show Less":"Show More Leagues!")}),$(".3On1Class > button").click(function(){$(this).siblings("div:gt(0)").slideToggle(),$(this).text("Show More Leagues!"==$(this).text()?"Show Less":"Show More Leagues!")}),$(".FreeRoll > button").click(function(){$(this).siblings("div:gt(0)").slideToggle(),$(this).text("Show More Leagues!"==$(this).text()?"Show Less":"Show More Leagues!")});
+function openEvent(e, t) {
+    var s, i, o;
+    for (i = document.getElementsByClassName("tabcontent"), s = 0; s < i.length; s++) i[s].style.display = "none";
+    for (o = document.getElementsByClassName("tablinksMain"), s = 0; s < o.length; s++) o[s].className = o[s].className.replace(" active", "");
+    document.getElementById(t).style.display = "block", e.currentTarget.className += " active"
+}
+$(document).ready(function() {
+    $("div.dropdown").each(function() {
+        var e = $(this);
+        $("a.dropdown-link", e).click(function(t) {
+            return t.preventDefault(), $div = $("div.dropdown-container", e), $div.toggle(), $("div.dropdown-container").not($div).hide(), !1
+        })
+    }), $("html").click(function() {
+        $("div.dropdown-container").hide()
+    })
+}), $(window).on("load", function() {
+    $(".BonusClass > div:gt(0)").hide(), $(".AllGoesToChampionClass > div:gt(0)").hide(), $(".GrandClass > div:gt(0)").hide(), $(".HeadClass > div:gt(0)").hide(), $(".4On1Class > div:gt(0)").hide(), $(".OtherContests > div:gt(0)").hide(), $(".3On1Class > div:gt(0)").hide(), $(".FreeRoll > div:gt(0)").hide(), $(".EqualClass > div:gt(0)").hide()
+}), $(".GrandClass > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Grand Leagues!" == $(this).text() ? "Show Less" : "Show More Grand Leagues!")
+}), $(".HeadClass > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+}), $(".4On1Class > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+}), $(".OtherContests > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+}), $(".3On1Class > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+}), $(".FreeRoll > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+}), $(".EqualClass > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+}), $(".BonusClass > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+}), $(".AllGoesToChampionClass > button").click(function() {
+    $(this).siblings("div:gt(0)").slideToggle(), $(this).text("Show More Leagues!" == $(this).text() ? "Show Less" : "Show More Leagues!")
+});

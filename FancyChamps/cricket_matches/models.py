@@ -71,4 +71,16 @@ class Winners2OutOf5Fee23(models.Model):
 
 
 class Free100To10(models.Model):
-    Rank1To10      = models.IntegerField(default=10)
+    Rank1To10  = models.IntegerField(default=10)
+
+
+class Winners2OutOf4Fee55Equal(models.Model):
+    Rank1To2   = models.IntegerField(default=100)
+
+
+class Winners2OutOf5Fee21Equal(models.Model):
+    Rank1To2   = models.IntegerField(default=50)
+
+
+class Winners2OutOf5Fee11Equal(models.Model):
+    Rank1To2   = models.IntegerField(default=25)
