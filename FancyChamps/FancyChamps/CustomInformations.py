@@ -130,6 +130,10 @@ def CancellOrApproveContest(match_slug):
         elif ((not contest.filled_status) and (contest.confirmed is False)):
             contest.cancelled = True
             contest.save()
+        elif ((contest.total_player_joined==1) and (contest.confirmed is True)):
+            contest.cancelled = True
+            print(contest.cancelled)
+            contest.save()
         elif(contest.total_player_joined==0):
             contest.cancelled = True
             contest.save()
@@ -175,19 +179,21 @@ def RefundCancelledContest(match_slug):
             joined_qs = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug)
             for joined in joined_qs:
                 # print(joined.username)
-                print(joined.balance_deduction)
+                
 
                 user = Profile.objects.filter(user__username__exact=joined.joined_user).first()
                 # print(user)
                 # print(user.username)
                 # print(Decimal(user.balance))
-                print(Decimal(joined.bonus_deduction))
-                print(Decimal(joined.balance_deduction))
+                print(user.bonus)
+                print(user.widhdrawable_balance)
+                print(user.balance)
                 user.bonus = Decimal(user.bonus) + Decimal(joined.bonus_deduction)
                 user.balance = Decimal(user.balance) + Decimal(joined.balance_deduction)
-                # print(user.balance)
-                # print(user.bonus)
-#             # print(Decimal(user.balance))
+                user.widhdrawable_balance = Decimal(user.widhdrawable_balance) + Decimal(joined.winnings_deduction)
+                print(user.balance)
+                print(user.bonus)
+                print(user.widhdrawable_balance)
                 user.save()
                 new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
                                                         transaction_amt=joined.balance_deduction + joined.bonus_deduction,

@@ -449,6 +449,7 @@ def PayAndJoin(request):
                     print(user_balance, deduction_from_main)
                     if(deduction_from_main > user_balance):
                         deduction_from_balance = user_balance
+                        print(deduction_from_main)
                         new_user_balance = user_balance - deduction_from_balance
                         user.balance  = new_user_balance
                         deduction_from_winnings = contest_fee - (deduction_from_bonus + deduction_from_balance)
