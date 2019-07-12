@@ -99,6 +99,7 @@ def update_total_team_points(match_slug):
                     i.rank = 1
                     i.save()
                 for i, ranker in enumerate(all_joined[1:]):
+                    print("HelloWorld.....................>#########################################################################")
                     print(ranker.total_team_points)
                     print(ranker.rank)
                     print(ranker.joined_user)
@@ -179,7 +180,7 @@ def RefundCancelledContest(match_slug):
             joined_qs = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug)
             for joined in joined_qs:
                 # print(joined.username)
-                
+
 
                 user = Profile.objects.filter(user__username__exact=joined.joined_user).first()
                 # print(user)
