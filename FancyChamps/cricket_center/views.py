@@ -437,6 +437,7 @@ def PayAndJoin(request):
         low_balance = 0
         add_money = 0
         if contest.bonus_contest is True:
+            print("Local")
             if user_bonus >= Decimal(round((bonus_percent*contest_fee)/100, 0)):
                 deduction_from_bonus = Decimal(round((bonus_percent*contest_fee)/100, 0))
                 new_bonus = user_bonus - deduction_from_bonus
