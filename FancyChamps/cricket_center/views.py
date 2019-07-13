@@ -448,19 +448,16 @@ def PayAndJoin(request):
                 else:
                     print(user_balance, deduction_from_main)
                     if(deduction_from_main > user_balance):
-                        deduction_from_balance = user_balance
-                        print(deduction_from_main)
-                        new_user_balance = user_balance - deduction_from_balance
+                        deduction_from_main = user_balance
+                        new_user_balance = user_balance - deduction_from_main
                         user.balance  = new_user_balance
-                        deduction_from_winnings = contest_fee - (deduction_from_bonus + deduction_from_balance)
+                        deduction_from_winnings = contest_fee - (deduction_from_bonus + deduction_from_main)
                         new_user_winnings = user_winnings - deduction_from_winnings
                         user.widhdrawable_balance = new_user_winnings
                     else:
                         new_user_balance = user_balance - deduction_from_main
                         user.balance = new_user_balance
                         deduction_from_winnings = 0
-                    # new_balance = user_balance - deduction_from_main
-                    # user.balance = new_balance
                     join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, winnings_deduction=deduction_from_winnings,  joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
                     join_transaction_detail_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase  + string.digits) for _ in range(15)),
                                                                         transaction_amt=contest_fee,
@@ -505,10 +502,10 @@ def PayAndJoin(request):
                     add_money = deduction_from_main - (user_balance + user_winnings)
                 else:
                     if(deduction_from_main > user_balance):
-                        deduction_from_balance = user_balance
-                        new_user_balance = user_balance - deduction_from_balance
+                        deduction_from_main = user_balance
+                        new_user_balance = user_balance - deduction_from_main
                         user.balance  = new_user_balance
-                        deduction_from_winnings = contest_fee - (deduction_from_bonus + deduction_from_balance)
+                        deduction_from_winnings = contest_fee - (deduction_from_bonus + deduction_from_main)
                         new_user_winnings = user_winnings - deduction_from_winnings
                         user.widhdrawable_balance = new_user_winnings
                     else:
@@ -556,10 +553,10 @@ def PayAndJoin(request):
                 add_money = deduction_from_main - (user_balance + user_winnings)
             else:
                 if(deduction_from_main > user_balance):
-                    deduction_from_balance = user_balance
-                    new_user_balance = user_balance - deduction_from_balance
+                    deduction_from_main = user_balance
+                    new_user_balance = user_balance - deduction_from_main
                     user.balance  = new_user_balance
-                    deduction_from_winnings = contest_fee - (deduction_from_bonus + deduction_from_balance)
+                    deduction_from_winnings = contest_fee - (deduction_from_bonus + deduction_from_main)
                     new_user_winnings = user_winnings - deduction_from_winnings
                     user.widhdrawable_balance = new_user_winnings
                 else:
