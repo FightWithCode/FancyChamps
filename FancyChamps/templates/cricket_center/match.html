@@ -113,7 +113,7 @@
 		  		<h6 class="ContentHeader">Available Leagues</h6>
 		  	</center>
 		  </div>
-		  
+
           <div class="BonusHeader" style="width:100%;">
             <img src="{% static "images/MultipleChampion.png" %}" alt="Image Not Found" class="LeagueImage">
             <div class="ContestTypeDiv">
@@ -203,7 +203,7 @@
 			</div>
 		  </div>
 		  <div class="HeadClass">
-    		  {% for contest in HeadToHead|dictsortreversed:"joined_percentage" %}
+    		  {% for contest in HeadToHead|dictsort:"contest_fee" %}
     			  {% if not contest.filled_status %}
     				<div class="LeagueArea row">
     			  	    <div class="row col-xs-12">
@@ -240,7 +240,7 @@
 			</div>
 		  </div>
 		  <div class="3On1Class">
-    		  {% for contest in ThreeOnOne|dictsortreversed:"joined_percentage" %}
+    		  {% for contest in ThreeOnOne|dictsort:"contest_fee" %}
     			{% if not contest.filled_status %}
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">

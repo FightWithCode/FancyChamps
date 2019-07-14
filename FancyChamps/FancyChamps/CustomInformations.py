@@ -197,10 +197,11 @@ def RefundCancelledContest(match_slug):
                 print(user.widhdrawable_balance)
                 user.save()
                 new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
-                                                        transaction_amt=joined.balance_deduction + joined.bonus_deduction,
+                                                        transaction_amt=joined.balance_deduction + joined.bonus_deduction + joined.winnings_deduction,
                                                         transact_user=joined.joined_user,
                                                         transaction_message="Refund for Contest",
                                                         transaction_type="added",
+                                                        refund_for_contest=joined.joined_contest_slug,
                 )
                 new_trans_obj.save()
 

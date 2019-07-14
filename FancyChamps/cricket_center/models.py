@@ -522,9 +522,10 @@ class JoiningTransactionDetail(models.Model):
     transaction_time = models.DateTimeField(auto_now=True)
     transaction_message = models.CharField(max_length=255, default="")
     transaction_type = models.CharField(max_length=16,default="added")
+    refund_for_contest = models.CharField(max_length=255, default="")
 
     def __str__(self):
-        return self.transaction_id
+        return self.transaction_id + '|' + self.transact_user
 
 
 class INDNZTeam(models.Model):
