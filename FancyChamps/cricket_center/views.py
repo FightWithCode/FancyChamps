@@ -515,7 +515,7 @@ def PayAndJoin(request):
                         deduction_from_winnings = 0
 
                     # user.balance = user_balance - deduction_from_main
-                    join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, winnings_deduction=deduction_from_winnings,  joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
+                    join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, winnings_deduction=deduction_from_winnings, joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
                     join_transaction_detail_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(15)),
                                                                         transaction_amt=contest_fee,
                                                                         transact_user=request.user.username,
@@ -554,6 +554,7 @@ def PayAndJoin(request):
                 add_money = deduction_from_main - (user_balance + user_winnings)
             else:
                 if(deduction_from_main > user_balance):
+                    print("I am the choosed one!")
                     deduction_from_main = user_balance
                     new_user_balance = user_balance - deduction_from_main
                     user.balance  = new_user_balance
@@ -571,7 +572,7 @@ def PayAndJoin(request):
                                                                         transaction_type = "deducted",
                 )
                 # user.balance = user_balance - deduction_from_main
-                join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
+                join_obj = JoiningDetail(bonus_deduction=deduction_from_bonus, balance_deduction=deduction_from_main, winnings_deduction=deduction_from_winnings, joined_user=request.user.username, joined_contest_slug=contest_slug, joined_user_team=team_no, match_slug=match_slug)
                 user.save()
                 join_obj.save()
                 contest.save()
@@ -635,6 +636,7 @@ def ProceedToPay(reques):
 
 @login_required(login_url='IndexView')
 def ContestJoinNow(request, match_slug, contest_slug):
+    print("He got the whole world!")
     match_objs = MatchDetail.objects.filter(match_slug__exact=match_slug)
     match_obj = match_objs.first()
     if match_obj.match_tick < time.time():
@@ -668,7 +670,7 @@ def ContestJoinNow(request, match_slug, contest_slug):
         contest_error = True
 
     if (profile_error is False) and (multiple_entry_error is False) and (contest_error is False):
-        user = Profile.objects.get(user__username__exact=request.user.username)
+        # user = Profile.objects.get(user__username__exact=request.user.username)
         all_joined = JoiningDetail.objects.filter(joined_contest_slug__exact=contest_slug)
         user_bonus = user.bonus
         user_balance = user.balance
@@ -686,9 +688,10 @@ def ContestJoinNow(request, match_slug, contest_slug):
                 deduction_from_bonus = Decimal(round((bonus_percent*contest_fee)/100, 0))
                 bonus_balance_after_deduction = user_bonus - deduction_from_bonus
                 deduction_from_main = contest_fee - deduction_from_bonus
-                if deduction_from_main > user_balance + user_winnings:
+                if deduction_from_main > (user_balance + user_winnings):
                     low_balance = 1
-                    add_money = deduction_from_main - user_balance + user_winnings
+                    print("I am here!")
+                    add_money = deduction_from_main - (user_balance + user_winnings)
                     main_balance_after_deduction = 0
                 else:
                     if deduction_from_main > user_balance:
