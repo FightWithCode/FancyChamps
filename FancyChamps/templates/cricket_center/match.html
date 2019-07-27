@@ -278,7 +278,7 @@
 		  </div>
 
 		  <div class="4On1Class">
-    		  {% for contest in FourOnOne|dictsortreversed:"joined_percentage" %}
+    		  {% for contest in FourOnOne|dictsort:"contest_fee" %}
     			{% if not contest.filled_status %}
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">
