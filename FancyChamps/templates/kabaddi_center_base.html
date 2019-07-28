@@ -12,7 +12,7 @@
       <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet">
       <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
       <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
-      <link rel="stylesheet" href="{% static "css/cricket_center_main.css" %}">
+      <link rel="stylesheet" href="{% static "css/kabaddi_center_main.css" %}">
     {% endblock stylesheets %}
 </head>
   <body>
@@ -27,10 +27,10 @@
     <div id="page">
       <div class="nav">
         <div class="nav-header">
-          <a class="nav-title" href="{% url 'cricket_center:cricket_center' %}" class="CricketCenterHeaderTop" style="color:#26BB1C">
+          <a class="nav-title" href="{% url 'cricket_center:cricket_center' %}" class="CricketCenterHeaderTop">
             Cricket
           </a><span style="font-size:23px;color:#F3F4F4"> | </span>
-          <a class="nav-title" href="{% url 'kabaddi_center:kabaddi_center' %}" class="CricketCenterHeaderTop">
+          <a class="nav-title" href="{% url 'kabaddi_center:kabaddi_center' %}" class="CricketCenterHeaderTop" style="color:#26BB1C">
             Kabaddi
           </a>
         </div>
@@ -71,7 +71,7 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>-->
       <script src="{% static 'js/main.js' %}"></script>
-      <script src="{% static 'js/cricket_center/cricket_center_main.js' %}"></script>
+      <script src="{% static 'js/kabaddi_center/kabaddi_center_main.js' %}"></script>
       <script type="text/javascript">
         // $(window).on('load', function(){
         //   $('.preloader').css('display','none')
@@ -103,3 +103,4 @@
     {% endblock %}
   </body>
 </html>
+M

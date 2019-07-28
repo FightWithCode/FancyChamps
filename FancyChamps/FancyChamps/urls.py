@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'about_us', views.AboutUs, name='about_us'),
     url(r'^MasterAdminOfFancyChamps/', admin.site.urls),
     url(r'^cricket_center/', include('cricket_center.urls')),
+    url(r'^kabaddi_center/', include('kabaddi_center.urls')),
     url(r'^payments/', include('payments.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^logout/', views.UserLogoutView, name="UserLogoutView"),

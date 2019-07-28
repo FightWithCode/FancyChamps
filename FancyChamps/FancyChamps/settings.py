@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'cricket_matches',
     'payments',
     'support',
+    'kabaddi_center',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',
