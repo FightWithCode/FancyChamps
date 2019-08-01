@@ -573,7 +573,7 @@ class MatchDetail(models.Model):
         return self.match_name
 
 
-class PATTAMTeam(models.Model):
+class PATJAITeam(models.Model):
     Player1 = models.CharField(max_length=255, default="")
     Player2 = models.CharField(max_length=255, default="")
     Player3 = models.CharField(max_length=255, default="")
@@ -606,7 +606,7 @@ class PATTAMTeam(models.Model):
 
     def save(self, *args, **kwargs):
         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-        super(PATTAMTeam, self).save(*args, **kwargs)
+        super(PATJAITeam, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username_of_player + "[" + str(self.team_no) + "]"

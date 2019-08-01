@@ -30,7 +30,7 @@ def PayTmPaymentView(request):
     # Generating unique temporary ids
     order_id = Checksum.__id_generator__()
     print(settings.PAYTM_WEBSITE)
-    bill_amount = request.GET['money_to_add']
+    bill_amount = request.GET['mta']
     print(request.GET)
     if bill_amount:
         data_dict = {
@@ -52,7 +52,7 @@ def PayTmPaymentView(request):
             order_id=param_dict['ORDER_ID'],
             checksum=param_dict['CHECKSUMHASH'],
             transact_user=request.user.username,
-            url_called=request.GET['match_slug']
+            url_called=request.GET['ms']
         )
         pre_trans_obj.save()
         return render(request,"payments/payment.html",{'paytmdict':param_dict})
@@ -214,7 +214,7 @@ def SubmitWidhdrawRequestView(request):
             data ={
                 "request":False
             }
-        
+
     else:
         data ={
             "request":False
