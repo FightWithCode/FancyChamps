@@ -27,12 +27,13 @@
     <div id="page">
       <div class="nav">
         <div class="nav-header">
-          <a class="nav-title" href="{% url 'cricket_center:cricket_center' %}" class="CricketCenterHeaderTop">
-            Cricket
-          </a><span style="font-size:23px;color:#F3F4F4"> | </span>
           <a class="nav-title" href="{% url 'kabaddi_center:kabaddi_center' %}" class="CricketCenterHeaderTop" style="color:#26BB1C">
             Kabaddi
+          </a><span style="font-size:23px;color:#F3F4F4"> | </span>
+          <a class="nav-title" href="{% url 'cricket_center:cricket_center' %}" class="CricketCenterHeaderTop">
+            Cricket
           </a>
+          
         </div>
         <div class="nav-btn">
           <label for="nav-check">
@@ -103,4 +104,3 @@
     {% endblock %}
   </body>
 </html>
-M

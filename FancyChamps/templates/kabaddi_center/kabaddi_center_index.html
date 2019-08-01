@@ -19,20 +19,9 @@
       <button class="tablinksMain" onclick="openEvent(event, 'Completed')" id="completed-contents">Results</button>
     </div>
     <div>
-      <br>
-      <center><h1>Kabaddi Fantasy is on the way... </h1></center>
-    </div>
-  </div>
-  <div class="">
-
-  </div>
-{% endblock %}
-
-{% block other_page_script %}
-<!-- <script src="{% static 'js/kabaddi_center/teams.js' %}"></script> -->
-{% endblock %}
-{% comment %}
-<div id="Upcomming" class="main_upper tabcontent">
+      <!-- <br>
+      <center><h1>Kabaddi Fantasy is on the way... </h1></center> -->
+      <div id="Upcomming" class="main_upper tabcontent">
       {% for match in upcomming_match_obj %}
         <a href="{% url 'kabaddi_center:match' match_slug=match.match_slug %}">
           <div class="MatchInfoCard">
@@ -64,7 +53,7 @@
           <center><h1>OPPS! There is no Ongoing Match currently</h1></center>
         {% else %}
           {% for match in live_match_obj %}
-            <!-- <a href="{% url 'cricket_center:match_live' match_slug=match.match_slug %}"> -->
+            <a href="{% url 'kabaddi_center:match_live' match_slug=match.match_slug %}">
               <div class="MatchInfoCard">
                 <div class="MatchInfo">
                     <div class="TeamFirst">
@@ -116,7 +105,7 @@
           <center><h1>Opps! There is no match to show Here!</h1></center>
         {% else %}
           {% for match in history_match_obj %}
-            <!-- <a href="{% url 'cricket_center:match_his' match_slug=match.match_slug %}"> -->
+            <a href="{% url 'kabaddi_center:match_his' match_slug=match.match_slug %}">
               <div class="MatchInfoCard">
                 <div class="MatchInfo">
                     <div class="TeamFirst">
@@ -142,4 +131,16 @@
           {% endfor %}
         {% endif %}
       </div>
+    </div>
+  </div>
+  <div class="">
+
+  </div>
+{% endblock %}
+
+{% block other_page_script %}
+<!-- <script src="{% static 'js/kabaddi_center/teams.js' %}"></script> -->
+{% endblock %}
+{% comment %}
+
 {% endcomment %}

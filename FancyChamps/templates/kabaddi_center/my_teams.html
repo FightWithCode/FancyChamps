@@ -1,0 +1,95 @@
+{% extends "kabaddi_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% load replace_with %}
+{% block title %}Kabaddi Center | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+	<div class="MainBackground">
+	  <div class="color-overlay"></div>
+	</div>
+	<div class="MatchAreaForMatch">
+	  <div class="TeamPreviewContainer">
+		<center>
+			<i class="fa fa-chevron-circle-down CloseTeamPreviewContainer"></i>
+			<hr style="border-color:white;width:80%;">
+		</center>
+		<div class="AllPlayers">
+			<center><h5 style="color:white">Defenders</h5></center>
+				<div class="KeepersPreview">
+				</div>
+				<center><h5 style="color:white">Allrounders</h5></center>
+				<div class="AllrounderPreview">
+				</div>
+				<center><h5 style="color:white">Raiders</h5></center>
+				<div class="BatsmenPreview">
+				</div>
+			<div class="CaptainVicePrivew">
+				<div class="PlayerView" style="width: 25%;">
+					<span class="PlayerNameView">Captain</span>
+					<center><img class="player_image" src="{% static "images/question.png" %}"></center>
+					<span class="PlayerNameView">Select</span>
+				</div>
+				<div class="PlayerView" style="width: 25%;">
+					<span class="PlayerNameView">Vice Captain</span>
+					<center><img class="player_image" src="{% static "images/question.png" %}"></center>
+					<span class="PlayerNameView">Select</span>
+				</div>
+			</div>
+		</div>
+	  </div>
+	  <div class="OwnMatchCardView">
+
+	  		<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'kabaddi_center:kabaddi_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a><span style="float:right">My Teams</span></h4>
+
+	  </div>
+      {% if my_teams.count == 0 %}
+        <center><h4>Create a Team <br>and Join Contest to Earn</h4></center>
+      {% else %}
+    	  {% for team in my_teams %}
+    		<div class="LeagueArea row">
+    	  	    <div class="row col-xs-12">
+    	  	      <div class="col-xs-12 ContestJoinedCard">
+    	  	  	    <h5 class="LeagueName">Team : {{team}}</h5>
+    	  	  	    <hr style="position:relative;border-color:white;top:-5px;">
+    	  	  	    <div class="LeagueInfoContainer">
+    	  	  	    	<div>
+    	  	  	    		<h6 class="CaptainName">Captain</h6>
+    	  	  	    		<h6 class="ViceName">Vice Captain</h6>
+    	  	  	    		<br>
+    	  	  	    		<h6 class="CaptainName">{{team.Captain|convert_to_space}}</h6>
+    	  	  	    		<h6 class="ViceName">{{team.Vice_Captain|convert_to_space}}</h6>
+    	  	  	    	</div>
+    	  	  	    	<div class="MultipleButtonContainer row" >
+    		  	      	  <center class="TeamEdit"><a href="{% url 'kabaddi_center:team_edit' team=team.team_no match_slug=match_slug%}"><button type="button" class="btn btn-success btn-lg JoinNow">Edit</b></button></a></center>
+    		  	      	  <center class="MyTeamEdit"><a href="#"><button type="button" class="btn btn-success btn-lg JoinNow Preview" go-to="{% url 'kabaddi_center:team_preview' team=team.team_no match_slug=match_slug%}">Preiew</b></button></a></center>
+    	  	  	    	</div>
+    	  	  	    </div>
+    	  	      </div>
+    		    </div>
+    		</div>
+    	  {% endfor %}
+      {% endif %}
+	  <div class="footer">
+		<!--<center><div style="position:relative; display:inline-block; width:2px; height:40px; top:5px; background-color:green;"></div></center>	-->
+			<a href="#"><button class="btn FooterInfoLeft">
+				My Teams : {{ my_teams.count }}
+			</button></a>
+			<a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button class="btn FooterInfoRight">
+				Create Team
+			</button></a>
+	  </div>
+	</div>
+
+{% endblock %}
+
+{% block other_page_script %}
+
+<script src="{% static 'js/kabaddi_center/my_teams.js' %}"></script>
+
+{% endblock %}

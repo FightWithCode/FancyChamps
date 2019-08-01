@@ -21,6 +21,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from cricket_center.models import MatchDetail as MatchDetailCricket
+from kabaddi_center.models import MatchDetail as MatchDetailKabaddi
 # Uncomment for Celery
 # from accounts.tasks import send_feedback_email_task
 
@@ -45,38 +47,6 @@ def AddStateView(request):
             profile = form.save()
             print(profile)
             print("is_valid")
-            # current_site = get_current_site(request)
-            # subject = 'Welcome to FancyChamps! Confirm Your FancyChamps email.'
-            # message = render_to_string('account_activation_email.html', {
-            #     'user': user,
-            #     'domain': current_site.domain   ,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': account_activation_token.make_token(user),
-            # })
-            # try:
-            #     result = send_mail(
-            #         subject,
-            #         message,
-            #         '',
-            #         [user.email]
-            #     )
-            # except BadHeaderError:
-            #     print("Something")
-            # plaintext = get_template('email.txt')
-            # htmly     = get_template('account_activation_email.html')
-
-            # d = { 'user': user, 'domain':current_site.domain, 'uemail':urlsafe_base64_encode(force_bytes(user.email)), 'uid':urlsafe_base64_encode(force_bytes(user.pk)), 'token': account_activation_token.make_token(user)}
-
-            # # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
-            # text_content = ""
-            # html_content = htmly.render(d)
-            # msg = EmailMultiAlternatives(subject, text_content, '', [user.email])
-            # msg.attach_alternative(html_content, "text/html")
-            # try:
-            #     msg.send()
-            # except BadHeaderError:
-            #     print("Error while sending email!")
-            profile.save()
             return redirect('/accounts/profile')
     else:
         print("aa")
@@ -180,15 +150,11 @@ def MyAccountView(request):
     transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username, added_to_user__exact=True)#.order_by("-transaction_time")
     sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj), key=lambda obj: obj.transaction_time, reverse=True)
     trans_obj = TransactionDetail.objects.filter(Q(added_to_user__exact=False), Q(transact_user__exact=request.user.username), Q(transaction_status__exact="TXN_SUCCESS"))
-    print("HelloWORLD")
     print(len(trans_obj))
     if len(trans_obj)>=1:
-        print(trans_obj)
         money_added_status = True
         trans = trans_obj.first()
-        print(trans)
         if trans.captured:
-            print("second IF")
             trans.added_to_user = True
             trans.save()
             user_obj_profile = Profile.objects.get(user__username__exact=request.user.username)
@@ -196,6 +162,15 @@ def MyAccountView(request):
             user_obj_profile.save()
             money_added = True
             print(money_added)
+            try:
+                match_obj = get_object_or_404(MatchDetailCricket, match_slug__exact=trans.requested_match_slug)
+                return redirect('/cricket_center/match/'+str(match_obj.match_slug))
+            except :
+                try:
+                    match_obj = get_object_or_404(MatchDetailKabaddi, match_slug__exact=trans.requested_match_slug)
+                    return redirect('/kabaddi_center/match/'+str(match_obj.match_slug))
+                except:
+                    pass
         else:
             print("3")
             money_added = False

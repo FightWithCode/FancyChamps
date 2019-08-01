@@ -1,8 +1,8 @@
-{% extends "cricket_center_base.html" %}
+{% extends "kabaddi_center_base.html" %}
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% load user_agents %}
-{% block title %}Cricket Center | {{block.super}}{% endblock title %}
+{% block title %}Kabaddi Center | {{block.super}}{% endblock title %}
 {% block stylesheets %}
   {{block.super}}
 {% endblock stylesheets %}
@@ -33,21 +33,22 @@
 				<hr style="border-color:white;width:80%;">
 			</center>
 			<div class="AllPlayers">
+				<center><h5 style="color:white">Defenders</h5></center>
 				<div class="KeepersPreview">
 				</div>
-				<div class="BatsmenPreview">
-				</div>
+				<center><h5 style="color:white">Allrounders</h5></center>
 				<div class="AllrounderPreview">
 				</div>
-				<div class="BowlerPreview">
+				<center><h5 style="color:white">Raiders</h5></center>
+				<div class="BatsmenPreview">
 				</div>
 				<div class="CaptainVicePrivew">
-					<div class="PlayerView" style="width: 25%;">
+					<div class="PlayerView">
 						<span class="PlayerNameView">Captain</span>
 						<center><img class="player_image" src="{% static "images/question.png" %}"></center>
 						<span class="PlayerNameView">Select</span>
 					</div>
-					<div class="PlayerView" style="width: 25%;">
+					<div class="PlayerView">
 						<span class="PlayerNameView">Vice Captain</span>
 						<center><img class="player_image" src="{% static "images/question.png" %}"></center>
 						<span class="PlayerNameView">Select</span>
@@ -55,7 +56,7 @@
 				</div>
 				<input type="hidden" value={{match_obj.match_slug}} id="match_slug">
 				<input type="hidden" slug={{contest_obj.contest_slug}} id="CS">
-		    </div>
+			</div>
 		</div>
 
 
@@ -64,16 +65,16 @@
 				<i class="fa fa-chevron-circle-down CloseMessageContainer"></i>
 				<hr style="border-color:white;width:80%;">
 				<div class="row MessageDiv">
-					<div class="Message Hello" go-to="{% url 'cricket_center:message' %}" message="1" >Hello!</div>
-					<div class="Message Hi" go-to="{% url 'cricket_center:message' %}" message="2" >Hi!</div>
-					<div class="Message GoodBye" go-to="{% url 'cricket_center:message' %}" message="3" >Good Bye.</div>
-					<div class="Message NiceToMeet" go-to="{% url 'cricket_center:message' %}" message="4">Nice to Meet you!</div>
-					<div class="Message GoodLuck" go-to="{% url 'cricket_center:message' %}" message="5" >Good Luck!</div>
-					<div class="Message IWon" go-to="{% url 'cricket_center:message' %}" message="6" >I Won!</div>
-					<div class="Message ILose" go-to="{% url 'cricket_center:message' %}" message="7">I Lose!</div>
-					<div class="Message TooClose" go-to="{% url 'cricket_center:message' %}" message="8">Too Close.</div>
-					<div class="Message WellPlayed" go-to="{% url 'cricket_center:message' %}" message="9">Well Played!</div>
-					<div class="Message SameCaptain" go-to="{% url 'cricket_center:message' %}" message="10">Same Captain!</div>
+					<div class="Message Hello" go-to="{% url 'kabaddi_center:message' %}" message="1" >Hello!</div>
+					<div class="Message Hi" go-to="{% url 'kabaddi_center:message' %}" message="2" >Hi!</div>
+					<div class="Message GoodBye" go-to="{% url 'kabaddi_center:message' %}" message="3" >Good Bye.</div>
+					<div class="Message NiceToMeet" go-to="{% url 'kabaddi_center:message' %}" message="4">Nice to Meet you!</div>
+					<div class="Message GoodLuck" go-to="{% url 'kabaddi_center:message' %}" message="5" >Good Luck!</div>
+					<div class="Message IWon" go-to="{% url 'kabaddi_center:message' %}" message="6" >I Won!</div>
+					<div class="Message ILose" go-to="{% url 'kabaddi_center:message' %}" message="7">I Lose!</div>
+					<div class="Message TooClose" go-to="{% url 'kabaddi_center:message' %}" message="8">Too Close.</div>
+					<div class="Message WellPlayed" go-to="{% url 'kabaddi_center:message' %}" message="9">Well Played!</div>
+					<div class="Message SameCaptain" go-to="{% url 'kabaddi_center:message' %}" message="10">Same Captain!</div>
 				</div>
 				<hr style="border-color:white;width:80%;">
 			</center>
@@ -82,10 +83,10 @@
 
 
       <div class="OwnMatchCard">
-	  	<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'cricket_center:cricket_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a><span style="float:right">{{match_obj.match_status}}</span></h4>
+	  	<h4 class="ContentHeaderTeams">{{match_obj.team_one}} vs {{match_obj.team_two}}<a href="{% url 'kabaddi_center:kabaddi_center' %}" style="text-decoration: none;color:#F3F4F4">[GO BACK]</a><span style="float:right">{{match_obj.match_status}}</span></h4>
 	  </div>
 	  <div class="ContestInfoCard">
-	  	<h5 class="ContestNameOfContestInfoCard LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest_obj.contest_slug %}">{{contest_obj.contest_name}}<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span></h5>
+	  	<h5 class="ContestNameOfContestInfoCard LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest_obj.contest_slug %}">{{contest_obj.contest_name}}<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span></h5>
 	  	<div class="ContestInfoHeaderContainer">
 	  		<h6 class="InfoHeaderOfContestInfoCard">Fee</h6>
 	  		<h6 class="InfoHeaderOfContestInfoCard">Joined</h6>
@@ -108,7 +109,7 @@
 		  	<h6 class="RankHeaderPointsLive">POINTS</h6>
 		  </div>
 		  {% for rank in user_teams_list %}
-		    <div class="RankInfoCard" style="background-color:#C0C0C0;" go-to="{% url 'cricket_center:ranking_team_preview' team_no=rank.joined_user_team team_name=rank.joined_user match_slug=match_obj.match_slug %}">
+		    <div class="RankInfoCard" style="background-color:#C0C0C0;" go-to="{% url 'kabaddi_center:ranking_team_preview' team_no=rank.joined_user_team team_name=rank.joined_user match_slug=match_obj.match_slug %}">
 		  		{% if match_obj.history_activate %}
 		  			<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderIfTeam">{{rank.joined_user|slice:":15"}}[{{rank.joined_user_team}}]</h6>
@@ -126,7 +127,7 @@
 		    </div>
 		  {% endfor %}
 		  {% for rank in all_joined_with_ranking %}
-		  	<div class="RankInfoCard" go-to="{% url 'cricket_center:ranking_team_preview' team_no=rank.joined_user_team team_name=rank.joined_user match_slug=match_obj.match_slug %}">
+		  	<div class="RankInfoCard" go-to="{% url 'kabaddi_center:ranking_team_preview' team_no=rank.joined_user_team team_name=rank.joined_user match_slug=match_obj.match_slug %}">
 		  		{% if match_obj.history_activate %}
 		  			<h6 class="RankingHeaderRankPosition">{{rank.rank}}</h6>
 				  	<h6 class="RankingHeaderIfTeam">{{rank.joined_user|slice:":15"}}[{{rank.joined_user_team}}]</h6>
@@ -148,14 +149,14 @@
 	      {% endif %}
 	  </div>
   	  <div class="footer">
-		<a href="{% url 'cricket_center:cricket_center' %}">
+		<a href="{% url 'kabaddi_center:kabaddi_center' %}">
 			<button class="btn FooterInfoLeft">
 				Match Center
 			</button>
 		</a>
 		<a href="#">
 			<button class="btn FooterInfoRight" id="MessageButton">
-				Messages
+				Messages({{messages}})
 			</button>
 		</a>
 	  </div>
@@ -164,5 +165,5 @@
 {% endblock %}
 
 {% block other_page_script %}
-<script src="{% static 'js/cricket_center/rankings.js' %}"></script>
+<script src="{% static 'js/kabaddi_center/rankings.js' %}"></script>
 {% endblock %}

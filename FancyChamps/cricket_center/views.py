@@ -892,6 +892,8 @@ def PreviewTeam(request, team, match_slug):
 @login_required(login_url='IndexView')
 def TeamEdit(request, team, match_slug):
     match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
+    team_one = match_obj.short_team_one
+    team_two = match_obj.short_team_two
     if match_obj.match_tick < time.time():
         return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     else:
@@ -1002,12 +1004,14 @@ def TeamEdit(request, team, match_slug):
                     team_to_edit.save()
                     team_edited = True
                     return HttpResponseRedirect('/cricket_center/match' + '/' + match_slug)
-        return render(request, 'cricket_center/edit_team.html', {"match_slug": match_slug, 'team': team, 'players_obj': players_obj, 'keeper_form': keeper_form, 'allrounders_form': allrounders_form, 'bowlers_form': bowlers_form, 'batsmen_form': batsmen_form, 'team_edited': team_edited, 'user_teams_obj': user_teams_obj})
+        return render(request, 'cricket_center/edit_team.html', {"match_slug": match_slug, 'team': team, 'players_obj': players_obj, 'keeper_form': keeper_form, 'allrounders_form': allrounders_form, 'bowlers_form': bowlers_form, 'batsmen_form': batsmen_form, 'team_edited': team_edited, 'user_teams_obj': user_teams_obj, 'team_one': team_one, 'team_two': team_two})
 
 
 @login_required(login_url='IndexView')
 def CreateTeamView(request, match_slug):
     match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
+    team_one = match_obj.short_team_one
+    team_two = match_obj.short_team_two
     if match_obj.match_tick < time.time():
         return redirect(reverse('cricket_center:match_live', kwargs={'match_slug': match_slug}))
     else:
@@ -1118,7 +1122,7 @@ def CreateTeamView(request, match_slug):
                 team_obj.save()
                 team_created = True
                 return HttpResponseRedirect('/cricket_center/match' + '/' + match_slug)
-        return render(request, 'cricket_center/create_team.html', {'players_obj': players_obj, 'keeper_form': keeper_form, 'allrounders_form': allrounders_form, 'bowlers_form': bowlers_form, 'batsmen_form': batsmen_form, 'team_created': team_created, 'user_teams_obj': user_teams_obj})
+        return render(request, 'cricket_center/create_team.html', {'players_obj': players_obj, 'keeper_form': keeper_form, 'allrounders_form': allrounders_form, 'bowlers_form': bowlers_form, 'batsmen_form': batsmen_form, 'team_created': team_created, 'user_teams_obj': user_teams_obj, 'team_one': team_one, 'team_two': team_two})
 
 
 def GetTeamInfo(request, team, match_slug):

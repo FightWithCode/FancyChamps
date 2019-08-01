@@ -11,6 +11,7 @@ class TransactionDetail(models.Model):
     added_to_user = models.BooleanField(default=False)
     transaction_message = models.CharField(max_length=255, default="Money Added")
     transaction_type = models.CharField(max_length=16, default="added")
+    requested_match_slug = models.CharField(max_length=255, default="")
 
     def __str__(self):
         return self.transaction_id

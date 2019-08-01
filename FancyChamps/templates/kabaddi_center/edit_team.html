@@ -1,4 +1,4 @@
-{% extends "cricket_center_base.html" %}
+{% extends "kabaddi_center_base.html" %}
 {% load replace_with %}
 {% load staticfiles %}
 {% load widget_tweaks %}
@@ -22,26 +22,27 @@
 			<center>
 				<input type="hidden" value={{team}} id="team">
 				<input type="hidden" value={{match_slug}} id="match_slug">
-				<input type="hidden" url-is="{% url 'cricket_center:get_team_info' team=team match_slug=match_slug %}" id="get_team_info">
+				<input type="hidden" url-is="{% url 'kabaddi_center:get_team_info' team=team match_slug=match_slug %}" id="get_team_info">
 				<i class="fa fa-chevron-circle-down CloseTeamPreviewContainer" style="position:relatice;top:10px;font-size:20px;color:white;"></i>
 				<hr style="border-color:white;width:80%;">
 			</center>
 			<div class="AllPlayers">
+				<center><h5 style="color:white">Defenders</h5></center>
 				<div class="KeepersPreview">
 				</div>
-				<div class="BatsmenPreview">
-				</div>
+				<center><h5 style="color:white">Allrounders</h5></center>
 				<div class="AllrounderPreview">
 				</div>
-				<div class="BowlerPreview">
+				<center><h5 style="color:white">Raiders</h5></center>
+				<div class="BatsmenPreview">
 				</div>
 				<div class="CaptainVicePrivew">
-					<div class="PlayerView" style="width: 25%;">
+					<div class="PlayerView">
 						<span class="PlayerNameView">Captain</span>
 						<center><img class="player_image" src="{% static "images/question.png" %}"></center>
 						<span class="PlayerNameView">Select</span>
 					</div>
-					<div class="PlayerView" style="width: 25%;">
+					<div class="PlayerView">
 						<span class="PlayerNameView">Vice Captain</span>
 						<center><img class="player_image" src="{% static "images/question.png" %}"></center>
 						<span class="PlayerNameView">Select</span>
@@ -53,18 +54,17 @@
             <h1>Team created</h1>
         {% else %}
 			<div class="tab CreateTeamTab">
-			  <button class="tablinks active" onclick="openCity(event, 'Keepers')">Keepers</button>
-			  <button class="tablinks" onclick="openCity(event, 'Batsmen')">Batsmen</button>
+			  <button class="tablinks active" onclick="openCity(event, 'Keepers')">Defenders</button>
 			  <button class="tablinks" onclick="openCity(event, 'Allrounders')">Allrounders</button>
-			  <button class="tablinks" onclick="openCity(event, 'Bowlers')">Bowlers</button>
+			  <button class="tablinks" onclick="openCity(event, 'Batsmen')">Raiders</button>
 			</div>
 			<form method="POST">
 				<div id="Keepers" class="main_upper tabcontent" style="top:55px;">
 					{% csrf_token %}
-					{{ keeper_form.non_field_errors }}
-		            {{ keeper_form.source.errors }}
-		            {{ keeper_form.source }}
-		            {% for field in keeper_form.visible_fields %}
+					{{ defenders_form.non_field_errors }}
+		            {{ defenders_form.source.errors }}
+		            {{ defenders_form.source }}
+		            {% for field in defenders_form.visible_fields %}
             			{% render_field field|add_class:'CustomInput keeper' %}
             			<label for="{{ field.id_for_label }}" class="CustomLabel">&nbsp;&nbsp;
             				{% for player in players_obj %}
@@ -84,39 +84,11 @@
             			</label>
 	            		{{ field.errors }}
 				    {% endfor %}
-				    <br><br>
-				</div>
-
-				<div id="Batsmen" class="tabcontent" style="top:55px;">
-					{% csrf_token %}
-					{{ batsmen_form.non_field_errors }}
-		            {{ batsmen_form.source.errors }}
-		            {{ batsmen_form.source }}
-					{% for field in batsmen_form.visible_fields %}
-            			{% render_field field|add_class:'CustomInput batsmen' %}
-            			<label for="{{ field.id_for_label }}" class="CustomLabel">&nbsp;&nbsp;
-            				{% for player in players_obj %}
-	            				{% if field.label|convert_to_underscore == player.player_name %}
-	            					<span class="CustomField">
-										<span class="PlayerTeam">{{player.player_current_team}}</span> | <span class="PlayerName">{{field.label|title}}</span><br>
-		            					<small class="PlayerSubInfo">
-	            							Points : <span class="PlayerPoints">{{player.total_points}}</span> | Bit Credit : <span class="PlayerCredits">{{player.player_credit_points}}</span>
-	            						</small>
-	            					</span>
-	            					<input type="checkbox"  name="captain" value="{{ player }}" id="{{ player|get_id_one }}" class="captain_class"/>
-								    <label for="{{ player|get_id_one }}" class="custom_cap"><span class="custom_text">C</span></label>
-								    <input type="checkbox" name="vice" value="{{ player }}" id="{{ player|get_id_two }}" class="vice_class"/>
-								    <label for="{{ player|get_id_two }}" class="custom_vice"><span class="custom_text">VC</span></label>
-	                            {% endif %}
-                            {% endfor %}
-            			</label>
-	            		{{ field.errors }}
-				    {% endfor %}
-				    <br><br>
+				    <br>
+				    <br>
 				</div>
 				<div id="Allrounders" class="tabcontent" style="top:55px;">
 			  		{% csrf_token %}
-			  		<input type="hidden" name="total_credits_points" value="" id="total_credits_points">
 			  		{{ allrounders_form.non_field_errors }}
 		            {{ allrounders_form.source.errors }}
 		            {{ allrounders_form.source }}
@@ -140,16 +112,16 @@
             			</label>
 	            		{{ field.errors }}
 				    {% endfor %}
-				    <br><br>
+				    <br>
+				    <br>
 				</div>
-
-    			<div id="Bowlers" class="tabcontent" style="top:55px;">
-			  		{% csrf_token %}
-			  		{{ bowlers_form.non_field_errors }}
-		            {{ bowlers_form.source.errors }}
-		            {{ bowlers_form.source }}
-					{% for field in bowlers_form.visible_fields %}
-            			{% render_field field|add_class:'CustomInput bowlers' %}
+				<div id="Batsmen" class="tabcontent" style="top:55px;">
+					{% csrf_token %}
+					{{ raiders_form.non_field_errors }}
+		            {{ raiders_form.source.errors }}
+		            {{ raiders_form.source }}
+					{% for field in raiders_form.visible_fields %}
+            			{% render_field field|add_class:'CustomInput batsmen' %}
             			<label for="{{ field.id_for_label }}" class="CustomLabel">&nbsp;&nbsp;
             				{% for player in players_obj %}
 	            				{% if field.label|convert_to_underscore == player.player_name %}
@@ -159,7 +131,7 @@
 	            							Points : <span class="PlayerPoints">{{player.total_points}}</span> | Bit Credit : <span class="PlayerCredits">{{player.player_credit_points}}</span>
 	            						</small>
 	            					</span>
-	                            	<input type="checkbox"  name="captain" value="{{ player }}" id="{{ player|get_id_one }}" class="captain_class"/>
+	            					<input type="checkbox"  name="captain" value="{{ player }}" id="{{ player|get_id_one }}" class="captain_class"/>
 								    <label for="{{ player|get_id_one }}" class="custom_cap"><span class="custom_text">C</span></label>
 								    <input type="checkbox" name="vice" value="{{ player }}" id="{{ player|get_id_two }}" class="vice_class"/>
 								    <label for="{{ player|get_id_two }}" class="custom_vice"><span class="custom_text">VC</span></label>
@@ -168,24 +140,25 @@
             			</label>
 	            		{{ field.errors }}
 				    {% endfor %}
+				    <br>
 				    <br><br>
 				</div>
-				<br><div style="position:relative; width:100%; height:10px;"></div>
+    			<input type="hidden" name="total_credits_points" value="" id="total_credits_points">
+				<br>
 				<div class="ButtonContainer">
-				  <!--<div style="text-align:center;display:inline-block;">Hello</div>-->
 				  <div class="TeamInfoClass">
 				  	<div class="CreditPointsClassContainer">
-				  		<center><span class="CreditPointsClass">0/100</span><br><small style="font-size:10px;text-align:center;">CR. LEFT</small></center>
+				  		<center><span class="CreditPointsClass">0/100</span><br><small class="CrPlayers">CR. LEFT</small></center>
 				  	</div>
 				  	<div class="TotalPlayersClassContainer">
-				  		<center><span class="TotalPlayersClass">0/11</span><br><small style="font-size:10px;text-align:center;">PLAYERS</small></center>
+				  		<center><span class="TotalPlayersClass">0/7</span><br><small class="CrPlayers">PLAYERS</small></center>
 				  	</div>
 				  	<div class="TotalSelectedPlayersClassContainer">
-				  		<center><span class="TotalSelectedPlayersClass"><span class="TeamOneSelected">0 </span>| <span class="TeamTwoSelected">0</span></span><br><small class="CrPlayers">&nbsp;&nbsp;<span class="TeamOneText">{{team_one}}</span> &nbsp;&nbsp;&nbsp;<span class="TeamTwoText">{{team_two}}</span></small></center>
+				  		<center><span class="TotalSelectedPlayersClass"><span class="TeamOneSelected">0 </span> | <span class="TeamTwoSelected">7</span></span><br><small class="CrPlayers">&nbsp;&nbsp;<span class="TeamOneText">{{team_one}}</span> &nbsp;&nbsp;&nbsp;<span class="TeamTwoText">{{team_two}}</span></small></center>
 				  	</div>
 				  	<span><i class="fa fa-eye TeamPreviewClass"></i></span>
 				  </div>
-				  <input class="btn btn-success btn-sm CreateTeam" type="submit" name="submit" id="signup" value="Save" style="float:right; right:20px;">
+				  <input class="btn btn-success btn-sm CreateTeam" type="submit" name="submit" id="signup" value="Save Team" style="float:right; right:20px;">
 	            </div>
 			</form>
         {% endif %}
@@ -195,19 +168,6 @@
 
 {% block other_page_script %}
 
-	<script src="{% static 'js/cricket_center/teams.js' %}"></script>
+	<script src="{% static 'js/kabaddi_center/teams.js' %}"></script>
 
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-

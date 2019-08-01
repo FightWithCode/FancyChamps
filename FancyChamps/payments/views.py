@@ -31,6 +31,7 @@ def PayTmPaymentView(request):
     order_id = Checksum.__id_generator__()
     print(settings.PAYTM_WEBSITE)
     bill_amount = request.GET['money_to_add']
+    print(request.GET)
     if bill_amount:
         data_dict = {
                     'MID':MERCHANT_ID,
@@ -51,7 +52,7 @@ def PayTmPaymentView(request):
             order_id=param_dict['ORDER_ID'],
             checksum=param_dict['CHECKSUMHASH'],
             transact_user=request.user.username,
-            url_called=resolve(request.path_info).url_name
+            url_called=request.GET['match_slug']
         )
         pre_trans_obj.save()
         return render(request,"payments/payment.html",{'paytmdict':param_dict})
@@ -66,6 +67,11 @@ def PayTmResponseView(request):
         for key in request.POST:
             data_dict[key] = request.POST[key]
         verify = Checksum.verify_checksum(data_dict, MERCHANT_KEY, data_dict['CHECKSUMHASH'])
+        try:
+            pre_trans_obj = get_object_or_404(PreTransData, order_id=data_dict["ORDERID"])
+            match_slug = pre_trans_obj.url_called
+        except:
+            match_slug = ""
         transaction_obj = TransactionDetail(
                                             transaction_id=data_dict["TXNID"],
                                             transaction_status=data_dict["STATUS"],
@@ -73,11 +79,8 @@ def PayTmResponseView(request):
                                             transact_user=request.user.username,
                                             captured=False,
                                             added_to_user=False,
+                                            requested_match_slug=match_slug,
                                   )
-        try:
-            pre_trans_obj = get_object_or_404(PreTransData, order_id=data_dict["ORDERID"])
-        except:
-            pass
         # url = 'https://securegw.paytm.in/order/status'
         # data = {
         #     "MID":"Iuyebg49353440880066",

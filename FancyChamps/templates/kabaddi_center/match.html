@@ -1,9 +1,9 @@
-{% extends "cricket_center_base.html" %}
+{% extends "kabaddi_center_base.html" %}
 {% load staticfiles %}
 {% load replace_with %}
 {% load widget_tweaks %}
 {% load user_agents %}
-{% block title %}Cricket Center | {{block.super}}{% endblock title %}
+{% block title %}Kabaddi Center | {{block.super}}{% endblock title %}
 {% block stylesheets %}
   {{block.super}}
 {% endblock stylesheets %}
@@ -99,7 +99,7 @@
 							<h6 class="JoinNowDetailsRight">Entry Fees</h6>
 							<h6 class="JoinNowDetailsLeft" id="MainDeduction"></h6>
 							<h6 class="JoinNowDetailsRight" id="BonusDeduction"></h6>
-							<button type="button" class="btn PayAndJoinNow" id="PayAndJoinNowID" pay-and-join="{% url 'cricket_center:pay_and_join' %}">Pay & Join</button>
+							<button type="button" class="btn PayAndJoinNow" id="PayAndJoinNowID" pay-and-join="{% url 'kabaddi_center:pay_and_join' %}">Pay & Join</button>
 							<button type="button" class="btn ProceedToPay"></button>
 						</div>
 					</center>
@@ -131,7 +131,7 @@
                                 <ul class="LiContainer{{contest.contest_slug}}" style="list-style-type: none;position:relative;text-align: center;padding-left:15px;padding-right:15px;top:50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);">
                                 </ul>
                             </div>  -->
-                            <h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+                            <h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
                             <hr style="border-color:#F3F4F4">
                             <div class="LeagueInfoContainer">
                               <h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -142,9 +142,9 @@
                               {% if total_teams.count == 0 %}
                                   <center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
                               {% elif contest.contest_slug in contest_joined %}
-                                  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+                                  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
                               {% else %}
-                                  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+                                  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
                               {% endif %}
                             </div>
                           </div>
@@ -172,7 +172,7 @@
     							<ul class="LiContainer{{contest.contest_slug}}" style="list-style-type: none;position:relative;text-align: center;padding-left:15px;padding-right:15px;top:50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);">
     							</ul>
     						</div>  -->
-    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+    						<h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     			  	  	    <div class="LeagueInfoContainer">
     				  	      <h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -183,9 +183,9 @@
     					      {% if total_teams.count == 0 %}
     					  	      <center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
     					  	  {% elif contest.contest_slug in contest_joined %}
-    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
     						  {% else %}
-    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
     						  {% endif %}
     			  	  	    </div>
     			  	      </div>
@@ -208,7 +208,7 @@
     				<div class="LeagueArea row">
     			  	    <div class="row col-xs-12">
     			  	      <div class="col-xs-12 LeagueCard">
-    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+    						<h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     			  	  	    <div class="LeagueInfoContainer">
     				  	      <h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -219,9 +219,9 @@
     					      {% if total_teams.count == 0 %}
     					  	      <center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
     					  	  {% elif contest.contest_slug in contest_joined %}
-    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
     						  {% else %}
-    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+    					  	  	  <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
     						  {% endif %}
     			  	  	    </div>
     			  	      </div>
@@ -245,7 +245,7 @@
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">
     						<div class="col-xs-12 LeagueCard">
-    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+    						<h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     							<div class="LeagueInfoContainer">
     							<h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -256,9 +256,9 @@
     							{% if total_teams.count == 0 %}
     								<center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
     							{% elif contest.contest_slug in contest_joined %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
     							{% else %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
     							{% endif %}
     							</div>
     						</div>
@@ -283,7 +283,7 @@
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">
     						<div class="col-xs-12 LeagueCard">
-    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+    						<h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     							<div class="LeagueInfoContainer">
     							<h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -294,9 +294,9 @@
     							{% if total_teams.count == 0 %}
     								<center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
     							{% elif contest.contest_slug in contest_joined %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
     							{% else %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
     							{% endif %}
     							</div>
     						</div>
@@ -321,7 +321,7 @@
                     <div class="LeagueArea row">
                             <div class="row col-xs-12">
                             <div class="col-xs-12 LeagueCard">
-                            <h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+                            <h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
                             <hr style="border-color:#F3F4F4">
                                 <div class="LeagueInfoContainer">
                                 <h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -332,9 +332,9 @@
                                 {% if total_teams.count == 0 %}
                                     <center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
                                 {% elif contest.contest_slug in contest_joined %}
-                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
                                 {% else %}
-                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
                                 {% endif %}
                                 </div>
                             </div>
@@ -359,7 +359,7 @@
                     <div class="LeagueArea row">
                             <div class="row col-xs-12">
                             <div class="col-xs-12 LeagueCard">
-                            <h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+                            <h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
                             <hr style="border-color:#F3F4F4">
                                 <div class="LeagueInfoContainer">
                                 <h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -370,9 +370,9 @@
                                 {% if total_teams.count == 0 %}
                                     <center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
                                 {% elif contest.contest_slug in contest_joined %}
-                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
                                 {% else %}
-                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+                                        <center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
                                 {% endif %}
                                 </div>
                             </div>
@@ -397,7 +397,7 @@
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">
     						<div class="col-xs-12 LeagueCard">
-    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+    						<h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     							<div class="LeagueInfoContainer">
     							<h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -408,9 +408,9 @@
     							{% if total_teams.count == 0 %}
     								<center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
     							{% elif contest.contest_slug in contest_joined %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
     							{% else %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
     							{% endif %}
     							</div>
     						</div>
@@ -435,7 +435,7 @@
     				<div class="LeagueArea row">
     						<div class="row col-xs-12">
     						<div class="col-xs-12 LeagueCard">
-    						<h5 class="LeagueName" pay-view="{% url 'cricket_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
+    						<h5 class="LeagueName" pay-view="{% url 'kabaddi_center:view_payout' contest_slug=contest.contest_slug %}">{{contest.contest_prize}}₹ Winnnings<span> &nbsp;<i class="fa fa-eye" style="position:relative;top:2px;"></i></span><span style="float:right"><span class="ContestTypes">{{contest.confirmed_text}}</span> <span class="ContestTypes">{{contest.multiple_entry_text}}</span> <span class="ContestTypes">{{contest.bonus_contest_text}}</span></span></h5>
     						<hr style="border-color:#F3F4F4">
     							<div class="LeagueInfoContainer">
     							<h6>Entry Fees : <span class="JoinedInfoContent">₹{{contest.contest_fee}}</span></h6>
@@ -446,9 +446,9 @@
     							{% if total_teams.count == 0 %}
     								<center><a href="{% url 'kabaddi_center:create_team' match_slug=match_slug %}"><button type="button" class="btn JoinNow">Create Team First</b></button></a></center>
     							{% elif contest.contest_slug in contest_joined %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Again</button></center>
     							{% else %}
-    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'cricket_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
+    									<center><button type="button" class="btn JoinNow JoinNowClass" check-teams="{% url 'kabaddi_center:join_now_contest' match_slug=match_slug contest_slug=contest.contest_slug %}">Join Now</button></center>
     							{% endif %}
     							</div>
     						</div>
@@ -461,10 +461,10 @@
 
           <div class="footer">
 			<!--<center><div style="position:relative; display:inline-block; width:2px; height:40px; top:5px; background-color:green;"></div></center>	-->
-			<a href="{% url 'cricket_center:my_teams' match_slug=match_slug %}"><button class="FooterInfoLeft btn">
+			<a href="{% url 'kabaddi_center:my_teams' match_slug=match_slug %}"><button class="FooterInfoLeft btn">
 				My Teams : {{ total_teams.count }}
 			</button></a>
-			<a href="{% url 'cricket_center:joined_contests' match_slug=match_slug %}"><button class="FooterInfoRight btn">
+			<a href="{% url 'kabaddi_center:joined_contests' match_slug=match_slug %}"><button class="FooterInfoRight btn">
 				Contests Joined : {{contest_joined|length}}
 			</button></a>
           </div>
@@ -475,5 +475,5 @@
 {% endblock %}
 
 {% block other_page_script %}
-<script src="{% static 'js/cricket_center/match.js'%}"></script>
+<script src="{% static 'js/kabaddi_center/match.js'%}"></script>
 {% endblock %}

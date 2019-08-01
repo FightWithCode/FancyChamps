@@ -573,7 +573,7 @@ class MatchDetail(models.Model):
         return self.match_name
 
 
-class INDPAKTeam(models.Model):
+class PATTAMTeam(models.Model):
     Player1 = models.CharField(max_length=255, default="")
     Player2 = models.CharField(max_length=255, default="")
     Player3 = models.CharField(max_length=255, default="")
@@ -594,7 +594,7 @@ class INDPAKTeam(models.Model):
     Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
     Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
 
-    total_defender = models.IntegerField(default=3)
+    total_defenders = models.IntegerField(default=3)
     total_allrounders = models.IntegerField(default=2)
     total_raiders = models.IntegerField(default=4)
     team_no = models.IntegerField(default=1)
@@ -606,7 +606,7 @@ class INDPAKTeam(models.Model):
 
     def save(self, *args, **kwargs):
         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-        super(INDPAKTeam, self).save(*args, **kwargs)
+        super(PATTAMTeam, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username_of_player + "[" + str(self.team_no) + "]"
@@ -691,7 +691,27 @@ class PlayerDetail(models.Model):
         return self.player_name
 
 
+class JoiningTransactionDetail(models.Model):
+    transaction_id = models.CharField(max_length=255)
+    transaction_amt = models.IntegerField(default=0)
+    transact_user = models.CharField(max_length=64)
+    transaction_time = models.DateTimeField(auto_now=True)
+    transaction_message = models.CharField(max_length=255, default="")
+    transaction_type = models.CharField(max_length=16,default="added")
+    refund_for_contest = models.CharField(max_length=255, default="")
 
+    def __str__(self):
+        return self.transaction_id + '|' + self.transact_user
+
+
+class ContestMessages(models.Model):
+    contest_slug = models.CharField(max_length=512)
+    message = models.CharField(max_length=512)
+    user = models.CharField(max_length=64)
+    time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user+":"+self.contest_slug+str(self.time)
 
 
 

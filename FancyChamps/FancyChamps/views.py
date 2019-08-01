@@ -233,7 +233,7 @@ def UserLogoutView(request):
 def IndexView(request):
     print("main")
     if request.user.is_authenticated():
-        return HttpResponseRedirect('cricket_center')
+        return HttpResponseRedirect('kabaddi_center')
     else:
         print("main else")
         registered = False
@@ -293,7 +293,7 @@ def IndexView(request):
                                 # Log the user in.
                                 login(request, user)
                                 user.save()
-                                return HttpResponseRedirect('cricket_center')
+                                return HttpResponseRedirect('kabaddi_center')
                             else:
                                 # If account is not active:
                                 return render(request, 'index.html',
