@@ -23,6 +23,7 @@ from django.template.loader import get_template
 from django.template import Context
 from cricket_center.models import MatchDetail as MatchDetailCricket
 from kabaddi_center.models import MatchDetail as MatchDetailKabaddi
+from kabaddi_center.models import JoiningTransactionDetail as JoiningTransactionDetailKabaddi
 # Uncomment for Celery
 # from accounts.tasks import send_feedback_email_task
 
@@ -148,7 +149,8 @@ def MyAccountView(request):
     user_obj = User.objects.filter(id=request.user.id).first()
     join_transaction_obj = JoiningTransactionDetail.objects.filter(transact_user__exact=request.user.username)
     transaction_obj = TransactionDetail.objects.filter(transact_user__exact=request.user.username, added_to_user__exact=True)#.order_by("-transaction_time")
-    sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj), key=lambda obj: obj.transaction_time, reverse=True)
+    join_transaction_obj_kabaddi = JoiningTransactionDetailKabaddi.objects.filter(transact_user__exact=request.user.username)
+    sorted_transaction = sorted(chain(join_transaction_obj, transaction_obj, join_transaction_obj_kabaddi), key=lambda obj: obj.transaction_time, reverse=True)
     trans_obj = TransactionDetail.objects.filter(Q(added_to_user__exact=False), Q(transact_user__exact=request.user.username), Q(transaction_status__exact="TXN_SUCCESS"))
     print(len(trans_obj))
     if len(trans_obj)>=1:

@@ -1,7 +1,5 @@
-from cricket_center.models import PlayerDetail, JoiningDetail, MatchDetail, ContestDetail, JoiningTransactionDetail
+from kabaddi_center.models import PlayerDetail, JoiningDetail, MatchDetail, ContestDetail, JoiningTransactionDetail
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
-from cricket_matches.models import Winners65OutOf100Fee12
 from django.apps import apps
 from django.forms.models import model_to_dict
 from accounts.models import User, Profile
@@ -10,7 +8,7 @@ from django.apps import apps
 import random, string
 
 #         model_name = match_obj.team_one + match_obj.team_two + "Team"
-#         model_is = apps.get_registered_model('cricket_center', model_name)
+#         model_is = apps.get_registered_model('kabaddi_center', model_name)
 #         HeadToHead = []
 #         GreatAndGrand = []
 #         FourOnOne = []
@@ -27,7 +25,7 @@ import random, string
 def update_total_team_points(match_slug):
         match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug).first()
         model_name = match_obj.team_one + match_obj.team_two + "Team"
-        model_is = apps.get_registered_model('cricket_center', model_name)
+        model_is = apps.get_registered_model('kabaddi_center', model_name)
         print(model_is)
         player_points_dict = {}
         for player in PlayerDetail.objects.filter(Q(player_current_team__exact=match_obj.short_team_one) | Q(player_current_team__exact=match_obj.short_team_two)):
@@ -41,8 +39,8 @@ def update_total_team_points(match_slug):
             print(detail.joined_user + "[" + str(detail.joined_user_team) + "]")
             team = model_is.objects.filter(full_team_name__exact=detail.joined_user + "[" + str(detail.joined_user_team) + "]" + match_slug).first()
             print(team)
-            total_points = total_points + player_points_dict[team.Keeper]
-            team.Keeper_Points = player_points_dict[team.Keeper]
+            total_points = total_points + player_points_dict[team.Player1]
+            team.Player1_Points = player_points_dict[team.Player1]
             total_points = total_points + player_points_dict[team.Player2]
             team.Player2_Points = player_points_dict[team.Player2]
             total_points = total_points + player_points_dict[team.Player3]
@@ -55,14 +53,6 @@ def update_total_team_points(match_slug):
             team.Player6_Points = player_points_dict[team.Player6]
             total_points = total_points + player_points_dict[team.Player7]
             team.Player7_Points = player_points_dict[team.Player7]
-            total_points = total_points + player_points_dict[team.Player8]
-            team.Player8_Points = player_points_dict[team.Player8]
-            total_points = total_points + player_points_dict[team.Player9]
-            team.Player9_Points = player_points_dict[team.Player9]
-            total_points = total_points + player_points_dict[team.Player10]
-            team.Player10_Points = player_points_dict[team.Player10]
-            total_points = total_points + (player_points_dict[team.Player11])
-            team.Player11_Points = player_points_dict[team.Player11]
             total_points = total_points + player_points_dict[team.Captain]
             team.Captain_Points = player_points_dict[team.Captain]*2
             total_points = total_points + player_points_dict[team.Vice_Captain] / 2
@@ -89,7 +79,7 @@ def update_total_team_points(match_slug):
                     i.save()
                     # if(i.joined_user==request.user.username):
                     #     user_teams_list.append(i)
-                # return render(request, "cricket_center/rankings.html", context={"match_obj": match_obj, "all_joined_with_ranking": all_joined, "contest_obj": contest_obj, "user":request.user.username, "user_teams_list":user_teams_list})
+                # return render(request, "kabaddi_center/rankings.html", context={"match_obj": match_obj, "all_joined_with_ranking": all_joined, "contest_obj": contest_obj, "user":request.user.username, "user_teams_list":user_teams_list})
             else:
                 print("ELSSSSSS")
                 for i in all_joined[0:1]:
