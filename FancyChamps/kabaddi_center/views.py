@@ -132,6 +132,10 @@ def TeamEdit(request, team, match_slug):
                     Selected_Keeper = [k for k, v in defenders_form.cleaned_data.items() if v is True]#Keeper_Dict
                     Selected_Batsmen = [k for k, v in raiders_form.cleaned_data.items() if v is True]
                     Selected_Allrounders = [k for k, v in allrounders_form.cleaned_data.items() if v is True]
+                    print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+                    def_count = len(Selected_Keeper)
+                    raid_count = len(Selected_Batsmen)
+                    all_count = len(Selected_Allrounders)
                     list_of_players = []
                     # list_of_players = [str(Selected_Keeper)] + list_of_players
                     for Keeper in Selected_Keeper:
@@ -142,7 +146,6 @@ def TeamEdit(request, team, match_slug):
 
                     for Allrounder in Selected_Allrounders:
                         list_of_players.append(str(Allrounder))
-                    print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
                     print(list_of_players)
                     print(len(list_of_players))
                     if len(list_of_players) != 7:
@@ -181,12 +184,13 @@ def TeamEdit(request, team, match_slug):
                     team_to_edit.Player7 = list_of_players[6]
                     team_to_edit.Captain = request.POST.get("captain")
                     team_to_edit.Vice_Captain = request.POST.get("vice")
-                    team_to_edit.total_raiders = len(Selected_Batsmen)
-                    team_to_edit.total_defender = len(Selected_Keeper)
-                    team_to_edit.total_allrounders = len(Selected_Allrounders)
+                    team_to_edit.total_raiders = raid_count
+                    team_to_edit.total_defenders = def_count
+                    team_to_edit.total_allrounders = all_count
                     team_to_edit.total_credits_used = request.POST.get("total_credits_points")
                     team_to_edit.save()
                     team_edited = True
+                    print(team_to_edit.total_allrounders, team_to_edit.total_raiders, team_to_edit.total_defenders)
                     return HttpResponseRedirect('/kabaddi_center/match' + '/' + match_slug)
         return render(request, 'kabaddi_center/edit_team.html', {"team_one": team_one, "team_two":team_two, "match_slug": match_slug, 'team': team, 'players_obj': players_obj, 'defenders_form': defenders_form, 'allrounders_form': allrounders_form, 'raiders_form': raiders_form, 'team_edited': team_edited, 'user_teams_obj': user_teams_obj})
 
@@ -204,6 +208,8 @@ def GetTeamInfo(request, team, match_slug):
     total_credits_points = team_dict['total_credits_used']
     team_captain = team_dict['Captain']
     team_vice = team_dict['Vice_Captain']
+    print("////////////////////////////////////////")
+    print(team_dict)
     data = {
         "team": team,
         "team_captain": team_captain,
@@ -216,20 +222,29 @@ def GetTeamInfo(request, team, match_slug):
     index = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     players_key = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7"]
     # data.update({"keeper": team_dict["Keeper"].title().replace("_", " ")})
+    print("??????????????????????????????")
+    print(total_defenders_in_team, total_allrounders_in_team, total_raiders_in_team)
     for i in range(0, total_defenders_in_team):
         key = "def" + str(i + 1)
         data.update({key: team_dict[players_key[0]].title().replace("_", " ")})
+        print("def")
         players_key.pop(0)
+        print(players_key)
 
     for i in range(0, total_raiders_in_team):
         key = "raider" + str(i + 1)
         data.update({key: team_dict[players_key[0]].title().replace("_", " ")})
         players_key.pop(0)
-    print(data)
+        print(players_key)
+
     for i in range(0, total_allrounders_in_team):
         key = "allrounder" + str(i + 1)
         data.update({key: team_dict[players_key[0]].title().replace("_", " ")})
         players_key.pop(0)
+        print(players_key)
+
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    print(data)
 
 
     # for i in range(2, total_raiders_in_team + 2):
@@ -297,6 +312,10 @@ def CreateTeamView(request, match_slug):
                 Selected_Keeper = [k for k, v in defenders_form.cleaned_data.items() if v is True]
                 Selected_Batsmen = [k for k, v in raiders_form.cleaned_data.items() if v is True]
                 Selected_Allrounders = [k for k, v in allrounders_form.cleaned_data.items() if v is True]
+                print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+                print(Selected_Keeper)
+                print(Selected_Batsmen)
+                print(Selected_Allrounders)
                 list_of_players = []
                 for Keeper in Selected_Keeper:
                     list_of_players.append(str(Keeper))
@@ -335,7 +354,8 @@ def CreateTeamView(request, match_slug):
                 print(request.POST)
                 model_name = match_obj.first().team_one + match_obj.first().team_two + "Team"
                 model_is = apps.get_registered_model('kabaddi_center', model_name)
-
+                print("**********************************************************************")
+                print(len(Selected_Keeper), len(Selected_Allrounders), len(Selected_Batsmen))
                 team_obj = model_is(
                                                 Player1=list_of_players[0],
                                                 Player2=list_of_players[1],
@@ -355,6 +375,8 @@ def CreateTeamView(request, match_slug):
                                                 total_credits_used=total_sallery,
                                             )
                 team_obj.save()
+                print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+                print(team_obj)
                 team_created = True
                 return HttpResponseRedirect('/kabaddi_center/match' + '/' + match_slug)
         return render(request, 'kabaddi_center/create_team.html', {'players_obj': players_obj, 'defenders_form': defenders_form, 'allrounders_form': allrounders_form, 'raiders_form': raiders_form, 'team_created': team_created, 'user_teams_obj': user_teams_obj, 'team_one': team_one, 'team_two': team_two})
@@ -377,9 +399,7 @@ def MyTeams(request, match_slug):
 def PreviewTeam(request, team, match_slug):
     index = [1, 2, 3, 4, 5, 6, 7]
     players_key = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7"]
-    print(index, players_key)
     match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug)
-    print(match_obj)
     model_name = match_obj.first().team_one + match_obj.first().team_two + "Team"
     model_is = apps.get_registered_model('kabaddi_center', model_name)
     team_to_preview = model_is.objects.filter(match_slug__exact=match_slug, username_of_player__exact=request.user.username, team_no=team).first()
@@ -394,20 +414,29 @@ def PreviewTeam(request, team, match_slug):
     # data.update({"keeper": team_dict["Keeper"].title().replace("_", " ")})
     for i in range(0, total_defenders_in_team):
         key = "def" + str(i + 1)
+        print(i)
         print(team_dict[players_key[0]])
-        print(players_key[0])
         data.update({key: team_dict[players_key[0]].title().replace("_", " ")})
         players_key.pop(0)
+        print(players_key)
 
-    for i in range(0 + total_defenders_in_team, total_defenders_in_team + total_allrounders_in_team):
+    for i in range(total_defenders_in_team + total_allrounders_in_team, (total_defenders_in_team + total_raiders_in_team + total_allrounders_in_team)):
         key = "raider" + str(i + 1)
+        print("ra")
+        print(i)
+        print(team_dict[players_key[0]])
         data.update({key: team_dict[players_key[0]].title().replace("_", " ")})
         players_key.pop(0)
+        print(players_key)
 
-    for i in range(0 + total_defenders_in_team + total_raiders_in_team, total_defenders_in_team + total_raiders_in_team + total_allrounders_in_team):
+    for i in range((total_defenders_in_team), (total_defenders_in_team + total_allrounders_in_team)):
         key = "allrounder" + str(i + 1)
+        print("aa")
+        print(i)
+        print(team_dict[players_key[0]])
         data.update({key: team_dict[players_key[0]].title().replace("_", " ")})
         players_key.pop(0)
+        print(players_key)
 
     data.update({"def_count": total_defenders_in_team})
     data.update({"allrounder_count": total_allrounders_in_team})
