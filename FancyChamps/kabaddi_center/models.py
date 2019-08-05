@@ -912,3 +912,49 @@ class DELJAITeam(models.Model):
     def update_total_team_points(self, user, team_no, match_slug):
         self.total_team_points = 100
         self.save()
+
+
+class PATHARTeam(models.Model):
+    Player1 = models.CharField(max_length=255, default="")
+    Player2 = models.CharField(max_length=255, default="")
+    Player3 = models.CharField(max_length=255, default="")
+    Player4 = models.CharField(max_length=255, default="")
+    Player5 = models.CharField(max_length=255, default="")
+    Player6 = models.CharField(max_length=255, default="")
+    Player7 = models.CharField(max_length=255, default="")
+    Captain = models.CharField(max_length=255, default=" ")
+    Vice_Captain = models.CharField(max_length=255, default=" ")
+
+    Player1_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player2_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player3_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player4_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player5_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player6_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Player7_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    Vice_Captain_Points = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+
+    total_defenders = models.IntegerField(default=3)
+    total_allrounders = models.IntegerField(default=2)
+    total_raiders = models.IntegerField(default=4)
+    team_no = models.IntegerField(default=1)
+    username_of_player = models.CharField(max_length=64)
+    # total_credits_used = models.IntegerField(default=100)
+    total_credits_used = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    match_slug = models.CharField(max_length=100)
+    full_team_name = models.CharField(max_length=255, default="Something")
+
+    def save(self, *args, **kwargs):
+        self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
+        super(PATHARTeam, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def __unicode__(self):
+        return self.username_of_player + "[" + str(self.team_no) + "]"
+
+    def update_total_team_points(self, user, team_no, match_slug):
+        self.total_team_points = 100
+        self.save()
