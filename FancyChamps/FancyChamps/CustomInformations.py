@@ -119,101 +119,83 @@ def update_total_team_points(match_slug):
                         #     user_teams_list.append(ranker)
 
 def CancellOrApproveContest(match_slug):
-    contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
-    for contest in contest_obj:
-        if ((not contest.filled_status) and contest.contest_size<=100 and contest.total_player_joined>1 and (contest.confirmed is True)):
-            print("I am here")
-            contest.contest_winners = 1
-            contest.prize_dist_type = "ToOne"
-            print(contest.contest_slug)
-            contest.contest_prize = (contest.total_player_joined*contest.contest_fee*85)//100
-            contest.contest_name = "₹" + str(contest.contest_prize) + " Winnings"
-            contest.save()
-        elif ((not contest.filled_status) and (contest.confirmed is False)):
-            contest.cancelled = True
-            contest.save()
-        elif ((contest.total_player_joined==1) and (contest.confirmed is True)):
-            contest.cancelled = True
-            print(contest.cancelled)
-            contest.save()
-        elif(contest.total_player_joined==0):
-            contest.cancelled = True
-            contest.save()
-#             joined_qs = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug)
-#             for joined in joined_qs:
-#                 # print(joined.username)
-#                 print(joined.balance_deduction)
-
-#                 user = Profile.objects.filter(user__username__exact=joined.joined_user).first()
-#                 # print(user)
-#                 # print(user.username)
-#                 # print(Decimal(user.balance))
-#                 print(Decimal(joined.bonus_deduction))
-#                 print(Decimal(joined.balance_deduction))
-#                 user.bonus = Decimal(user.bonus) + Decimal(joined.bonus_deduction)
-#                 user.balance = Decimal(user.balance) + Decimal(joined.balance_deduction)
-#                 # print(user.balance)
-#                 # print(user.bonus)
-# #             # print(Decimal(user.balance))
-#                 user.save()
-#                 new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
-#                                                         transaction_amt=joined.balance_deduction + joined.bonus_deduction,
-#                                                         transact_user=joined.joined_user,
-#                                                         transaction_message="Refund for Contest",
-#                                                         transaction_type="added",
-#                 )
-#                 new_trans_obj.save()
-
-                # transaction_id = models.CharField(max_length=255)
-                # transaction_amt = models.IntegerField(default=0)
-                # transact_user = models.CharField(max_length=64)
-                # transaction_time = models.DateTimeField(auto_now=True)
-                # transaction_message = models.CharField(max_length=255, default="")
-                # transaction_type = models.CharField(max_length=16,default="added")
-                # except:
-                #     print("except")
+    match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug).first()
+    if match_obj.cancelled_called:
+        print("Already Called!")
+    else:
+        match_obj.cancelled_called = True
+        match_obj.save()
+        contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
+        for contest in contest_obj:
+            if ((not contest.filled_status) and contest.contest_size<=100 and contest.total_player_joined>1 and (contest.confirmed is True)):
+                print("I am here")
+                contest.contest_winners = 1
+                contest.prize_dist_type = "ToOne"
+                print(contest.contest_slug)
+                contest.contest_prize = (contest.total_player_joined*contest.contest_fee*85)//100
+                contest.contest_name = "₹" + str(contest.contest_prize) + " Winnings"
+                contest.save()
+            elif ((not contest.filled_status) and (contest.confirmed is False)):
+                contest.cancelled = True
+                contest.save()
+            elif ((contest.total_player_joined==1) and (contest.confirmed is True)):
+                contest.cancelled = True
+                print(contest.cancelled)
+                contest.save()
+            elif(contest.total_player_joined==0):
+                contest.cancelled = True
+                contest.save()
 
 
 def RefundCancelledContest(match_slug):
-    contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
-    for contest in contest_obj:
-        if (contest.cancelled):
-            joined_qs = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug)
-            for joined in joined_qs:
-                # print(joined.username)
+    match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug).first()
+    print(match_obj)
+    if match_obj.refund_called:
+        print("Already Called!")
+    else:
+        match_obj.refund_called = True
+        match_obj.save()
+        contest_obj = ContestDetail.objects.filter(contest_of_match__exact=MatchDetail.objects.filter(match_slug__exact=match_slug).first())
+        for contest in contest_obj:
+            if (contest.cancelled):
+                joined_qs = JoiningDetail.objects.filter(joined_contest_slug__exact=contest.contest_slug)
+                for joined in joined_qs:
+                    if joined.refunded == False:
+                        # print(joined.username)
 
 
-                user = Profile.objects.filter(user__username__exact=joined.joined_user).first()
-                # print(user)
-                # print(user.username)
-                # print(Decimal(user.balance))
-                print(user.bonus)
-                print(user.widhdrawable_balance)
-                print(user.balance)
-                user.bonus = Decimal(user.bonus) + Decimal(joined.bonus_deduction)
-                user.balance = Decimal(user.balance) + Decimal(joined.balance_deduction)
-                user.widhdrawable_balance = Decimal(user.widhdrawable_balance) + Decimal(joined.winnings_deduction)
-                print(user.balance)
-                print(user.bonus)
-                print(user.widhdrawable_balance)
-                user.save()
-                new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
-                                                        transaction_amt=joined.balance_deduction + joined.bonus_deduction + joined.winnings_deduction,
-                                                        transact_user=joined.joined_user,
-                                                        transaction_message="Refund for Contest",
-                                                        transaction_type="added",
-                                                        refund_for_contest=joined.joined_contest_slug,
-                )
-                new_trans_obj.save()
-
-                # transaction_id = models.CharField(max_length=255)
-                # transaction_amt = models.IntegerField(default=0)
-                # transact_user = models.CharField(max_length=64)
-                # transaction_time = models.DateTimeField(auto_now=True)
-                # transaction_message = models.CharField(max_length=255, default="")
-                # transaction_type = models.CharField(max_length=16,default="added")
-                # except:
-                #     print("except")
+                        user = Profile.objects.filter(user__username__exact=joined.joined_user).first()
+                        # print(user)
+                        # print(user.username)
+                        # print(Decimal(user.balance))
+                        print(user.bonus)
+                        print(user.widhdrawable_balance)
+                        print(user.balance)
+                        user.bonus = Decimal(user.bonus) + Decimal(joined.bonus_deduction)
+                        user.balance = Decimal(user.balance) + Decimal(joined.balance_deduction)
+                        user.widhdrawable_balance = Decimal(user.widhdrawable_balance) + Decimal(joined.winnings_deduction)
+                        print(user.balance)
+                        print(user.bonus)
+                        print(user.widhdrawable_balance)
+                        user.save()
+                        new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
+                                                                transaction_amt=joined.balance_deduction + joined.bonus_deduction + joined.winnings_deduction,
+                                                                transact_user=joined.joined_user,
+                                                                transaction_message="Refund for Contest",
+                                                                transaction_type="added",
+                                                                refund_for_contest=joined.joined_contest_slug,
+                        )
+                        new_trans_obj.save()
+                        joined.refunded = True
+                        joined.save()
+                    # transaction_id = models.CharField(max_length=255)
+                    # transaction_amt = models.IntegerField(default=0)
+                    # transact_user = models.CharField(max_length=64)
+                    # transaction_time = models.DateTimeField(auto_now=True)
+                    # transaction_message = models.CharField(max_length=255, default="")
+                    # transaction_type = models.CharField(max_length=16,default="added")
+                    # except:
+                    #     print("except")
 
 
 def CallThisForDistribution(match_slug):
@@ -442,58 +424,73 @@ def DistributeWinning(contest_slug, prize_dist_type, contest_winners):
 
 
 def AddMoneyToWidhrawable(match_slug):
-    all_joined = JoiningDetail.objects.filter(match_slug__exact=match_slug)
-    list_of_winners = []
-    for obj in all_joined:
-        if(obj.winnings>0):
-            print("If block")
-            print(list_of_winners)
-            print(obj.joined_user)
-            try:
-                user_obj = User.objects.filter(username__exact=obj.joined_user).first()
-                user_obj.profile.widhdrawable_balance = user_obj.profile.widhdrawable_balance + Decimal(obj.winnings)
-                if obj.joined_user in list_of_winners:
-                    pass
-                else:
-                    print(obj.joined_user)
-                    user_obj.profile.total_wins = user_obj.profile.total_wins + 1
-                    list_of_winners.append(obj.joined_user)
-                user_obj.save()
-                user_obj.profile.save()
-                new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
-                                                            transaction_amt=obj.winnings,
-                                                            transact_user=user_obj.username,
-                                                            transaction_message="Won a Contest",
-                                                            transaction_type="added",
-                )
-                new_trans_obj.save()
-            except Exception as e:
-                print("Something Went Wrong")
-                print(e)
+    match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug).first()
+    if match_obj.added_called:
+        print("Already Called!")
+    else:
+        match_obj.added_called = True
+        match_obj.save()
+        all_joined = JoiningDetail.objects.filter(match_slug__exact=match_slug)
+        list_of_winners = []
+        for obj in all_joined:
+            if(obj.winnings>0 and obj.added_to_wallet == False):
+                print("If block")
+                print(list_of_winners)
+                print(obj.joined_user)
+                try:
+                    user_obj = User.objects.filter(username__exact=obj.joined_user).first()
+                    user_obj.profile.widhdrawable_balance = user_obj.profile.widhdrawable_balance + Decimal(obj.winnings)
+                    if obj.joined_user in list_of_winners:
+                        pass
+                    else:
+                        print(obj.joined_user)
+                        user_obj.profile.total_wins = user_obj.profile.total_wins + 1
+                        list_of_winners.append(obj.joined_user)
+                    user_obj.save()
+                    user_obj.profile.save()
+                    new_trans_obj = JoiningTransactionDetail(transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(15)),
+                                                                transaction_amt=obj.winnings,
+                                                                transact_user=user_obj.username,
+                                                                transaction_message="Won a Contest",
+                                                                transaction_type="added",
+                                                                transaction_for_contest=obj.joined_contest_slug,
+                    )
+                    new_trans_obj.save()
+                    obj.added_to_wallet = True
+                    obj.save()
+                except Exception as e:
+                    print("Something Went Wrong")
+                    print(e)
 
 def UpdateMatchPlayed(match_slug):
-    list_of_contest = []
-    list_of_user = []
-    all_joined = JoiningDetail.objects.filter(match_slug__exact=match_slug)
-    for joined in all_joined:
-        if (joined.joined_contest_slug in list_of_contest) and (joined.joined_user in list_of_user) and (joined.joined_user in list_of_contest):
-            continue
-        else:
-            # try:
-            user_obj = User.objects.filter(username__exact=joined.joined_user).first()
-            if joined.joined_user in list_of_user:
-                pass
+    match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug).first()
+    if match_obj.update_wins_called:
+        print("Already Called!")
+    else:
+        match_obj.update_wins_called = True
+        match_obj.save()
+        list_of_contest = []
+        list_of_user = []
+        all_joined = JoiningDetail.objects.filter(match_slug__exact=match_slug)
+        for joined in all_joined:
+            if (joined.joined_contest_slug in list_of_contest) and (joined.joined_user in list_of_user) and (joined.joined_user in list_of_contest):
+                continue
             else:
-                user_obj.profile.match_played = user_obj.profile.match_played + 1
-                list_of_user.append(joined.joined_user)
-            # user_obj.profile.contest_played = user_obj.profile.contest_played + 1
-            # if (joined.joined_contest_slug in list_of_contest):
-            #     pass
-            # else:
-            #     list_of_contest.append(joined.joined_contest_slug)
-            #     list_of_contest.append(joined.joined_user)
-            user_obj.save()
-            user_obj.profile.save()
+                # try:
+                user_obj = User.objects.filter(username__exact=joined.joined_user).first()
+                if joined.joined_user in list_of_user:
+                    pass
+                else:
+                    user_obj.profile.match_played = user_obj.profile.match_played + 1
+                    list_of_user.append(joined.joined_user)
+                # user_obj.profile.contest_played = user_obj.profile.contest_played + 1
+                # if (joined.joined_contest_slug in list_of_contest):
+                #     pass
+                # else:
+                #     list_of_contest.append(joined.joined_contest_slug)
+                #     list_of_contest.append(joined.joined_user)
+                user_obj.save()
+                user_obj.profile.save()
 
             # except:
             #     print("something went wrong")

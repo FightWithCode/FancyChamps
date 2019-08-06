@@ -19,6 +19,10 @@ class MatchDetail(models.Model):
     short_team_two = models.CharField(default='AUS', max_length=5)
     initial_contest_created = models.BooleanField(default=False)
     match_status = models.CharField(default="0/0 (0 Overs)", max_length=255)
+    cancelled_called = models.BooleanField(default=False)
+    refund_called = models.BooleanField(default=False)
+    added_called = models.BooleanField(default=False)
+    update_wins_called = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         print(self.match_date)
@@ -650,7 +654,9 @@ class JoiningDetail(models.Model):
     balance_deduction = models.PositiveIntegerField(default=0)
     winnings_deduction = models.PositiveIntegerField(default=0)
     last_rank = models.PositiveIntegerField(default=0)
-
+    refunded = models.BooleanField(default=False)
+    added_to_wallet = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.joined_contest_slug + "[" + self.joined_user + self.joined_user_team + "]"
 
@@ -663,9 +669,10 @@ class JoiningTransactionDetail(models.Model):
     transaction_message = models.CharField(max_length=255, default="")
     transaction_type = models.CharField(max_length=16,default="added")
     refund_for_contest = models.CharField(max_length=255, default="")
+    transaction_for_contest = models.CharField(max_length=255, default="")
 
     def __str__(self):
-        return self.transaction_id + '|' + self.transact_user
+        return self.transaction_id + ' | ' + self.transact_user + ' | ' + self.transaction_amt + ' | ' + self.transaction_for_contest
 
 
 class WIINDTeam(models.Model):
