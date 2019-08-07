@@ -672,7 +672,7 @@ class JoiningTransactionDetail(models.Model):
     transaction_for_contest = models.CharField(max_length=255, default="")
 
     def __str__(self):
-        return self.transaction_id + ' | ' + self.transact_user + ' | ' + self.transaction_amt + ' | ' + self.transaction_for_contest
+        return self.transaction_id + ' | ' + self.transact_user + ' | ' + str(self.transaction_amt) + ' | ' + self.transaction_for_contest
 
 
 class WIINDTeam(models.Model):
