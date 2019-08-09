@@ -65,6 +65,11 @@ def PointSystem(request):
     return render(request, 'points_system.html',{})
 
 
+def PointSystemKabaddi(request):
+    print(".........................................")
+    return render(request, 'points_system_kabaddi.html',{})
+
+
 def Faqs(request):
     return render(request, 'faqs.html',{})
 

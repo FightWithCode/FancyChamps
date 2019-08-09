@@ -1,0 +1,85 @@
+{% extends "kabaddi_center_base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load user_agents %}
+{% block title %}Point System Kabaddi | {{block.super}}{% endblock title %}
+{% block stylesheets %}
+  {{block.super}}
+{% endblock stylesheets %}
+
+{% block other_page_content %}
+
+  <div class="MainBackground">
+    <div class="color-overlay">
+    </div>
+  </div>
+  <div class="MatchAreaForMatch">
+    <div class="MainPageHeader">
+        <center>
+          <p sclass="ProfileContent">Points System</p>
+        </center>
+    </div>
+    <div class="InfoConatinerOfPage">
+        <div class="TableContainer">
+            <center><h6 style="padding-left:5px;">KABADDI</h6></center>
+            <table class="Table">
+                <tr class="TableTr">
+                    <th class="MainHeaderOfTable">Type of Point</th>
+                    <th class="SubHeaderOfContent" style="color:#F3F4F4">Points</th>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Being part of the Starting 7</td>
+                    <td class="SubHeaderOfContent">4</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Making a substitute appearance</td>
+                    <td class="SubHeaderOfContent">2</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Each successful raid touch point</td>
+                    <td class="SubHeaderOfContent">4</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Each successful tackle</td>
+                    <td class="SubHeaderOfContent">5</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Each unsuccessful raid</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-1</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Super tackle</td>
+                    <td class="SubHeaderOfContent">4</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Pushing all out (starting 7)</td>
+                    <td class="SubHeaderOfContent">3</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Getting all out (starting 7)</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-2</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Green card</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-2</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Yellow card</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-4</td>
+                </tr>
+                <tr class="TableTr">
+                    <td class="MainHeaderOfTable">Red card</td>
+                    <td class="SubHeaderOfContent" style="color:#ff5833">-6</td>
+                </tr>
+            </table><br>
+            <center><a href="{% url 'points_system' %}">Cricket Point System</a></center>         
+        </div>
+    </div>
+    <div class="footer">
+      <a href="{% url 'cricket_center:cricket_center' %}"><center><button class="btn btn-success FooterInfoLeft" style="margin-top:7px;width:96%;left:1%;">
+        Go to Match Center
+      </button></center></a>  	
+    </div>
+  </div>
+{% endblock %}
+      

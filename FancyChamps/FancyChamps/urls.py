@@ -28,6 +28,7 @@ sitemaps = {
     }
 
 urlpatterns = [
+    url(r'points_system_kabaddi', views.PointSystemKabaddi, name='points_system_kabaddi'),
     url(r'^verify_mobile_otp', views.MobileOTPVerifyView, name="MobileOTPVerify"),
     url(r'^verify_email_otp', views.EmailOTPVerifyView, name="EmailOTPVerify"),
     url(r'^check', views.CheckEnteredData, name="CheckEnteredData"),
@@ -53,5 +54,5 @@ urlpatterns = [
     # url(r'^accounts/password_reset/$', auth_views.password_reset, {'template_name': 'registration/password_reset.html'}),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    #url(r'^sitemap\.xml$', views.SiteMapView, name="SiteMap"),
+    #url(r'^sitemap\.xml$', views.SiteMapView, name="SiteMap"),PointSystemKabaddi
 ]

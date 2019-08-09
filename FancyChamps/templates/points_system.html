@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% load user_agents %}
-{% block title %}How to Play | {{block.super}}{% endblock title %}
+{% block title %}Point System Cricket | {{block.super}}{% endblock title %}
 {% block stylesheets %}
   {{block.super}}
 {% endblock stylesheets %}
@@ -278,7 +278,8 @@
                     <td class="SubHeaderOfContent">2</td>
                     <td class="SubHeaderOfContent">2</td>
                 </tr>
-            </table>       
+            </table><br>
+            <center><a href="{% url 'points_system_kabaddi' %}">Kabaddi Point System</a></center>       
         </div>
     </div>
     <div class="footer">
