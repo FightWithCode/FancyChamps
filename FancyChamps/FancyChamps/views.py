@@ -362,7 +362,7 @@ def IndexView(request):
                         otp_send =  True
                         username = user_form.cleaned_data['username']
                     else:
-                        digits_valid = False0
+                        digits_valid = False
                     print(digits_valid, otp_send)
                     #mobile_no = profile_form.cleaned_data['phone_number']
                     #otp_send=True

@@ -19,6 +19,8 @@ from itertools import chain
 from django.contrib.messages import get_messages
 from django.http import JsonResponse
 from django.db import IntegrityError
+from django.template.loader import get_template
+from django.contrib.sites.shortcuts import get_current_site
 
 
 def PayTmPaymentView(request):
@@ -210,6 +212,28 @@ def SubmitWidhdrawRequestView(request):
                 "request":True
             }
             print("HelloWOelr")
+            # current_site = get_current_site(request)
+            # subject = 'Withdraw request on FancyChamps!'
+            # htmly     = get_template('withdraw_request.html')
+
+            # d = { 'user': user, 'domain':current_site.domain, 'amount':Decimal(Cash), 'time':widhdraw_obj.request_time }
+
+            # # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
+            # text_content = ""
+            # html_content = htmly.render(d)
+            # msg = EmailMultiAlternatives(subject, text_content, 'FancyChamps <mail@fancychamps.com>', [user.email])
+            # msg.attach_alternative(html_content, "text/html")
+            try:
+                print("I am here")
+                msg.send(fail_silently=False)
+                #UnComment if want to use Celery
+                # send_feedback_email_task.delay(subject, text_content, user.email, html_content)
+                user.save()
+            except Exception as e:
+                print("In except")
+                print(e)
+                print("Error while sending email!")
+            
         except:
             data ={
                 "request":False
