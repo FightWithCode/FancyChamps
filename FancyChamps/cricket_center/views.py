@@ -219,6 +219,39 @@ def SingleMatchView(request, match_slug):
 
 
 @login_required(login_url='IndexView')
+def SingleMatchHistoryView(request, match_slug):
+    # match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug)
+    # model_name = match_obj.first().team_one + match_obj.first().team_two + "Team"
+    # model_is = apps.get_registered_model('cricket_center', model_name)
+    all_joined = JoiningDetail.objects.filter(joined_user__exact=request.user.username, match_slug__exact=match_slug)
+    match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
+    if match_obj.match_tick > time.time() or (not match_obj.history_activate):
+        return redirect('/cricket_center/')
+    else:
+        contests_joined = []
+        contest_done = []
+        for contest in all_joined:
+            contest_obj = get_object_or_404(ContestDetail, contest_slug__exact=contest.joined_contest_slug)
+            if contest_obj not in contest_done:
+                obj = JoiningDetail.objects.filter(joined_user__exact=request.user.username,joined_contest_slug__exact=contest_obj.contest_slug).order_by("rank").first()
+                print(obj)
+                print(obj.rank)
+                contest_dict = model_to_dict(contest_obj)
+                contest_dict["top_rank"] = obj.rank
+                contest_done.append(contest_obj)
+                contests_joined.append(contest_dict)
+                print(contest_dict)
+        contests_count = len(contests_joined)
+        # all_joined = JoiningDetail.objects.filter(username_of_player__exact=request.user.username)
+        # contests = []
+        # for team in all_joined:
+        #     if team.joined_contest_slug not in contests:
+        #         contests.append(team.contest_slug)
+
+        return render(request, "cricket_center/match_his.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj,"contests_count":contests_count,})
+
+
+@login_required(login_url='IndexView')
 def SingleMatchLiveView(request, match_slug):
     all_joined = JoiningDetail.objects.filter(joined_user__exact=request.user.username, match_slug__exact=match_slug)
     match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
@@ -240,31 +273,6 @@ def SingleMatchLiveView(request, match_slug):
                 print(contest_dict)
         contests_count = len(contests_joined)
         return render(request, "cricket_center/live_match.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj, "contests_count":contests_count,})
-
-
-@login_required(login_url='IndexView')
-def SingleMatchHistoryView(request, match_slug):
-    # match_obj = MatchDetail.objects.filter(match_slug__exact=match_slug)
-    # model_name = match_obj.first().team_one + match_obj.first().team_two + "Team"
-    # model_is = apps.get_registered_model('cricket_center', model_name)
-    all_joined = JoiningDetail.objects.filter(joined_user__exact=request.user.username, match_slug__exact=match_slug)
-    match_obj = get_object_or_404(MatchDetail, match_slug__exact=match_slug)
-    if match_obj.match_tick > time.time() or (not match_obj.history_activate):
-        return redirect('/cricket_center/')
-    else:
-        contests_joined = []
-        for contest in all_joined:
-            contest_obj = get_object_or_404(ContestDetail, contest_slug__exact=contest.joined_contest_slug)
-            if contest_obj not in contests_joined:
-                contests_joined.append(contest_obj)
-        contests_count = len(contests_joined)
-        # all_joined = JoiningDetail.objects.filter(username_of_player__exact=request.user.username)
-        # contests = []
-        # for team in all_joined:
-        #     if team.joined_contest_slug not in contests:
-        #         contests.append(team.contest_slug)
-
-        return render(request, "cricket_center/match_his.html", context={"match_slug": match_slug, "contests_joined": contests_joined, "match_obj": match_obj,"contests_count":contests_count})
 
 
 @login_required(login_url='IndexView')
