@@ -98,6 +98,7 @@ $(".AddCash").click(function() {
                     cash: a
                 },
                 success: function(e) {
+                    console.log(e)
                     e.request ? ($("#sub_max").css("display", "block"), $("#sub_max").css({
                         "background-color": "green",
                         color: "white"

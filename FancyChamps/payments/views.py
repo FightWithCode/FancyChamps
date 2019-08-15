@@ -21,6 +21,10 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 from django.template.loader import get_template
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
+
 
 
 def PayTmPaymentView(request):
@@ -211,37 +215,41 @@ def SubmitWidhdrawRequestView(request):
             data ={
                 "request":True
             }
+            print(data)
             print("HelloWOelr")
-            # current_site = get_current_site(request)
-            # subject = 'Withdraw request on FancyChamps!'
-            # htmly     = get_template('withdraw_request.html')
+            current_site = get_current_site(request)
+            print("Hello1")
+            subject = 'Withdraw request on FancyChamps!'
+            htmly     = get_template('withdraw_request.html')
 
-            # d = { 'user': user, 'domain':current_site.domain, 'amount':Decimal(Cash), 'time':widhdraw_obj.request_time }
-
-            # # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
-            # text_content = ""
-            # html_content = htmly.render(d)
-            # msg = EmailMultiAlternatives(subject, text_content, 'FancyChamps <mail@fancychamps.com>', [user.email])
-            # msg.attach_alternative(html_content, "text/html")
+            d = { 'user': request.user.username, 'domain':current_site.domain, 'amount':Decimal(cash), 'time':widhdraw_obj.request_time }
+            print("Hello")
+            # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
+            text_content = ""
+            html_content = htmly.render(d)
+            print(user_profile.user.email)
+            msg = EmailMultiAlternatives(subject, text_content, 'FancyChamps <mail@fancychamps.com>', [user_profile.user.email])
+            msg.attach_alternative(html_content, "text/html")
+            print("Hello02")
             try:
                 print("I am here")
                 msg.send(fail_silently=False)
                 #UnComment if want to use Celery
                 # send_feedback_email_task.delay(subject, text_content, user.email, html_content)
-                user.save()
             except Exception as e:
                 print("In except")
                 print(e)
                 print("Error while sending email!")
             
-        except:
+        except Exception as e:
             data ={
                 "request":False
             }
+            print(e)
 
     else:
         data ={
             "request":False
         }
-    # print(data)
+    print(data)
     return JsonResponse(data)

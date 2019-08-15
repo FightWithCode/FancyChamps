@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+        <style type="text/css">
+            .MainDiv{position:relative;width:70%;margin-left:10%  !important;}
+            @media only screen and (min-width: 625px) {
+                .MainDiv{width:80%;left:10%  !important;}
+            }
+        </style>
+    </head>
+    <body>
+        <img src="https://www.fancychamps.com/static/images/maillogo.jpg" width="100%" alt="FancyChamps">
+        <div style="font-family: 'Josefin Sans', sans-serif;left:3%;padding:5px;" class="MainDiv">
+            <div style="text-align:center;color:#323641;padding-top:10px;font-size:25px;padding-bottom:5px;">Withdraw Request Proceed!
+            </div>
+            <div style="position:relative;font-family: 'Josefin Sans', sans-serif;line-height:20px;">
+                <center><p style="font-size:15px;text-align: justify;">Hi {{ user.username }}, Thankyou so much for being a user of FancyChamps. Your request of withdrwal of INR {{amount}} has been proceed. Please reply your PayTM Wallet number to this email for confirmation. Keep playing and Winning! Let's be the Champs together!</p>
+                </center>
+                <div style="position:relative;width:100%;line-height: 5px;">
+                    <p style="font-size:15px;">Regards,</p>
+                    <p style="font-size:15px;">FancyChamps</p>
+                    <p style="font-size:15px;">Facing any problem? <a href="www.fancychamps.com/contact_us/0">Contact us</a></p>
+                </div>
+                <!-- <center><img src="https://www.fancychamps.com/static/images/OriginalLogoBack.png" width="25%" alt="FancyChamps"></center> -->
+            </div>
+        </div>
+    </body>
+</html>
+
+            
+            
