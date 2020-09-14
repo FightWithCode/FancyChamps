@@ -406,4 +406,3 @@ def CheckEnteredData(request):
     }
     return JsonResponse(data)
 
-

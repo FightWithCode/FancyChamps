@@ -98,12 +98,12 @@ WSGI_APPLICATION = 'FancyChamps.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 #For SQLITE3
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
 #For MySQL
 # DATABASES = {
 #     'default': {
@@ -120,28 +120,28 @@ WSGI_APPLICATION = 'FancyChamps.wsgi.application'
 # }
 
 # #For Postgresql
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER_NAME'),
-            'PASSWORD': config('DB_USER_PASS'),
-            'HOST': config('DB_HOST'),
-            'PORT': '',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER_NAME'),
-            'PASSWORD': config('DB_USER_PASS'),
-            'HOST': config('DB_HOST'),
-            'PORT': '11141',
-        }
-    }
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': config('DB_NAME'),
+#             'USER': config('DB_USER_NAME'),
+#             'PASSWORD': config('DB_USER_PASS'),
+#             'HOST': config('DB_HOST'),
+#             'PORT': '',
+#         }
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': config('DB_NAME'),
+#             'USER': config('DB_USER_NAME'),
+#             'PASSWORD': config('DB_USER_PASS'),
+#             'HOST': config('DB_HOST'),
+#             'PORT': '11141',
+#         }
+#     }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -187,9 +187,9 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'ProductionFiles')
 
-EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-EMAIL_HOST = 'smtpout.secureserver.net'
-EMAIL_HOST_USER = 'verify@fancychamps.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rkswcud2@gmail.com'
 EMAIL_HOST_PASSWORD = "FightBack@2010"
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
