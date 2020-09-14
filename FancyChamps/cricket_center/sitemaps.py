@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 #from FancyChamps.urls import urlpatterns as FancyChampsUrls
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+
 
 class StaticSitemap(Sitemap):
     """Reverse 'static' views for XML sitemap."""

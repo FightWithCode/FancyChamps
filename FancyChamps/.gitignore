@@ -1,3 +1,19 @@
+FancyChamps/accountss/migrations/
+FancyChamps/cricket_center/migrations/
+FancyChamps/cricket_matches/migrations/
+FancyChamps/kabaddi_center/migrations/
+FancyChamps/FancyChamps/migrations/
+FancyChamps/payments/migrations/
+FancyChamps/support/migrations/
+FancyChamps/.env
+FancyChamps/env/
+FancyChamps/db.sqlite3
+FancyChamps/db.sqlite3*
+FancyChamps/.vscode/
+FancyChamps/ProductionFiles/
+FancyChamps/some.py
+FancyChamps/FancyChamps/settingss.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

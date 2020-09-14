@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from accounts.forms import UserForm, ProfileForm, UserLogInForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -237,7 +237,7 @@ def UserLogoutView(request):
 
 def IndexView(request):
     print("main")
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect('kabaddi_center')
     else:
         print("main else")

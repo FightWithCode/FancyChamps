@@ -744,7 +744,7 @@ class PATJAITeam(models.Model):
 
 
 class ContestDetail(models.Model):
-    contest_of_match = models.ForeignKey(MatchDetail)
+    contest_of_match = models.ForeignKey(MatchDetail, on_delete=models.CASCADE)
     contest_name = models.CharField(max_length=100)
     contest_slug = models.CharField(max_length=64, unique=True, default="Test")
     contest_prize = models.IntegerField()
