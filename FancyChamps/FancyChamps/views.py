@@ -8,6 +8,7 @@ from django.http import JsonResponse
 import http.client
 from accounts.models import OTPVerification, OTPVerificationEmail
 import ast
+from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.utils.crypto import get_random_string
 from support.forms import SupportQuerriesForm
@@ -157,36 +158,69 @@ def MobileOTPVerifyView(request):
     otp_obj = OTPVerification.objects.filter(mobile_no__exact=mobile_no).order_by('-sent_time').first()
     details = otp_obj.otp_send_detail
     print(details)
-    conn = http.client.HTTPConnection("2factor.in")
-    payload = ""
-    headers = {'content-type': "application/x-www-form-urlencoded"}
-    # https://2factor.in/API/V1/6dc69c9e-e414-11e8-a895-0200cd936042/SMS/VERIFY/42dff03e-e417-11e8-a895-0200cd936042/646481
-    conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS//VERIFY/" + details + "/" + otp, payload, headers)
-    res = conn.getresponse()
-    data_of_2f = res.read()
-    responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
-    print("print it")
-    print(responce_from_2f)
-    if responce_from_2f['Status'] == 'Success' and responce_from_2f['Details'] == 'OTP Matched':
-        data = {
-            'otp_matched_status': True,
-        }
-        user = User(username=username)
-        user.set_password(temp_user_obj.password)
-        user.save()
-        profile = Profile(phone_number=mobile_no)
-        profile.user = user
-        profile.save()
-        new_user = authenticate(username=username,
-                        password=temp_user_obj.password,
-                        )
-        print(new_user)
-        login(request, new_user)
-        temp_user_obj.delete()
+    if settings.DEBUG:
+        conn = http.client.HTTPConnection("2factor.in")
+        payload = ""
+        headers = {'content-type': "application/x-www-form-urlencoded"}
+        # https://2factor.in/API/V1/6dc69c9e-e414-11e8-a895-0200cd936042/SMS/VERIFY/42dff03e-e417-11e8-a895-0200cd936042/646481
+        conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS//VERIFY/" + details + "/" + otp, payload, headers)
+        res = conn.getresponse()
+        data_of_2f = res.read()
+        responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
+        print("print it")
+        print(responce_from_2f)
+        if responce_from_2f['Status'] == 'Success' and responce_from_2f['Details'] == 'OTP Matched':
+            data = {
+                'otp_matched_status': True,
+            }
+            user = User(username=username)
+            user.set_password(temp_user_obj.password)
+            user.save()
+            profile = Profile(phone_number=mobile_no)
+            profile.user = user
+            profile.save()
+            new_user = authenticate(username=username,
+                            password=temp_user_obj.password,
+                            )
+            print(new_user)
+            login(request, new_user)
+            temp_user_obj.delete()
+        else:
+            data = {
+                'otp_matched_status': False,
+            }
     else:
-        data = {
-            'otp_matched_status': False,
-        }
+        conn = http.client.HTTPSConnection("proxy.server", 3128)
+        conn.set_tunnel("2factor.in")
+        payload = ""
+        headers = {'content-type': "application/x-www-form-urlencoded"}
+        # https://2factor.in/API/V1/6dc69c9e-e414-11e8-a895-0200cd936042/SMS/VERIFY/42dff03e-e417-11e8-a895-0200cd936042/646481
+        conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS//VERIFY/" + details + "/" + otp, payload, headers)
+        res = conn.getresponse()
+        data_of_2f = res.read()
+        responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
+        print("print it")
+        print(responce_from_2f)
+        if responce_from_2f['Status'] == 'Success' and responce_from_2f['Details'] == 'OTP Matched':
+            data = {
+                'otp_matched_status': True,
+            }
+            user = User(username=username)
+            user.set_password(temp_user_obj.password)
+            user.save()
+            profile = Profile(phone_number=mobile_no)
+            profile.user = user
+            profile.save()
+            new_user = authenticate(username=username,
+                            password=temp_user_obj.password,
+                            )
+            print(new_user)
+            login(request, new_user)
+            temp_user_obj.delete()
+        else:
+            data = {
+                'otp_matched_status': False,
+            }
     return JsonResponse(data)
 
 
@@ -342,28 +376,53 @@ def IndexView(request):
                     print("Success")
                     temp_user_obj = TempUser(username=user_form.cleaned_data['username'], password=user_form.cleaned_data['password'], mobile_no=profile_form.cleaned_data['phone_number'])
                     mobile_no = profile_form.cleaned_data['phone_number']
-                    conn = http.client.HTTPConnection("2factor.in")
-                    payload = ""
-                    # https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/AUTOGEN/FancyChamps OTP
-                    headers = {'content-type': "application/x-www-form-urlencoded"}
-                    conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS/" + mobile_no + "/AUTOGEN/FancyChamps+OTP", payload, headers)
-                    res = conn.getresponse()
-                    data_of_2f = res.read()
-                    responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
-                    print(responce_from_2f['Status'])
-                    if responce_from_2f['Status'] == 'Success':
-                        otp_veri_obj = OTPVerification(
-                                mobile_no=mobile_no,
-                                otp_send_detail=responce_from_2f['Details'],
-                        )
-                        otp_veri_obj.save()
-                        temp_user_obj.save()
-                        digits_valid =  True
-                        otp_send =  True
-                        username = user_form.cleaned_data['username']
+                    if settings.DEBUG:
+                        conn = http.client.HTTPConnection("2factor.in")
+                        payload = ""
+                        # https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/AUTOGEN/FancyChamps OTP
+                        headers = {'content-type': "application/x-www-form-urlencoded"}
+                        conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS/" + mobile_no + "/AUTOGEN/FancyChamps+OTP", payload, headers)
+                        res = conn.getresponse()
+                        data_of_2f = res.read()
+                        responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
+                        print(responce_from_2f['Status'])
+                        if responce_from_2f['Status'] == 'Success':
+                            otp_veri_obj = OTPVerification(
+                                    mobile_no=mobile_no,
+                                    otp_send_detail=responce_from_2f['Details'],
+                            )
+                            otp_veri_obj.save()
+                            temp_user_obj.save()
+                            digits_valid =  True
+                            otp_send =  True
+                            username = user_form.cleaned_data['username']
+                        else:
+                            digits_valid = False
+                        print(digits_valid, otp_send)
                     else:
-                        digits_valid = False
-                    print(digits_valid, otp_send)
+                        conn = http.client.HTTPSConnection("proxy.server", 3128)
+                        conn.set_tunnel("2factor.in")
+                        payload = ""
+                        # https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/AUTOGEN/FancyChamps OTP
+                        headers = {'content-type': "application/x-www-form-urlencoded"}
+                        conn.request("GET", "/API/V1/ed3da657-699c-11e9-90e4-0200cd936042/SMS/" + mobile_no + "/AUTOGEN/FancyChamps+OTP", payload, headers)
+                        res = conn.getresponse()
+                        data_of_2f = res.read()
+                        responce_from_2f = ast.literal_eval(data_of_2f.decode("utf-8"))
+                        print(responce_from_2f['Status'])
+                        if responce_from_2f['Status'] == 'Success':
+                            otp_veri_obj = OTPVerification(
+                                    mobile_no=mobile_no,
+                                    otp_send_detail=responce_from_2f['Details'],
+                            )
+                            otp_veri_obj.save()
+                            temp_user_obj.save()
+                            digits_valid =  True
+                            otp_send =  True
+                            username = user_form.cleaned_data['username']
+                        else:
+                            digits_valid = False
+                        print(digits_valid, otp_send)
                     #mobile_no = profile_form.cleaned_data['phone_number']
                     #otp_send=True
                     #print(user_form.cleaned_data['username'], user_form.cleaned_data['password'])
