@@ -1011,7 +1011,7 @@ class WSLTTeam(models.Model):
         self.save()
 
 
-class INDWITeam(models.Model):
+class INDAUSTeam(models.Model):
     Keeper = models.CharField(max_length=255, default="")
     Player2 = models.CharField(max_length=255, default="")
     Player3 = models.CharField(max_length=255, default="")
@@ -1052,7 +1052,7 @@ class INDWITeam(models.Model):
 
     def save(self, *args, **kwargs):
         self.full_team_name = self.username_of_player + "[" + str(self.team_no) + "]" + self.match_slug
-        super(INDWITeam, self).save(*args, **kwargs)
+        super(INDAUSTeam, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username_of_player + "[" + str(self.team_no) + "]"
