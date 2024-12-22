@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path as url
 from . import views
 # from django.contrib.sitemaps.views import sitemap
 # from cricket_center.sitemaps import StaticSitemap

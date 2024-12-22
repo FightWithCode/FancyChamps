@@ -16,7 +16,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail,BadHeaderError
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
@@ -119,8 +119,8 @@ def AddEmailView(request):
 def activate(request, uidb64, token, uemailb64):
     print("called")
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        uemail = force_text(urlsafe_base64_decode(uemailb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        uemail = force_str(urlsafe_base64_decode(uemailb64))
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None

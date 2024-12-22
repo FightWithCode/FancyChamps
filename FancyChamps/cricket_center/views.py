@@ -13,7 +13,7 @@ from accounts.models import Profile
 from django.http import Http404
 from django.apps import apps
 from django.forms.models import model_to_dict
-import razorpay, random, string
+import random, string
 import operator
 from collections import OrderedDict
 
@@ -356,41 +356,41 @@ def ContestsViews(request, match_slug, contest_slug):
     return render(request, "cricket_center/view_contest.html", context={"match_obj": match_obj, "all_joined_with_ranking": all_joined, "contest_obj": contest_obj})
 
 
-@login_required(login_url='IndexView')
-def CapturePayment(request):
-    razorpay_client = razorpay.Client(auth=("rzp_test_C4Ohgv6Fhh2piC", "nmz1n0jwb5avB6uEB1Fpk2dG"))
-    response_of_payment = razorpay_client.payment.capture(request.POST.get("razorpay_payment_id"), request.POST.get("amt"))
-    print(response_of_payment)
-    transaction_obj = TransactionDetail(
-                                            transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(15)),
-                                            razorpay_transaction_payment_id=request.POST.get("razorpay_payment_id"),
-                                            transaction_amt=request.POST.get("amt"),
-                                            transact_user=request.user.username,
-                                            captured=False
-                                  )
-    print(response_of_payment["status"], response_of_payment["captured"])
-    if response_of_payment["status"] == "captured":
-        print("Ok I am Fine HERE")
+# @login_required(login_url='IndexView')
+# def CapturePayment(request):
+#     razorpay_client = razorpay.Client(auth=("rzp_test_C4Ohgv6Fhh2piC", "nmz1n0jwb5avB6uEB1Fpk2dG"))
+#     response_of_payment = razorpay_client.payment.capture(request.POST.get("razorpay_payment_id"), request.POST.get("amt"))
+#     print(response_of_payment)
+#     transaction_obj = TransactionDetail(
+#                                             transaction_id=''.join(random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(15)),
+#                                             razorpay_transaction_payment_id=request.POST.get("razorpay_payment_id"),
+#                                             transaction_amt=request.POST.get("amt"),
+#                                             transact_user=request.user.username,
+#                                             captured=False
+#                                   )
+#     print(response_of_payment["status"], response_of_payment["captured"])
+#     if response_of_payment["status"] == "captured":
+#         print("Ok I am Fine HERE")
 
-    if response_of_payment["captured"] is True:
-        print("Ok I am ALSO Fine HERE")
+#     if response_of_payment["captured"] is True:
+#         print("Ok I am ALSO Fine HERE")
 
-    if (response_of_payment["status"] == "captured") and (response_of_payment["captured"] is True):
-        transaction_obj.transaction_amt = response_of_payment["amount"]
-        transaction_obj.captured = True
-        data = {
-            'success': True,
-            'amount': response_of_payment["amount"],
-        }
-        user_obj = Profile.objects.get(user__username__exact=request.user.username)
-        user_obj.balance = user_obj.balance + Decimal(response_of_payment["amount"]/100)
-        user_obj.save()
-        transaction_obj.save()
-    else:
-        data = {
-            'success': False,
-        }
-    return JsonResponse(data)
+#     if (response_of_payment["status"] == "captured") and (response_of_payment["captured"] is True):
+#         transaction_obj.transaction_amt = response_of_payment["amount"]
+#         transaction_obj.captured = True
+#         data = {
+#             'success': True,
+#             'amount': response_of_payment["amount"],
+#         }
+#         user_obj = Profile.objects.get(user__username__exact=request.user.username)
+#         user_obj.balance = user_obj.balance + Decimal(response_of_payment["amount"]/100)
+#         user_obj.save()
+#         transaction_obj.save()
+#     else:
+#         data = {
+#             'success': False,
+#         }
+#     return JsonResponse(data)
 
 
 @login_required(login_url='IndexView')

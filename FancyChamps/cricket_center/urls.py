@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path as url
 from . import views
 # from django.contrib.sitemaps.views import sitemap
 # from cricket_center.sitemaps import StaticSitemap
@@ -13,7 +13,7 @@ app_name = 'cricket_center'
 
 urlpatterns = [
     url(r'view_contest/(?P<match_slug>[\w]+)/(?P<contest_slug>[\w]+)', views.ContestsViews, name='view_contest'),
-    url(r'capture_payment', views.CapturePayment, name='capture_payment'),
+    # url(r'capture_payment', views.CapturePayment, name='capture_payment'),
     url(r'^$', views.CricketCenterIndexView, name="cricket_center"),
     url(r'match/(?P<match_slug>[\w]+)', views.SingleMatchView, name='match'),
     url(r'rankings/(?P<match_slug>[\w]+)/(?P<contest_slug>[\w]+)', views.ContestsRankings, name='contest_ranking'),#//Resolved//Before match url is accessible
